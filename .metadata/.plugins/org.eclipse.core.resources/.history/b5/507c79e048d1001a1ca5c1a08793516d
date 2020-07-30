@@ -1,0 +1,15 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-api</artifactId>
+		    <version>5.6.2</version>
+		    <scope>test</scope>
+		</dependency>
+		
+	}
+}
+

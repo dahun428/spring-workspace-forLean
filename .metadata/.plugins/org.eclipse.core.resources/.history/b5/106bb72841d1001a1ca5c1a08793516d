@@ -1,0 +1,52 @@
+package kr.co.jhta.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kr.co.jhta.dao.BlogDao;
+import kr.co.jhta.vo.Blog;
+import kr.co.jhta.vo.Comment;
+
+public class BlogServiceImpl implements BlogService{
+
+	@Autowired
+	private BlogDao blogDao;
+	
+	public void addNewBlog(Blog blog) {
+		blogDao.insertBlog(blog);
+	}
+	@Override
+	public void addNewComment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public List<Blog> getAllBlogs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Blog getBlogDetail(int blogNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void modifyBlog(Blog blog) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void removeBlog(int blogNo) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void removeComment(int commentNo) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}

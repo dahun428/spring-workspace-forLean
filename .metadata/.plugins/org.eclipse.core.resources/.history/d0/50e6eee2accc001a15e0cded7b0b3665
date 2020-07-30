@@ -1,0 +1,6 @@
+package kr.co.jhta.service;
+
+public interface EventService {
+
+	void (String dept, string subject, String content);
+}

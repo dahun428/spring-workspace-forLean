@@ -1,0 +1,16 @@
+package kr.co.jhta.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.jhta.dao.BoardDao;
+
+@Service
+public class BoardServiceImpl {
+
+	@Autowired
+	BoardDao boardDao;
+	
+	
+	
+}

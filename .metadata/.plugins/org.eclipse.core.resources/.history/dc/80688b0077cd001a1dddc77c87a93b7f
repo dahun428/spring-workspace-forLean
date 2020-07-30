@@ -1,0 +1,32 @@
+package kr.co.jhta.main;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
+
+import kr.co.jhta.dao.UserDao;
+import kr.co.jhta.dao.UserDaoSpringJdbcImpl;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		String conf="classpath:/spring/context.xml";
+	
+		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(conf);
+		UserDao dao = ctx.getBean(UserDao.class);
+		
+		while(true) {
+			try {
+				System.out.println("[사용자관리]");
+				System.out.println("1.전체조회 2.조회(아이디) 3.조회(이름) 4.등록 5.삭제(아이디) 6.전체 0.종료");
+				
+				
+			} catch(DataAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+}

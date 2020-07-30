@@ -1,0 +1,5 @@
+package kr.co.jhta.di.step1;
+
+public class NotificationServiceImp {
+
+}

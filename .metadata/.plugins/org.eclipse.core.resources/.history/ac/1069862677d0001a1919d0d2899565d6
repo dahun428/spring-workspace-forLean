@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	
+	<settings>
+	<!-- 
+		일부 데이터베이스 제품은 컬럼에 null 값이 저장되는 경우 해당 컬럼의 jdbc 타입을 요구한다.
+		아래의 설정은 JDBC 타입과 상관없이 null 값이 저장되도록한다.
+	
+	 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+</configuration>

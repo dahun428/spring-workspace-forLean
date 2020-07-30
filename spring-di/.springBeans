@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.9.11.201912160804-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>src/main/java/kr/co/jhta/di/service/step5/context-step5.xml</config>
+		<config>src/main/java/kr/co/jhta/di/service/step6/context-step6.xml</config>
+		<config>src/main/java/kr/co/jhta/di/service/step7/context-step7.xml</config>
+		<config>src/main/java/kr/co/jhta/di/service/step8/context-step8.xml</config>
+		<config>src/main/java/kr/co/jhta/di/service/step8/context-step8-map.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

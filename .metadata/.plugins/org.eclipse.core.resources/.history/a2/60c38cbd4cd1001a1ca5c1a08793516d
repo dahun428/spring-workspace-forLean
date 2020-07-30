@@ -1,0 +1,10 @@
+package kr.co.jhta.service;
+
+public class SampleTest {
+
+	public void TestPlus1() {
+		Sample sample = new Sample();
+		
+	}
+	
+}

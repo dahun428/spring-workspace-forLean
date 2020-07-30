@@ -1,0 +1,20 @@
+package kr.co.jhta.di.step1;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class EventNotificationServiceImp implements NotificationService{
+
+
+	@Autowired
+	private SmsMessageSender sms;
+	public void setSms(SmsMessageSender sms) {
+		this.sms = sms;
+	}
+	
+	public void notice(String dept, String subject, String content) {
+		
+		sms.send(dept, "모든고객", "1", "내용");
+	}
+	
+}

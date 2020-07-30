@@ -1,0 +1,22 @@
+package kr.co.jhta.step1;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import kr.co.jhta.sender.KakaotalkMessageSender;
+
+@Configuration
+public class JavaConfig {
+
+	
+	/*
+	 * 아래의 spring bean configuration 파일의 설정과동일 설정으로 자바코드를 정의한것
+	 * <bean id="kakao" class="kr.co.jhta.sender.KakaotalkMessageSender"></bean>
+	 * 
+	 */
+	@Bean
+	public KakaotalkMessageSender kakao() {
+		return new KakaotalkMessageSender();
+	}
+	
+}

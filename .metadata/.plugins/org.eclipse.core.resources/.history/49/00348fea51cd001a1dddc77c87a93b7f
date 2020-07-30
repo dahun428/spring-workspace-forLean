@@ -1,0 +1,32 @@
+package kr.co.jhta.vo;
+
+import java.util.Date;
+
+/*
+ * BOOK_NO
+BOOK_TITLE
+BOOK_WRITE
+BOOK_GENRE
+BOOK_PUBLISHER
+BOOK_PRICE
+BOOK_DISCOUNT_PRICE
+BOOK_REGISTERED_DATE
+BOOK_STOCK
+BOOK_POINT
+BOOK_LIKES
+ * 
+ */
+public class Book {
+
+	private int no;
+	private String title;
+	private String writer;
+	private String genre;
+	private String publisher;
+	private int price;
+	private int discountPrice;
+	private Date registeredDate;
+	private int stock;
+	private double point;
+	private int likes;
+}

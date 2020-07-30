@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!--  태그만 등록하면됨 -->
+<context:annotation-config></context:annotation-config>
+<context:component-scan base-package="kr.co.jhta.di.di"></context:component-scan>
+<context:property-placeholder location="classpath:/config/spring.properties"/>
+<!--
+	@Component = 아래의 모든 어노테이션 부모
+		@Controller = mvc 컨트롤러
+		@ControllerAdvivce
+		@Service = xxxService 객체(업무로직)
+		@Repository  xxxDAO (DBAccess)
+		@RestController = REST API
+ -->
+
+</beans>

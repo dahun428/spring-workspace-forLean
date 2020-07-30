@@ -1,0 +1,14 @@
+package kr.co.jhta.di.step1;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class EventNotificationServiceImp implements NotificationService{
+
+@Override
+	public void notice(String dept, String subject, String content) {
+		// TODO Auto-generated method stub
+		
+	}	
+	
+}

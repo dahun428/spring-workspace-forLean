@@ -1,0 +1,26 @@
+package kr.co.jhta.sender;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+public class KakaotalkMessageSender implements MessageSender{
+
+
+	private String username;
+	private String password;
+	
+	
+	@PostConstruct
+	public void connecting() {
+		System.out.println(username + ", " +password + "접속정보로 카카오톡 대용량 서비스 연결됨");
+	}
+	
+	@PreDestroy
+	public void disconnect() {
+		System.out.println(username + " 접속 해제");
+	}
+	
+	public void send(String from, String to, String subject, String content) {
+		
+	}
+}

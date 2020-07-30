@@ -1,0 +1,52 @@
+package kr.co.jhta.dao;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import kr.co.jhta.vo.User;
+
+public class UserDaoSpringJdbcImpl implements UserDao{
+
+	DataSource ds;
+	public void setDs(DataSource ds) {
+		this.ds = ds;
+	}
+	
+	
+	@Override
+	public void deleteAllUsers() {
+		System.out.println("deleteAl");
+	}
+	@Override
+	public void deleteUserById(String userId) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public User getUserById(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<User> getUsersByName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void insertUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

@@ -1,0 +1,19 @@
+package kr.co.jhta.main;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+import kr.co.jhta.dao.UserDao;
+import kr.co.jhta.dao.UserDaoSpringJdbcImpl;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		String conf="classpath:/spring/context.xml";
+	
+		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(conf);
+		UserDao dao = ctx.getBean(UserDaoSpringJdbcImpl.class);
+		dao.deleteAllUsers();
+	}
+	
+}

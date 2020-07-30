@@ -1,0 +1,17 @@
+package kr.co.jhta.di.di;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class KakaoTalkMessageSender implements MessageSender{
+
+
+	@Value("${message.sender.kakao.username}")
+	private String username;
+	@Value("${message.sender.kakao.password}")
+	private String password;
+	
+	public void send(String from, String to, String subject, String content) {
+		
+	}
+
+}

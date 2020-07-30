@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- 
+	Database와 연결을 담당하는 Connection 객체를 제공하는 
+	Connection Pool(javax.sql.DataSource 인터페이스의 구현객체)객체를 생성시키기
+	
+ -->
+
+
+</beans>

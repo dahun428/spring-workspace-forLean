@@ -1,0 +1,37 @@
+package kr.co.jhta.vo;
+
+import java.util.Date;
+
+public class Board {
+/*
+ * create table spring_free_boards (
+board_no number(10) primary key,
+board_title varchar2(200) not null,
+board_writer varchar2(200) not null,
+board_password varchar(20) not null,
+board_content varchar2(2000) ,
+board_likes number(5) default 0,
+board_deleted char(1) default 'N',
+board_filename
+board_created_date date default sysdate,
+board_updated_date date default sysdate,
+board_deleted_date date
+ */
+	
+
+	private long no;
+	private String title;
+	private String writer;
+	private String password;
+	private String content;
+	private String filename;
+	private int likes;
+	private String detelted;
+	private Date createdDate;
+	private Date updatedDate;
+	private Date deletedDate;
+	
+	
+	
+	
+}

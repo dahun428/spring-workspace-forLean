@@ -1,0 +1,49 @@
+package kr.co.jhta.dao;
+
+import java.util.List;
+
+import kr.co.jhta.vo.User;
+
+public class UserDao {
+
+	public void insertUser(User user) {
+		
+	}
+	public void deleteAllUsers() {
+		
+	}
+	public void deleteUserById(String userId) {
+		
+	}
+	//update : N종류의 데이터 , paramter : User , result : 
+	public void updateUser(User user) {
+		
+	}
+	
+	// select: N행 N열  paramter : 없음 result: User 최종값:List<User>
+	public List<User> getAllUsers(){
+		return null;
+	}
+	// select : N행 N열, paramter : string, result : User , 최종값 : List<User>
+	public List<User> getUsersByName(String userName){
+		
+		return null;
+	}
+	// select: 1행 1열, parameter : string , result : User , 최종값 : 
+	public User getUserById(String userId) {
+		return null;
+	}
+	// select : 1행 1열, parameter : string , result:User객체
+	public List<User> getUserByEmail(String userEmail){
+		return null;
+	}
+	// select : 1행 1열, parameter : 없음 , result : int , 최종값 : int
+	public int getUsersCount() {
+		return 0;
+	}
+	
+	
+	
+	
+	
+}

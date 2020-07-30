@@ -1,0 +1,12 @@
+Sprint myBatis 프로젝트
+	1. Maven Project 생성
+	2. 의존성 설정
+		: Spring-context, Spring-jdbc, Spring-tx, myBatis, mybatis-spring
+	3. 폴더 생성
+		1) src/main/resources/spring
+			: Spring Bean Configuration 파일 위치한다.
+		2) src/main/resources/spring/config
+		3) src/main/resources/spring/mybatis
+		4) src/main/resources/spring/mybatis/mappers
+	
+		

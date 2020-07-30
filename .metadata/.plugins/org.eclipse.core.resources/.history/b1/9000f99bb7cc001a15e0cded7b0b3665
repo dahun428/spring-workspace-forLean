@@ -1,0 +1,32 @@
+package kr.co.jhta.step2;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+
+
+/*
+ * 자바 기반 빈 설정
+ * 	@Configuration
+ * 	- 빈 설정 정보를 포함하고 있는 자바 클래스임을 나타냄
+ * 	@PropertySource("properties 파일 경로")
+ * 	- 읽어올 properties 파일의 경로를 지정한다.
+ * 	@ComponentScan(basePackage=["패키지명","패키지명"])
+ * 	- 지정된 패키지에서 스프링 컨테이너가 생성/조립할 클래스를 스캔한다.
+ * 	@Bean
+ * 	- 어노테이션이 부착된 메소드가 반환하는 객체는 컨테이너가 관리한다.
+ */
+@Configuration
+@PropertySource("classpath:/config/spring.properties")
+@ComponentScan(basePackages = {"kr.co.jhta.sender", "kr.co.jhta.service"})
+public class AppConfig {
+	
+	@Bean
+	public PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+		
+	}
+	
+}

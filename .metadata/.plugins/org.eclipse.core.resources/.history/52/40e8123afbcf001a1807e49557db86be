@@ -1,0 +1,26 @@
+package kr.co.jhta.dao;
+
+import java.util.List;
+
+import kr.co.jhta.dto.BlogDto;
+import kr.co.jhta.vo.Blog;
+
+public class CommentDao {
+
+	public void insertBlog(Blog blog) { 
+
+	}
+	public List<BlogDto> getAllBlogs() { 
+
+		return null;
+	}
+	public BlogDto getBlogByNo(int blogNo) {
+		
+		return null;
+	}	
+	public void updateBlog(Blog blog) { 
+
+	}
+	
+	
+}

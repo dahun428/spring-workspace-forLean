@@ -1,0 +1,17 @@
+package kr.co.jhta.di.di.step2;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.jhta.di.di.MessageSender;
+
+@Service
+public class AlarmServiceIml implements AlarmService{
+
+	@Autowired
+	MessageSender ms;
+	
+	public void alarm(String message) {
+		
+	}
+}

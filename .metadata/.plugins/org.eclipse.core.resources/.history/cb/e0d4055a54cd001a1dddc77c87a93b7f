@@ -1,0 +1,36 @@
+package kr.co.jhta.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import kr.co.jhta.vo.Book;
+
+public class BookDAO {
+
+	private DataSource ds;
+	public void setDs(DataSource ds) {
+		this.ds = ds;
+	}
+	
+	public void insertBook(Book book) throws SQLException {
+		
+	}
+	public void deleteBook(int bookNo) throws SQLException {
+		
+	}
+	public void updateBook(Book book) throws SQLException {
+		
+	}
+	public Book getBookByNo(int bookNo) throws SQLException {
+		
+		return null;
+	}
+	public List<Book> getAllBooks() throws SQLException {
+		
+		return null;
+	}
+	
+	
+}

@@ -1,0 +1,23 @@
+package kr.co.jhta.step2;
+
+import java.sql.SQLException;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+import kr.co.jhta.dao.BookDAO;
+
+public class Main {
+
+	public static void main(String[] args) throws SQLException {
+		
+		String conf = "classpath:/spring/context.xml";
+		ApplicationContext ctx = new GenericXmlApplicationContext(conf);
+		BookDAO dao = ctx.getBean(BookDAO.class);
+		
+		
+		
+	}
+	
+	
+}

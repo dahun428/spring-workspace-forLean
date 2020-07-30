@@ -1,0 +1,30 @@
+1. kr.co.jhta.di.service에 MessageSender 인터페이스를 정의한다.
+	* void send(String from, String to, String subject, String content);
+
+2. kr.co.jhta.di.service에 MessageSender 인터페이스를 구현한 SmsMessageSender 클래스 정의
+	* SmsMessageSender은 통신사명이 필요하다.
+	* MessageSender의 send메소드를 재정의한다.
+		- XXX통신사를 이용합니다.
+		- SMS 발신자 : from
+		- SMS 수신자 : to
+		- SMS 제목 : subject
+		- SMS 내용 : content 
+		* 위와 같이 출력되도록 정의한다.
+3. kr.co.jhta.di.service.step7에 EventNotificationService 인터페이스를 정의한다.
+	* void noticeEvent(String eventName, String eventContent);
+   kr.co.jhta.di.service.step7에 UserService 인터페이스를 정의한다.
+	* List<User> getAllUser();
+   kr.co.jhta.di.vo에 User 클래스를 정의한다. 필드: id, name, tel
+4. kr.co.jhta.di.service.step7에 EventNotificationServiceImpl 클래스를 정의한다.
+	* EventNotificationService 인터페이스를 구현한 클래스다.
+	* 이벤트 정보를 사용자에게 보내기 위해서는 MessageSender류 객체가 필요하다.
+	* 이벤트 정보를 받은 사용자정보를 조회하기 위해서는 UserService류 객체가 필요하다
+	* void noticeEvent(String eventName, String eventContent)를 구현한다.
+		사용자 정보를 조회해서 모든 사용자에게 이벤트 내용을 Sms로 발송시킨다.
+   kr.co.jhta.di.service.step7에 UserServiceImpl 클래스를 정의한다.
+	* UserService 인터페이스를 구현한 클래스다.
+	* List<User> getAllUser();
+		5명 미만의 User정보를 임의로 생성해서 반환하도록 구현한다.
+5. kr.co.jhta.di.service.step7에 context-step7.xml을 정의한다.
+	* SmsMessageSender, UserServiceImpl, EventNotificationServiceImpl을 빈 등록
+	* 4번의 내용을 참조해서 빈들을 조립한다.

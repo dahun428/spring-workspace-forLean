@@ -1,0 +1,5 @@
+package kr.co.jhta.exception;
+
+public class DuplicatedUserException {
+
+}

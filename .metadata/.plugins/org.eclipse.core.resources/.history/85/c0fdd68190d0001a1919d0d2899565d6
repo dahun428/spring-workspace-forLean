@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 
+		database.properties 파일 읽기
+	 -->
+	<context:property-placeholder location="classpath:/spring/config/database.properties"/>
+	<!-- 
+		DataSource 빈 설정
+	 -->
+	 
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	 	<property name="driverClassName" 	value="${db.driverClassName}"/>
+	 	<property name="url" 				value="${db.url}"/>
+	 	<property name="username"			value="${db.username}"/>
+	 	<property name="password" 			value="${db.password}"/>
+	</bean>
+	
+	<!-- 
+		mybatis 핵심객체인 SqlSessionFactory를 스프링의 빈으로 등록시키는
+		SqlSessionFactoryBean을 <bean></bean>로 정의한다.
+			- ConfigLocation : mybatis 환경설정 파일의 경로를 설정한다.
+			- mapperLocations : mapper 파일의 경로를 설정한다.
+			- typeAliases : 별칭을 부여할 VO객체들이 포함된 패키지를 설정한다.
+			- dataSource : 커넥션풀을 제공하는 DataSource 객체의 빈 아이디를 설정한다.
+	 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		 <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
+		 <property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 
+		<mybatis-spring:scan base-package="패키지명" /> 태그는
+		지정된 패키지에서 Mapper 매퍼 인터페이스(UserDao, BlogDao, BlogCommentDao)를 검색해서,
+		매퍼 인스턴스(userDao의 구현객체, BlogDao 의 구현객체, BlogCommentDao 의구현 객체) 를 생성한다.
+		생성된 매퍼 인스턴스는 스프링 컨테이너의 빈으로 자동 등록된다.
+	 -->
+	<mybatis-spring:scan base-package="kr.co.jhta.dao"/>
+</beans>

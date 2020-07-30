@@ -1,0 +1,15 @@
+package kr.co.jhta.di.step1;
+
+import kr.co.jhta.di.di.SmsMessageSender;
+
+public class NoticificationServiceImp implements NotificationService{
+
+	private SmsMessageSender sms;
+	public void setSms(SmsMessageSender sms) {
+		this.sms = sms;
+	}
+	
+	public void notice(String dept, String subject, String content) {
+		
+	}
+}

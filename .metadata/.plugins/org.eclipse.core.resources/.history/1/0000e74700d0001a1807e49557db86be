@@ -1,0 +1,47 @@
+package kr.co.jhta.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.jhta.dto.BlogDto;
+import kr.co.jhta.util.MybatisUtil;
+import kr.co.jhta.vo.Blog;
+
+public class BlogDao {
+	public void insertBlog(Blog blog) { 
+
+		SqlSession session = MybatisUtil.getSqlSession();
+		try {
+			
+			session.insert("insertBlog" , blog);
+			session.commit();
+		} finally {
+			session.close();
+		}
+		
+	}
+	public List<Blog> getAllBlogs() { 
+
+		SqlSession session = MybatisUtil.getSqlSession();
+		try {
+			List<Blog> blogs = session.selectList("getAllBlogs");
+			return blogs;
+		} finally {
+			session.close();
+		}
+		
+	}
+	public Blog getBlogByNo(int blogNo) {
+		
+		
+		
+		
+		return null;
+	}	
+	public void updateBlog(Blog blog) { 
+
+	}
+	
+	
+}

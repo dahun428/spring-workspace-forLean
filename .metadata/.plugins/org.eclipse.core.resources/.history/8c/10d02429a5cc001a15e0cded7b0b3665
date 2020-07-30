@@ -1,0 +1,28 @@
+- src/main/ ~ : 실제 배포
+- src/test/ ~ : 테스트 하기 위한 소스
+- src 에는 들어갈 일이 없음 
+- target :  패키징 시 jar 파일이 만들어지는 곳 ( 최정 컴파일 된 클래스, 패키징한 Jar 파일 위치 , 테스트 결과 )
+- pom.xml
+	: Project Object Model 의 약자
+	: 프로젝트 객체 모델
+	: Maven Build 도구에서 pom.xml 설정 정보를 바탕으로 프로젝트를 구성
+	: Project , 이름, 패키징 방법, 사용할 자바 버전, 외부 라이브러리 , 배포 대상 , 톰캣 주소 등 설정 
+	
+	
+	
+* Spring Container
+	- 객체 생성 및 조립을 지원하는 객체
+	- 스프링의 가장 핵심적인 기능을 담당하는 객체
+	
+* BeanFactory
+	- 기본적인 객체 생성 /조립만 지원
+	- 구현체 : xmlBeanFactory
+* Application Context
+	- 객체 생성/ 조립
+	- 국제화
+	- ejb 연동
+	- 구현체 : ClasspathXmlApplicationContext, FileSystemXmlApplicationContext, GenericXmlApplicationContext
+* WebApplication Context
+	- 기능을 ApplicationContext와 동일
+	- Web 환경에 적합
+	- 구현체 : XmlWebApplicationContext

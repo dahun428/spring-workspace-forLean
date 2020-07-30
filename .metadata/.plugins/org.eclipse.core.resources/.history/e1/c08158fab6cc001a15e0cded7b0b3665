@@ -1,0 +1,21 @@
+package kr.co.jhta.step2;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+
+
+/*
+ * 자바 기반 빈 설정
+ * 	@Configuration
+ * 	- 빈 설정 정보를 포함하고 있는 자바 클래스임을 나타냄
+ * 
+ */
+@Configuration
+@PropertySource("classpath:/config/spring.properties")
+@ComponentScan(basePackages = {"kr.co.jhta.sender", "kr.co.jhta.service"})
+public class AppConfig {
+	
+	
+}

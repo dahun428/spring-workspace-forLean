@@ -1,0 +1,14 @@
+package kr.co.jhta.di.di.step2;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class AlarmServiceIml implements AlarmService{
+
+	
+	@Override
+	public void alarm(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+}

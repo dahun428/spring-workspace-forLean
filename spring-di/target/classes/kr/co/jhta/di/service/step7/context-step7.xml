@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<bean id="SmsSender" class="kr.co.jhta.di.service.SmsMessageSender">
+		<property name="provider" value="하나통신사"/>
+	</bean>
+	<bean id="userService" class="kr.co.jhta.di.service.step7.UserServiceImpl"/>
+	<bean id="eventService" class="kr.co.jhta.di.service.step7.EventNotificationServiceImpl">
+		<property name="from" value="하나로마트"/>
+		<property name="messageSender" ref="SmsSender"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+</beans>

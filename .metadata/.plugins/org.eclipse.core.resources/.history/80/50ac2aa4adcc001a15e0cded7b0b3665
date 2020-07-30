@@ -1,0 +1,15 @@
+package kr.co.jhta.step1;
+
+import org.springframework.context.annotation.Configuration;
+
+import kr.co.jhta.sender.KakaotalkMessageSender;
+
+@Configuration
+public class JavaConfig {
+
+	
+	public KakaotalkMessageSender kakao() {
+		return new KakaotalkMessageSender();
+	}
+	
+}

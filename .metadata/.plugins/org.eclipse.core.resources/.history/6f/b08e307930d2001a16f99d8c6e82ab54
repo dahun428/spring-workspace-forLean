@@ -1,0 +1,18 @@
+package kr.co.jhta.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import kr.co.jhta.vo.Board;
+
+public interface BoardService {
+
+	List<Board> getAllBoards();
+	void addNewBoard(Board board);
+	Board getBoardDetail(int boardNo);
+	void increaseBoardLikes(int boardNo);
+	void modifyBoardDetail(Board board);
+	void deleteBoard(int boardNo, String password);
+	
+}
