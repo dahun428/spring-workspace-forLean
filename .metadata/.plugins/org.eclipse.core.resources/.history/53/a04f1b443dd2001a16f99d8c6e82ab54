@@ -17,12 +17,6 @@
    		Spring Container는<context-param>태그에 정의된 
    		설정파일을읽어서 객체를 생성, 조립한다.
    		* ContextLoaderListener이 생성한 스프링 컨테이너는 
-   		root Spring Container가된다.
-   		* 루트 스프링 컨테이너에서 생성/조립된 개체는 자식 스프링 컨테이너
-   		(DispatcherServlet 이 생성한 스프링 컨테이너)에서
-  		참조할 수 있다.
-  		* 자식 스프링 컨테이너는 루트 스프링 컨테이너의 객체를 검색해서
-  		자식스프링 컨테이너가 생성한 객체에 조립시킬 수 있다. 		
    -->
   <context-param>
   	<param-name>contextConfigLocation</param-name>
