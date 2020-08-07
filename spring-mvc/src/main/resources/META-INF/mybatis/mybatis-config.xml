@@ -8,11 +8,24 @@
 </settings>
 <typeAliases>
 	<typeAlias type="kr.co.jhta.vo.Board" alias="Board"/>
+	<typeAlias type="kr.co.jhta.vo.Category" alias="Category"/>
+	<typeAlias type="kr.co.jhta.vo.Delivery" alias="Delivery"/>
+	<typeAlias type="kr.co.jhta.vo.Item" alias="Item"/>
+	<typeAlias type="kr.co.jhta.vo.Order" alias="Order"/>
+	<typeAlias type="kr.co.jhta.vo.Payment" alias="Payment"/>
+	<typeAlias type="kr.co.jhta.vo.Product" alias="Product"/>
+	<typeAlias type="kr.co.jhta.vo.User" alias="User"/>
+	<typeAlias type="kr.co.jhta.vo.UrlRole" alias="Roles"/>
 </typeAliases>
 
 
 <mappers>
 	<mapper resource="META-INF/mybatis/mappers/freeboards.xml"/>
+	<mapper resource="META-INF/mybatis/mappers/categories.xml"/>
+	<mapper resource="META-INF/mybatis/mappers/products.xml"/>
+	<mapper resource="META-INF/mybatis/mappers/orders.xml"/>
+	<mapper resource="META-INF/mybatis/mappers/roles.xml"/>
+	<mapper resource="META-INF/mybatis/mappers/users.xml"/>
 </mappers>
 
 </configuration>

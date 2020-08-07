@@ -1,0 +1,114 @@
+Spring MVC 구성요소
+	DispatcherServlet
+		* FrontController 역할을 수행한다.
+		* Servlet 클래스다.
+		* 클라이언트의 요청을 접수한다.
+		* 요청처리를 위해 HandlerMapping, HandlerAdapter,
+		  ViewResolver, View 객체 사용
+		* web.xml에  <servlet/>, <servlet-mapping/> 태그로 설정한다.
+		* Spring MVC 관련 주요 객체를 생성, 조립, 관리하는 스프링 컨테이너를 생성한다.
+	HandlerMapping 인터페이스
+		* 요청 URL에 대응되는 컨트롤러 혹은 요청 핸들러 메소드 정보를 제공하는 객체다.
+		* RequestMappingHandlerMapping 객체가 기본 구현 객체로 사용된다.
+	HandlerAdapter 인터페이스
+		* 클라이언트의 요청을 처리하는 컨트롤러를 실행하는 기능이 정의된 인터페이스다.
+		* RequestMappingHnadlerMapping 객체가 기본 구현객체로 사용된다.
+		* Spring MVC에서 클라이언트의 요청 처리하는 컨트롤러를 위한 다양한 작업을 수행한다.
+			(요청 파라미터 처리, 유효성 체크, 파일 업로드 처리 등)
+	ViewResolver 인터페이스
+		* 뷰 이름을 분석해서 적절한 뷰 객체를 반환하는 기능이 정의된 인터페이스다.
+		* InterResourceViewResolver 객체가 기본 구현객체로 사용된다.
+		* ViewResolver는 컨트롤러 실행 후 반환되는 ModelAndView객체에 
+		  View객체가 존재하지 않을 때만 실행된다.
+		* InterResourceViewResolver 객체는 JSP 기반의 HTML 응답을 제공하는
+		  웹 애플리케이션에서 기본적으로 사용하는 ViewResolver 객체다.
+		* InterResourceViewResolver 객체는 컨트롤러가 반환하는 뷰 이름에
+		  JSP 페이지의 경로와 이름이 지정되어 있으면 해당 JSP로 내부이동시키는 기능이 구현된
+		  InternalResouceView객체를 반환하고, 뷰 이름이 redirce:로 시작하면
+		     해당 URL 재요청 응답을 보내는 RedirectView 객체를 반환한다.
+		* InternalViewResolver, InternalResourceView, RedirectView는
+		  스프링이 제공하는 객체다.
+	View 인터페이스
+		* Model에 저장된 데이터를 특정한 타입의 응답컨텐츠로 변환하는 기능이 정의된 인터페이스다.
+		* DispatcherServlet 는 클라이언트에게 최종적인 응답을 보낼 때 항상 View 객체의
+		    기능을 실행시켜서 응답을 보낸다.
+		* View 인터페이스는 다양한 구현객체가 존재하고, 사용자 정의 구현객체를 생성할 수 있다.
+		* HTML 응답 : InternalResourceView, JsltView
+		    재요청URL 응답 : RedirectView
+		 엑셀 응답 : AbstractExcelView , AbstractJExcelView를 구현한 객체
+		 pdf 응답 : AbstractPdfView를 구현한 객체
+		 json 응답 : AbstractJackson2View를 구현한 객체
+	
+	Sprinb mvc 의 파일 업로드
+		* pom.xml에 라이브러리 의존성 추가
+			commons-fileupload
+		* spring bean configuration 파일에 MultipartResolver 빈 등록하기
+			<bean id="multipartResolver" class="CommonsMultipartResolver">
+			</bean>
+		* maxUploadSize, maxUploadSizePerFile, uploadTempDir 등의 프로터티를 설정할 수 있다.
+		* xxForm 객체에 MultipartFile 필드 추가하기
+			<input type="file" name="upfile"/>이면
+			//입력 폼값을 저장하는 xxForm 객체에 MultipartFile 타입의 변수 선언
+			(변수명은 입력폼의 name 속성의 값과 동일한 이름으로 지정한다.)
+			public class xxForm{
+				private MultipartFile upfile;
+				//getter, setter 추가
+			}	
+		* 첨부파일을 저장할 폴더 생성
+			c:/files/free-board
+		* WEB-INF/spring/mvc.properties 파일 생성
+			directory.save.freeboard=c:/files/free-board
+		* context-mvc.xml에서 mvc.properties 파일 읽기
+			<context:property-placeholder location="/WEB-INF/spring/mvc.properties />"
+		* 파일 업로드 요청을 처리하는 컨트롤러 구현하기
+			@Controller
+			public class FreeBoardController{
+				// 첨부파일을 저장할 경로를 주입받기
+				@Value("${directory.save.freeboard}")
+				String saveDirectory;
+				// 첨부파일을 지정된 폴더에 저장하기
+				MultipartFile upfile = xxxForm.getUpfile();
+				if(!upfile.isEmpty()){ // MultipartFile 객체에 첨부파일이 존재하는지 확인하기
+					
+					// 첨부파일 이름 조회하기
+					String filename = upfile.getOriginalFilename();
+					// 첨부 파일을 저장할 디렉토리와 파일명을 가진 File 객체 생성하기
+					File file = new File(saveDirectory, filename);
+					// 서버로 업로드된 첨부파일을 지정된 곳에 복사하기
+					FileCopyUtils.copy(upfile.getBytes(), file); //1번방법
+					FileCopyUtils.copy(upfile.getInputStream(), new FileOutputStream(file)) // 2번방법
+				
+				
+					//첨부파일명을 DB에 저장하기 위해서 VO 객체에 담기
+					vo.setFilename(filename);
+				}
+				xxxService.addXXX(vo);	
+			}				
+			
+			
+컨트롤러의 요청 핸들러 메소드에서 사용가능한 반환값과 매개변수
+	- 매개변수
+		Model, ModelMap		- 뷰에 전달한 데이터를 저장하는 객체
+		RedirectAttributes	- 리다이렉트 경로에 추가할 쿼리 스트링값을 저장하는 객체
+		BindingResult	- 유효성 검증 결과가 바인딩
+		SessionStatus	- @SessionAttributes 로 세션에 저장된 값을 클리어
+		HttpServletRequest, httpServletResponse, HttpSession
+		@RequestParam	- 요청파라미터의 이름을 지정
+		@PathVariable	- 요청URI 경로의 파라미터값과 바인딩
+		@ModelAttribute	- Model 에 지정된 이름으로객체를 저장
+		@Valid			- 유효성 검증
+		@RequestBody	- 요청메시지의 Body의 내용과 바인딩
+		
+		기본자료형			-요청파라미터 값이 바인딩
+		사용자정의 클래스		-요청파라미터 값이 바인딩
+		
+		
+	- 반환값
+		String			- 뷰의 이름 (JSP 페이지 이
+		사용자정의 클래스		- JSON, XML 응답
+		HttpEntity<?>	- 응답메시지의 헤더, 바디에 
+		
+	
+		
+			
+	

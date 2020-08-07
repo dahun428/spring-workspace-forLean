@@ -1,0 +1,11 @@
+package kr.co.jhta.form;
+
+public class OrderForm {
+
+	//주문정보관련
+	private String username;
+	private String usertel;
+	
+	
+	
+}

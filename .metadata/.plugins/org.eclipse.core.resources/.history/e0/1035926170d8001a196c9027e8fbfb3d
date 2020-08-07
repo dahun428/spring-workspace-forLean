@@ -1,0 +1,8 @@
+package kr.co.jhta.web;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping("json")
+public class JSONController {
+
+}

@@ -1,0 +1,16 @@
+$(function(){
+	
+	//입력 폼에서 submit 이벤트 발생시 실행할 이벤트 핸들러 함수 등록해두기
+	$('#form-board').submit(function(){
+		
+		var $title = $('#add-title');
+		var $writer = $('#add-writer');		
+		var $pwd = $('#add-password');
+		
+		if(!$title){
+			$title.css('border','red').attr('placeholder','비밀번호를 입력하세요');
+			return;
+		}
+		
+	});
+})

@@ -1,0 +1,10 @@
+package kr.co.jhta.form;
+
+public class BoardForm {
+
+	private String title;
+	private String writer;
+	private String content;
+	private String password;
+
+}

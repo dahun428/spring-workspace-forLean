@@ -11,3 +11,5 @@
 1596093492530	Rename method 'getDetelted'
 1596093501917	Rename method 'setDetelted'
 1596093727838	Rename method 'BoardCheckFuncForNullOrDiffPassword'
+1596157896575	Delete elements
+1596157902481	Rename resource 'bootstrap-4.5.0-dist'

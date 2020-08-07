@@ -1,0 +1,76 @@
+package kr.co.jhta.vo;
+
+import java.util.Date;
+
+public class Order {
+/**
+ * 
+create table spring_orders(
+    order_no number(10) primary key,
+    order_username varchar2(100) not null,
+    order_tel varchar2(20) not null,
+    order_status varchar2(100) default '결제완료',
+    order_created_date date default sysdate
+    );
+    
+ * 
+ */
+	
+	private long no;
+	private String username;
+	private String tel;
+	private String status;
+	private Date createdDate;
+	
+	public Order() {
+		// TODO Auto-generated constructor stub
+	}
+
+	long getNo() {
+		return no;
+	}
+
+	void setNo(long no) {
+		this.no = no;
+	}
+
+	String getUsername() {
+		return username;
+	}
+
+	void setUsername(String username) {
+		this.username = username;
+	}
+
+	String getTel() {
+		return tel;
+	}
+
+	void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	String getStatus() {
+		return status;
+	}
+
+	void setStatus(String status) {
+		this.status = status;
+	}
+
+	Date getCreatedDate() {
+		return createdDate;
+	}
+
+	void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [no=" + no + ", username=" + username + ", tel=" + tel + ", status=" + status + ", createdDate="
+				+ createdDate + "]";
+	}
+	
+	
+}

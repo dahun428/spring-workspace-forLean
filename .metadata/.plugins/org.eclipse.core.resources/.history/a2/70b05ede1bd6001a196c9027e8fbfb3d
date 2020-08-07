@@ -1,0 +1,43 @@
+package kr.co.jhta.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.co.jhta.service.OrderService;
+
+@Controller
+@RequestMapping("/order")
+public class OrderController {
+
+	@Autowired
+	private OrderService orderService;
+	
+	@GetMapping("/step1.do")
+	public String step1() {
+		
+		
+		return "redirect:step2.do";
+	}
+	@PostMapping("/step2.do")
+	public String step2() {
+		
+		
+		return "redirect:step3.do";
+	}
+	@PostMapping("/step3.do")
+	public String step3() {
+		
+		
+		return "redirect:step4.do";
+	}
+	@PostMapping("/step4.do")
+	public String step4() {
+		
+		
+		return "redirect:completed.do";
+	}
+	
+}

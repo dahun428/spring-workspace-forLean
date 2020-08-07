@@ -1,8 +1,0 @@
-package kr.co.jhta.service;
-
-public class EventServiceImpl implements EventService{
-
-
-	public void send(String dept, String subject, String content) {
-	}
-}

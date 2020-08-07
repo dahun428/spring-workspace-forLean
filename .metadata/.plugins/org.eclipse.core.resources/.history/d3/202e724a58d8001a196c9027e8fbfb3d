@@ -1,0 +1,22 @@
+package kr.co.jhta.intercepter;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+//인증된 사용자가 해당 페이지에대한 접근권한을 가지고 있는지 체크한다.
+public class AuthorizationIntercepter extends HandlerInterceptorAdapter{
+	
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		
+		List<String> reqRoles = (List<String>) request.getAttribute("roles");
+		
+		
+		return true;
+	}
+	
+}

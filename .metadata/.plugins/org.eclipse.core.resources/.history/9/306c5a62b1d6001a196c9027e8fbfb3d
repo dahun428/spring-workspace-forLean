@@ -1,0 +1,76 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/resources\bootstrap\css\bootstrap.css">
+
+<title>쇼핑몰</title>
+</head>
+<body>
+<div class="container mt-3 mb-5">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+			<form action="step2.do" method="post">
+			
+				<div class="card-header">구매상품</div>
+				<div class="card-body">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<th>상품이름</th>
+								<td>${orderForm.productName }</td>
+							</tr>
+							<tr>
+								<th>상품가격</th>
+								<td><fmt:formatNumber value="${orderForm.productPrice }"/> 원</td>
+							</tr>
+							<tr>
+								<th>상품 할인 가격</th>
+								<td><fmt:formatNumber value="${orderForm.productDiscountPrice }" /> 원</td>
+							</tr>
+							<tr>
+								<th>구매자이름</th>
+								<td>${orderForm.username }</td>
+							</tr>
+							<tr>
+								<th>구매자연락처</th>
+								<td>${orderForm.usertel }</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label for="">결제방법</label>
+						<input type="text" name="payType" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="">계좌 혹은 카드번호</label>
+						<input type="text" name="payAccount"  class="form-control" />
+					</div>
+					<div class="card-footer text-right">
+						<button type="submit" class="btn btn-primary"> 다음</button>
+					</div>
+					
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+	<script type="text/javascript" src="/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/resources/jquery/custom.js"></script>
+
+</body>
+</html>

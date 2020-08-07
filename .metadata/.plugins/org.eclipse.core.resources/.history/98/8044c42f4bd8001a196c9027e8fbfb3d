@@ -1,0 +1,6 @@
+package kr.co.jhta.intercepter;
+
+//인증된 사용자가 해당 페이지에대한 접근권한을 가지고 있는지 체크한다.
+public class AuthorizationIntercepter {
+
+}

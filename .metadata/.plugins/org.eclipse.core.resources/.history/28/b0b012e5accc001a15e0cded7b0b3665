@@ -1,6 +1,0 @@
-package kr.co.jhta.service;
-
-public interface EventService {
-
-	void send(String dept, string subject, String content);
-}

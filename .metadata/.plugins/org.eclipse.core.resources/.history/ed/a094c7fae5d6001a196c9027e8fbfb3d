@@ -1,0 +1,12 @@
+package kr.co.jhta.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kr.co.jhta.dao.UserDao;
+
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	private UserDao userDao;
+	
+}

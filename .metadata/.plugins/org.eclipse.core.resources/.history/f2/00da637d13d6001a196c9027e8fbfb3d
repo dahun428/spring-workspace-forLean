@@ -1,0 +1,87 @@
+package kr.co.jhta.vo;
+
+public class OrderItem {
+
+	/*
+	 * 
+    create table spring_order_items(
+        item_no number(10) primary key,
+        order_no number(10) references spring_orders (order_no),
+        product_no number(10) references spring_products(product_no),
+        item_price number(10) not null,
+        order_point number(10) not null,
+        item_amount number(5) not null
+    );
+	 * 
+	 * 
+	 */
+	
+	private String no;
+	private Order order;
+	private Product product;
+	private long price;
+	private long orderPoint;
+	private long amount;
+	
+	public OrderItem() {
+		// TODO Auto-generated constructor stub
+	}
+
+	String getNo() {
+		return no;
+	}
+
+	void setNo(String no) {
+		this.no = no;
+	}
+
+	Order getOrder() {
+		return order;
+	}
+
+	void setOrder(Order order) {
+		this.order = order;
+	}
+
+	Product getProduct() {
+		return product;
+	}
+
+	void setProduct(Product product) {
+		this.product = product;
+	}
+
+	long getPrice() {
+		return price;
+	}
+
+	void setPrice(long price) {
+		this.price = price;
+	}
+
+	long getOrderPoint() {
+		return orderPoint;
+	}
+
+	void setOrderPoint(long orderPoint) {
+		this.orderPoint = orderPoint;
+	}
+
+	long getAmount() {
+		return amount;
+	}
+
+	void setAmount(long amount) {
+		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderItem [no=" + no + ", order=" + order + ", product=" + product + ", price=" + price
+				+ ", orderPoint=" + orderPoint + ", amount=" + amount + "]";
+	}
+	
+	
+	
+	
+}

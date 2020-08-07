@@ -1,0 +1,28 @@
+package kr.co.jhta.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kr.co.jhta.dao.OrderDao;
+import kr.co.jhta.dao.ProductDao;
+import kr.co.jhta.vo.Delivery;
+import kr.co.jhta.vo.Item;
+import kr.co.jhta.vo.Order;
+import kr.co.jhta.vo.Payment;
+
+public class OrderServiceImpl implements OrderService{
+
+	@Autowired
+	private OrderDao orderDao;
+	@Autowired
+	private ProductDao productDao;
+	
+	public void order(Order order, Item item, Payment payment, Delivery delivery) {
+
+		//1. 주문정보 저장하기
+		orderDao.insertOrder(order);
+		
+		//2. 주문 상품 저장하기
+		
+		
+	}
+}

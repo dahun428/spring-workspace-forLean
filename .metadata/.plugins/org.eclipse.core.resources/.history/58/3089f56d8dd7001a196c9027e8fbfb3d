@@ -1,0 +1,15 @@
+package kr.co.jhta.resolver;
+
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+
+
+/*
+ * HandlerMethodArgumentResolver
+ * 	- 요청 핸들러 메소드의 매개변수를 분석하는 객체가 구현하는 인터페이스다.
+ * 
+ */
+public class UserArgumentResolver implements HandlerMethodArgumentResolver{
+
+	
+	
+}

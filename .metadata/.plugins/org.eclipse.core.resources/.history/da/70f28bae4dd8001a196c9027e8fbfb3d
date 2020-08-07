@@ -1,0 +1,19 @@
+package kr.co.jhta.intercepter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+// 이증 여부를 체크하는 인터셉터
+// 이미 가입을 했고, 정상적인 로그인 과정을 
+public class AuthenticationIntercepter extends HandlerInterceptorAdapter{
+
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+
+		return super.preHandle(request, response, handler);
+	}
+	
+}

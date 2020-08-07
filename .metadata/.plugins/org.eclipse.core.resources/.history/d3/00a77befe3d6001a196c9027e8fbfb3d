@@ -1,0 +1,15 @@
+package kr.co.jhta.vo;
+
+import java.util.Date;
+
+public class User {
+
+	private String id;
+	private String name;
+	private String password;
+	private String email;
+	private String tel;
+	private int age;
+	private Date birth;
+	private Date createDate;
+}

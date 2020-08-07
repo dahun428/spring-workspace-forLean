@@ -1,0 +1,22 @@
+package kr.co.jhta.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import kr.co.jhta.form.LoginForm;
+
+@Controller
+public class SignInOutController {
+
+	
+	@GetMapping("/signin.do")
+	public String signIn(Model model) {
+		
+		LoginForm loginForm = new LoginForm();
+		model.addAttribute("loginForm", loginForm);
+		
+		return "";
+	}
+	
+}

@@ -1,0 +1,31 @@
+package kr.co.jhta.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.co.jhta.service.ProductService;
+import kr.co.jhta.vo.Category;
+import kr.co.jhta.vo.Product;
+
+@Controller
+@RequestMapping("/product")
+public class ProductController {
+
+	@Autowired
+	private ProductService productService;
+	
+	@RequestMapping("/list.do")
+	public String products(Model model) {
+		
+		List<Category> categories = productService.getAllCategories();
+		List<Product> products = productService.getAllProducts();
+		
+		return "product/list";
+	}
+	
+	
+}

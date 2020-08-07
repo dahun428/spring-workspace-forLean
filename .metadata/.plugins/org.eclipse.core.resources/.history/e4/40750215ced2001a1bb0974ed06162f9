@@ -1,0 +1,39 @@
+package kr.co.jhta.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.co.jhta.service.BoardService;
+import kr.co.jhta.vo.Board;
+
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+
+	@Autowired
+	private BoardService boardService;
+	
+	@RequestMapping("/list.do")
+	public String boardList(Model model) {
+
+		//게시글 전체조회
+		List<Board> boardList = boardService.getAllBoards();
+		// 조회된 게시글을  Model 에 담아서 View 페이지에 전달하기
+		model.addAttribute("boards", boardList);
+		//내부 이동할 JSP 페이지의경로및 이름 반환
+		return "board/list";
+	}
+	@RequestMapping("/form.do")
+	public String form() {
+		return "board/form";
+	}
+	@RequestMapping("/add.do")
+	public String addBoard() {
+		return "redirect:list.do";
+	}
+	
+}

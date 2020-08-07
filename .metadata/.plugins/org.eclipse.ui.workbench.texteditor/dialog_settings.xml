@@ -6,6 +6,7 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="maven-com"/>
 			<item value="getBlogByNo"/>
 			<item value="&#x09;&lt;construct-arg name=&quot;password&quot; value=&quot;zcv1234&quot;&gt;&lt;/construct-arg&gt;"/>
 		</list>

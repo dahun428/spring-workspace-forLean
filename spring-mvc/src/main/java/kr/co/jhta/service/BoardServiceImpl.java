@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.dao.BoardDao;
 import kr.co.jhta.vo.Board;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
@@ -20,7 +22,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 	public void deleteBoard(long boardNo, String password) {
 		Board savedBoard = boardDao.selectBoard(boardNo);
-		BoardCheckFuncForNullOrDiffPasswordIncreaseException(savedBoard);
+
+		if(savedBoard == null) {
+			throw new RuntimeException("["+boardNo+"]번 게시글이 없습니다.");
+		}
+		if(!password.equals(savedBoard.getPassword())) {
+			throw new RuntimeException("게시글의 비밀번호가 일치하지 않습니다.");
+		}
 		savedBoard.setDeleted("Y");
 		savedBoard.setDeletedDate(new Date());
 		boardDao.updateBoard(savedBoard);

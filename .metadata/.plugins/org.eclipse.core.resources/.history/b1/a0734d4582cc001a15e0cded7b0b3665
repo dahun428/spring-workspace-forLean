@@ -1,8 +1,0 @@
-package kr.co.jhta.di.step1;
-
-public class SmsMessageSender implements MessageSender{
-
-	public void send(String from, String to, String subject, String content) {
-		
-	}
-}
