@@ -26,11 +26,13 @@
 		<typeAlias type="com.sample.web.view.PerformanceSeatPrice" alias="PerformanceSeatPrice"/>
 		<typeAlias type="com.sample.dto.PerformanceDto" alias="PerformanceDto"/>
 		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
+		<typeAlias type="com.sample.dto.MypageLastestReserveDto" alias="LastestPerformance"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="META-INF/mybatis/mappers/users.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/performances.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/notices.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/mates.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/reserve.xml"/>
 	</mappers>
 </configuration>

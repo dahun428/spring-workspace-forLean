@@ -73,6 +73,15 @@ public class MateServiceImpl implements MateService {
 	@Override
 	public void addMateMember(int mateId, User newMember) {
 		// TODO Auto-generated method stub
+		// 해당 방이 있는지 조회한다.
+//		-- SELECT * FROM mate_main WHERE id = 6;
+		// 해당 유저가 결제했는지 여부를 조회한다.
+		// reserve_main 테이블에서 해당 회차에  예약 여부를 조회한다.
+		// 
+		// 해당 메이트방 제한 인원을 조회한다.
+		// 제한 인원 미만이면  insert 한다.
+//		-- insert into mate_members (userid, id) values ('dahun427', 6)
+		
 		
 	}
 	
