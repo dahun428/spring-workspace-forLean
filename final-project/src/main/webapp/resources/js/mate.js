@@ -23,11 +23,14 @@ $(function(){
 			
 			//mateTag정보
 			var mateTags = data.mate.mateTags;
-			var mateTagName = '';
-			for(var i in mateTags){
-				mateTagName += mateTags[i].tagName;
-				if(i < mateTags.length - 1){
-					mateTagName += ', ';
+			if(!mateTags){
+				
+				var mateTagName = '';
+				for(var i in mateTags){
+					mateTagName += mateTags[i].tagName;
+					if(i < mateTags.length - 1){
+						mateTagName += ', ';
+					}
 				}
 			}
 			console.log(mateTagName);
@@ -235,6 +238,8 @@ $(function(){
 			//catChange($mCat.val());
 			//$('#mCat').val(mateCatId).prop("selected",true);
 		});
+		
+		
 })
 
 

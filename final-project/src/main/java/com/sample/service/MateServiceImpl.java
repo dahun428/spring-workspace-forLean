@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sample.dao.MateDao;
+import com.sample.dao.PaymentDao;
+import com.sample.dao.ReserveDao;
 import com.sample.dao.UserDao;
 import com.sample.dto.MateDetailDto;
 import com.sample.web.view.Mate;
@@ -27,6 +29,12 @@ public class MateServiceImpl implements MateService {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	PaymentDao paymentDao;
+	
+	@Autowired
+	ReserveDao reserveDao;
 
 	/**
 	 * 특정 메이트 방에 해시태그를 등록하는 서비스 기능
@@ -91,7 +99,11 @@ public class MateServiceImpl implements MateService {
 		
 	}
 	
-	@Override
+	/**
+     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
+     * @param performanceId
+     * @return
+     */
 	public List<Mate> getMatesByPerformanceId(int performanceId) {
 		
 		return mateDao.getMatesByPerformanceId(performanceId);

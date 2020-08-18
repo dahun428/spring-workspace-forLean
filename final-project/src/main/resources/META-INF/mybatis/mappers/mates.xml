@@ -248,5 +248,10 @@ WHERE mmain.id = 1;
 		WHERE id = #{mateId}
 	</update>
 
+<!-- mate add 관련 query -->
+
+
+
+
 
 </mapper>

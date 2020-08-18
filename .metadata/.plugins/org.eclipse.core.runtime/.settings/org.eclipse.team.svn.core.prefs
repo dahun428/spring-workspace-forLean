@@ -2,3 +2,4 @@ eclipse.preferences.version=1
 externalMigrateFromAuthorizationDatabase/isMigrated=true
 migrateFromAuthorizationDatabase/isMigrated=true
 repositories/10a3947bb1cb001a1608d05d886dd976=10a3947bb1cb001a1608d05d886dd976;https\://localhost/svn/lecture/spring-pom;https\://localhost/svn/lecture/spring-pom;branches;tags;trunk;true;;;;false;;;0
+repositories/30cfd30c5ce1001a19c7d8da6faf1618=30cfd30c5ce1001a19c7d8da6faf1618;https\://192.168.10.65/svn/repo2/final-project;https\://192.168.10.65/svn/repo2/final-project;branches;tags;trunk;true;;;;false;;;0

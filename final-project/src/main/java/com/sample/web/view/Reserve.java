@@ -66,6 +66,12 @@ public class Reserve {
     public void setMate(Mate mate) {
         this.mate = mate;
     }
+
+	@Override
+	public String toString() {
+		return "Reserve [id=" + id + ", reserveUser=" + reserveUser + ", performance=" + performance + ", regDate="
+				+ regDate + ", status=" + status + ", receiveType=" + receiveType + ", mate=" + mate + "]";
+	}
     
 
 }

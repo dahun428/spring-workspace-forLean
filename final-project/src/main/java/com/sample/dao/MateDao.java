@@ -15,7 +15,6 @@ import com.sample.web.view.User;
 
 public interface MateDao {
     void insertMate(Mate mate);
-    Mate getMateById(int mateId);
     List<MateTimeLine> getTimelinesByMateId(int mateId);
     List<Mate> getMatesByPerformanceId(int performanceId);
     List<Mate> getOldMates();
@@ -138,6 +137,5 @@ public interface MateDao {
     
     void updateMateCategoryByMateId(@Param("catId") int categoryId
     		, @Param("mateId") int mateId);
-    
     
 }

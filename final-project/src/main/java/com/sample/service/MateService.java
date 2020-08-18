@@ -11,12 +11,17 @@ import com.sample.web.view.User;
 
 public interface MateService {
     void addMate(Mate mate);
-    List<Mate> getMatesByPerformanceId(int performanceId);
     void insertMateTimeLine(int mateId, MateTimeLine mateTimeLine);
     List<MateTag> addHashTag(int mateId, List<String> mateTags);
     void addMateMember(int mateId, User newMember);
     void changeCategory(int mateId, String category);
     
+    /**
+     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
+     * @param performanceId
+     * @return
+     */
+    List<Mate> getMatesByPerformanceId(int performanceId);
     /**
      * mate_main 테이블, mate_category 테이블에서
      * mate_category의 id, category(name) 값을 모두 가져온다.

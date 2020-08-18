@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sample.dto.MateDetailDto;
+import com.sample.dto.PerformanceDto;
 import com.sample.service.MateService;
+import com.sample.service.PerformanceService;
+import com.sample.service.ReserveService;
 import com.sample.web.security.Auth;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
 import com.sample.web.view.MateTimeLine;
+import com.sample.web.view.Reserve;
 import com.sample.web.view.User;
 
 @Controller
@@ -31,6 +35,10 @@ public class MateController {
 
 	@Autowired
 	MateService mateService;
+	@Autowired
+	PerformanceService performanceService;
+	@Autowired
+	ReserveService reserveService;
 	
 	/**
 	 * matelist 페이지에서 '참가'버튼을 클릭하면 해당 방으로 입장가능하다.
@@ -65,10 +73,19 @@ public class MateController {
 		 * 해당 아이디가 접근 권한이 있는지 체크하기
 		 * 유저가 특정 공연을 결제를 완료했으면 접근가능
 		 */
-		//User user = (User) session.getAttribute("LOGIN_USER");
-		//if(user == null) {
-		//	return "redirect:/home.do";
-		//}
+		User user = (User) session.getAttribute("LOGIN_USER");
+		
+		PerformanceDto performance = performanceService.getPerformanceByPerformanceMainId(performanceId);
+		if(performance == null) {
+			return "redirect:/home.do";
+		}
+		
+//		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+//		if(reserve == null) {
+//			return "redirect:/home.do";
+//		}
+//		
+		
 		List<Mate> mates = mateService.getMatesByPerformanceId(performanceId);
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
@@ -79,11 +96,11 @@ public class MateController {
 		
 		return "mate/matelist";
 	}
-//	@GetMapping("/jsonmate.do")
-//	public @ResponseBody List<Mate> jsonMate(@RequestParam("pid") int performanceId){
-//		
-//		return mateService.getMatesByPerformanceId(performanceId);
-//	}
+	@GetMapping("/jsonmate.do")
+	public @ResponseBody List<Mate> jsonMate(@RequestParam("pid") int performanceId){
+		
+		return mateService.getMatesByPerformanceId(performanceId);
+	}
 	/**
 	 * 해당 방의 정보를 ajax 데이터와 연결하여 불러온다.
 	 * @param performanceId 
@@ -189,6 +206,31 @@ public class MateController {
 		return categoryId;
 	}
 	
+	//해당 공연을 예약한 유저가 해당 메이트방 참가 신청을하면 더하는 것
+	@Auth
+	@RequestMapping("/addMate.do")
+	public String addMate(@RequestParam("pid") int performanceId,
+					@RequestParam("mnum") int mateId, HttpSession session, Model model) {
+		
+		User user = (User) session.getAttribute("LOGIN_USER");
+
+	//	Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+	//	if(reserve == null) {
+	//		return "redirect:/home.do";
+	//	}
+		
+		model.addAttribute("mnum",mateId);
+		model.addAttribute("pid", performanceId);
+		
+		return "redirect:matedetail.do";
+	}
+	@Auth
+	@RequestMapping("/beforeAddMate.do")
+	public @ResponseBody int beforeAddMate(@RequestParam("pid") int performanceId,
+			@RequestParam("mnum") int mateId) {
+		//로직
+		return 0;
+	}
 	
 	
 }

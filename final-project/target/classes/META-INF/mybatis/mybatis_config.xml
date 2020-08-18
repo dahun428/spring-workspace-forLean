@@ -34,5 +34,6 @@
 		<mapper resource="META-INF/mybatis/mappers/notices.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/mates.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/reserve.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/payments.xml"/>
 	</mappers>
 </configuration>

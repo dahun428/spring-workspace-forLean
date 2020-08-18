@@ -58,5 +58,12 @@ public class Payment {
         this.usedPoint = usedPoint;
     }
 
+	@Override
+	public String toString() {
+		return "Payment [id=" + id + ", reserve=" + reserve + ", pay=" + pay + ", method=" + method + ", regDate="
+				+ regDate + ", usedPoint=" + usedPoint + "]";
+	}
+
+    
     
 }
