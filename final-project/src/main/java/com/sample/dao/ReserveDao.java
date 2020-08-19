@@ -25,4 +25,25 @@ public interface ReserveDao {
     Reserve getReserveByUserIdAndPerformanceId(
     		@Param("userId") String userId,
     		@Param("performanceId") int performanceId);
+<<<<<<< HEAD
+    
+    /**
+     * performanceId와 userId를 입력받아 Reserve객체를 한개 반환받는다.
+     * user가 메이트 방에 참여하지 않아, mateId가  null 일경우 null을 반환받는다.
+     * mateid 와 Reserve id를 조인함
+     * @param performanceId
+     * @param userId
+     * @return null or Reserve 객체
+     */
+    Reserve getReservedMateByPerformanceIdAndUserId(@Param("performanceId") int performanceId,
+    		@Param("userId") String userId);
+    
+    /**
+     * Reserve 테이블을 업데이트한다.
+     * @param reserve
+     */
+    void updateReserve(Reserve reserve);
+    
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }

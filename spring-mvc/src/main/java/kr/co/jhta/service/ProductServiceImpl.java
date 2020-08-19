@@ -20,8 +20,12 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public void addNewProduct(Product product) {
+	public Product addNewProduct(Product product) {
 		productDao.insertProduct(product);
+		
+		//inesrt 작업 완료후 product의 no에 저장된 상품번호로 저장된 상품 상세 정보 조회
+		Product savedProduct = productDao.getProductByNo(product.getNo());
+		return savedProduct;
 	}
 	
 	public List<Category> getAllCategories() {

@@ -11,6 +11,34 @@ $(function(){
 		//이미 메이트가 있는 회원입니다.
 		//결제되지 않은 회원입니다.
 		//location.href = 'addMate.do?mnum=mnum&pid=pid'
+<<<<<<< HEAD
+			
+			
+			$.ajax({
+				type:'POST',
+				url:'/mate/beforeAddMate.do',
+				data:{
+					"mnum":mnum,
+					"pid":pid
+				},
+				success:function(data){
+					console.log(data);
+					var type = data.type;
+					var message = data.message;
+					if(type == 0){
+						alert(message);
+						return;
+					} 
+					var con = confirm("정말 해당 방에 참여하시겠습니까? 예약되면 돌이킬 수 없습니다.");
+					if(con){
+						console.log(1);
+						location.href = '/mate/addMateMember.do?pid='+pid+'&mnum='+mnum;
+					}
+					
+				}
+			
+			})
+=======
 //			$.ajax({
 //				type:'POST',
 //				url:'/mate/beforeAddMate.do',
@@ -23,5 +51,6 @@ $(function(){
 //				}
 //			
 //			})
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		});
 })

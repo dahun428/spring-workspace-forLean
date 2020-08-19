@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import kr.co.jhta.form.ProdctForm;
+import kr.co.jhta.form.ProductForm;
 import kr.co.jhta.service.ProductService;
 import kr.co.jhta.vo.Category;
 import kr.co.jhta.vo.Product;
@@ -61,7 +61,7 @@ public class ProductController {
 		return "product/form";
 	}
 	@PostMapping("/add.do")
-	public String addProduct(ProdctForm productForm) {
+	public String addProduct(ProductForm productForm) {
 		
 		Product product = new Product();
 		BeanUtils.copyProperties(productForm, product);

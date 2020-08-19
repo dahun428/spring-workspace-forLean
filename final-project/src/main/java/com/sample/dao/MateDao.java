@@ -16,6 +16,11 @@ import com.sample.web.view.User;
 public interface MateDao {
     void insertMate(Mate mate);
     List<MateTimeLine> getTimelinesByMateId(int mateId);
+    /**
+     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
+     * @param performanceId
+     * @return
+     */
     List<Mate> getMatesByPerformanceId(int performanceId);
     List<Mate> getOldMates();
     
@@ -135,7 +140,34 @@ public interface MateDao {
      */
     void deleteMateTagAllByMateId(int mateId);
     
+    /**
+     * mateId에 해당하는 categoryId를 업데이트 한다.
+     * @param categoryId
+     * @param mateId
+     */
     void updateMateCategoryByMateId(@Param("catId") int categoryId
     		, @Param("mateId") int mateId);
     
+<<<<<<< HEAD
+    /**
+     * mateId와 performanceId 에 해당하는 Mate 방의 member의 총 멤버 숫자를 구한다.
+     * @param mateId
+     * @param performanceId
+     * @return int Count
+     */
+    Integer getMateMemberCountInMateByMateId(@Param("mateId") int mateId
+    			, @Param("performanceId") int performanceId);  
+    
+    /**
+     * userId와 mateId를 받아서 해당 메이트 방에 해당 회원을 참여시킨다.
+     * @param userId
+     * @param mateId
+     */
+    void insertMateMember(@Param("userId") String userId, @Param("mateId") int mateId);
+    
+    User getMateUserByMateIdAndUserId(@Param("userId") String userId, @Param("mateId") int mateId);
+    
+    
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }

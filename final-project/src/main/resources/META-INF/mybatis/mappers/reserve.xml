@@ -41,8 +41,13 @@
 	<select id="getReserveByUserIdAndPerformanceId" resultType="Reserve">
 			SELECT
 				rmain.id, 
+<<<<<<< HEAD
+				rmain.reserveUser 			as "reserveUser.id", 
+				rmain.performanceId 		as "performance.id", 
+=======
 				rmain.reserveUser 			as "user.id", 
 				rmain.performanceId, 
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 				rmain.regDate, 
 				rmain.`status`, 
 				rmain.receiveType, 
@@ -51,7 +56,34 @@
 			WHERE rmain.performanceId = #{performanceId}
 			AND rmain.reserveUser = #{userId}
 	</select>
+<<<<<<< HEAD
+	<select id="getReservedMateByPerformanceIdAndUserId" resultType="Reserve">
+		SELECT 
+				rmain.id,
+				rmain.reserveUser 			as "reserveUser.id",  
+				rmain.performanceId 		as "performance.id", 
+				rmain.regDate, 
+				rmain.`status`, 
+				rmain.receiveType, 
+				rmain.mateId 				as "mate.id"
+			FROM reserve_main rmain
+			JOIN mate_main mmain ON mmain.id = rmain.mateId
+			WHERE rmain.reserveUser = #{userId}
+			AND rmain.performanceId = #{performanceId}
+	</select>
+	<update id="updateReserve" parameterType="Reserve">
+			UPDATE reserve_main rmain
+				SET 
+					 rmain.performanceId = #{performance.id},
+					 rmain.`status` = #{status},
+					 rmain.receiveType = #{receiveType},
+					 rmain.mateId = #{mate.id}
+				WHERE rmain.id = #{id}
+				AND rmain.reserveUser = #{reserveUser.id}
+	</update>
+=======
 	
 	
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	
 </mapper>

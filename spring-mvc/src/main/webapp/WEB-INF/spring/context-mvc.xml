@@ -36,6 +36,7 @@
 		대상 스프링의 정적리소스를 서비스하는 서블릿 요청을 해결한다. -->
 	<mvc:resources location="/resources/"
 		mapping="/resources/**" />
+	<mvc:resources location="/" mapping="/*.html" />	
 
 	<!-- 인터셉터를 스프링의 빈으로 등록 -->
 	<bean id="authenticationIntercepter"

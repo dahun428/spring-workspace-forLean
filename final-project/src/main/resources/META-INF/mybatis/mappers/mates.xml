@@ -247,11 +247,36 @@ WHERE mmain.id = 1;
 			SET category = #{catId}
 		WHERE id = #{mateId}
 	</update>
+	
+	<!--  해당 메이트방의 멤버의 숫자를 구한다.-->
+	<select id="getMateMemberCountInMateByMateId" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM mate_main mmain
+		JOIN mate_members mmem ON mmain.id = mmem.id
+		WHERE performanceId = #{performanceId}
+		AND mmain.id = #{mateId}
+	</select>
 
+<<<<<<< HEAD
+ 	<!-- 해당 메이트를 메이트 멤버 테이블에 인서트 시킨다. -->
+	<insert id="insertMateMember">
+		INSERT INTO mate_members
+			(userId, id)
+			VALUES
+			(#{userId}, #{mateId})
+	</insert>
+	
+	<!-- 해당 메이트가 메이트 아이디에 따라서 있는지 확인하는 쿼리 -->
+	<select id="getMateUserByMateIdAndUserId" resultType="User" >
+			SELECT userId FROM mate_members
+			WHERE id = #{mateId}
+			AND userId = #{userId}
+	</select>
+=======
 <!-- mate add 관련 query -->
 
 
 
 
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 
 </mapper>

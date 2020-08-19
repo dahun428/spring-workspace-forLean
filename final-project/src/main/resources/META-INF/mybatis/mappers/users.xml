@@ -55,6 +55,12 @@
 		WHERE A.id = #{id}
 	</select>
 	
+	<select id="getIdByEmail" parameterType="string" resultType="USER">
+		select id
+		from user_main
+		where email= #{email}
+	</select>
+	
 	<select id="getCouponsByUserId" parameterType="string" resultType="Coupon">
 		select b.id as id, name, type, 
 			   value, getDate, used 

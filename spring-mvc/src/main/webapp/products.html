@@ -110,7 +110,7 @@
       			</div>
       			<div class="modal-footer">
         			<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        			<button type="button" class="btn btn-primary">등록</button>
+        			<button type="button" class="btn btn-primary" id="btn-add-product">등록</button>
       			</div>
     		</div>
   		</div>
@@ -120,11 +120,16 @@
 <script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	// 모든 상품 조회하기
+	// 요청방식 : GET
+	// 요청 URL : /rest/products/
+	// 요청데이터 : 없음
+	// 응답데이터 : list...
 	$.ajax({
 		type:"GET",
-		url:"/json/products.do",
-		dataType:"json",
-		success:function(products) {
+		url : "/rest/products/",
+		dataType: "json",
+		success:function(products){
 			var $tbody = $("#table-product-list tbody").empty();
 			
 			$.each(products, function(index, product) {
@@ -132,7 +137,7 @@ $(function() {
 				tr += "<td>"+product.no+"</td>";
 				tr += "<td>"+product.name+"</td>";
 				tr += "<td>"+product.price+"</td>";
-				tr += "<td><button class='btn btn-primary btn-sm' data-no='"+product.no+"'>상세</button> <button class='btn btn-danger btn-sm' data-no='"+product.no+"'>삭제</button></td>";
+				tr += "<td><button id='' class='btn btn-primary btn-sm' data-no='"+product.no+"'>상세</button> <button class='btn btn-danger btn-sm' data-no='"+product.no+"'>삭제</button></td>";
 				tr += "<tr>";
 				
 				$tbody.append(tr);
@@ -140,15 +145,17 @@ $(function() {
 			
 		}
 	})
-	
 	// <button data-no="23">상세</button>
-	$("#table-product-list").on("click", "button", function() {
+	// 요청방식 : GET
+	// 요청 URL : /rest/products/상품번호
+	// 요청데이터 : 없음
+	// 응답데이터 : {"no":10, "name":"아이폰",pridct:160000, "stock":100, ...}
+	$("#table-product-list tbody").on("click", "button.btn-primary", function() {
 		var productNo = $(this).data("no");
 		
 		$.ajax({
 			type:"GET",
-			url:"/json/product.do",
-			data: {no:productNo},
+			url:"/rest/products/"+productNo,
 			dataType: 'json',
 			success: function(product) {
 				$("#table-product td:eq(0)").text(product.no);
@@ -161,10 +168,51 @@ $(function() {
 			}
 		})
 	});
-	
 	$("#btn-open-form").click(function() {
 		$("#modal-product-form").modal("show")
 	})
+	
+	//등록버튼 클릭 시 새상품 등록하기
+	// 요청 방식 : POST
+	// 요청 URL : /rest/products/
+	// 요청 데이터 : {"category":"디지털","name" :"맥북프로", "price":"1500000","discount":""}
+	// 응답 데이터 : {"no":10,"cateogy":"디지털"....,createdDate:12345678}
+	$('#btn-add-product').click(function(){
+		var product = {
+				category:$('#category-id').val(),
+				name:$('#product-name').val(),
+				price:$('#product-price').val(),
+				discount:$('#product-discount-price').val()
+		}
+		console.log(product);
+		var jsonData = JSON.stringify(product);
+		console.log(jsonData);
+		$.ajax({
+			type:"POST",
+			url:"/rest/products/",
+			dataType:"json",
+			data:jsonData,
+			contentType:"application/json",
+			success:function(savedProduct){
+				var tr = "<tr>";
+				tr += "<td>"+product.no+"</td>";
+				tr += "<td>"+product.name+"</td>";
+				tr += "<td>"+product.price+"</td>";
+				tr += "<td><button id='' class='btn btn-primary btn-sm' data-no='"+product.no+"'>상세</button> <button class='btn btn-danger btn-sm' data-no='"+product.no+"'>삭제</button></td>";
+				tr += "<tr>";
+				
+				$("#table-product-list tbody").prepend(tr);
+				
+				$('#category-id').val("");
+				$('#product-name').val("");
+				$('#product-price').val("");
+				$('#product-discount-price').val("");
+				
+				
+				$('#modal-product-form').modal('hide');
+			}
+		});
+	});
 })
 </script>
 </body>
