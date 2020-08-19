@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sample.dao.MateDao;
+import com.sample.dao.PaymentDao;
+import com.sample.dao.ReserveDao;
 import com.sample.dao.UserDao;
 import com.sample.dto.MateDetailDto;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
 import com.sample.web.view.MateTimeLine;
+import com.sample.web.view.Payment;
 import com.sample.web.view.Performance;
+import com.sample.web.view.Reserve;
 import com.sample.web.view.User;
 
 @Service
@@ -27,6 +31,12 @@ public class MateServiceImpl implements MateService {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	PaymentDao paymentDao;
+	
+	@Autowired
+	ReserveDao reserveDao;
 
 	/**
 	 * 특정 메이트 방에 해시태그를 등록하는 서비스 기능
@@ -70,9 +80,11 @@ public class MateServiceImpl implements MateService {
 		
 	}
 	
-	@Override
-	public void addMateMember(int mateId, User newMember) {
-		// TODO Auto-generated method stub
+	/**
+	 * mateId와 User 객체를 넣어서 해당 메이트를 방에 참여시킨다.
+	 */
+	@Transactional
+	public void addMateMember(int mateId, User newMember, int performanceId) {
 		// 해당 방이 있는지 조회한다.
 //		-- SELECT * FROM mate_main WHERE id = 6;
 		// 해당 유저가 결제했는지 여부를 조회한다.
@@ -82,16 +94,40 @@ public class MateServiceImpl implements MateService {
 		// 제한 인원 미만이면  insert 한다.
 //		-- insert into mate_members (userid, id) values ('dahun427', 6)
 		
+		// 메이트 아이디 있는지 유효성검사
+		isExistMateException(mateId);
+		
+		if(userDao.getUserById(newMember.getId()) == null) {
+			throw new RuntimeException("해당 유저가 존재하지 않습니다.");
+		}
+		Reserve reserve = reserveDao.getReserveByUserIdAndPerformanceId(newMember.getId(), performanceId);
+		if(reserve == null) {
+			throw new RuntimeException("예약 정보가 없습니다.");
+		}
+		//해당 유저가 결제했는지 확인한다.
+		Payment payment = paymentDao.getPaymentByReserveId(reserve.getId());
+		if(payment == null) {
+			throw new RuntimeException("결제되지 않은 회원입니다.");
+		}
+		Mate mate = mateDao.getMateByMateId(mateId);
+		reserve.setMate(mate);
+		reserveDao.updateReserve(reserve);
+		//해당 유저 인서트
+		mateDao.insertMateMember(newMember.getId(), mateId);
+		// 메이트 타임 라인 자동으로 남기기
+		MateTimeLine mateTimeLine = new MateTimeLine();
+		mateTimeLine.setId(mateId);
+		mateTimeLine.setUser(newMember);
+		mateTimeLine.setContent(newMember.getId()+" 님이 입장하셨습니다. 환영해주세요!");
+		mateDao.addTimeLine(mateTimeLine);
 		
 	}
-	
-	@Override
-	public void changeCategory(int mateId, String category) {
-		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
+	/**
+     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
+     * @param performanceId
+     * @return
+     */
 	public List<Mate> getMatesByPerformanceId(int performanceId) {
 		
 		return mateDao.getMatesByPerformanceId(performanceId);
@@ -163,7 +199,6 @@ public class MateServiceImpl implements MateService {
 
 		//세션으로부터 userId 여부를 검사한다.
 		User user = mateDao.getUserMateInfoById(mateTimeLine.getUser().getId());
-		
 		//mate방이 존재하는지 여부를 검사한다.
 		Mate mate = mateDao.getMateByMateId(mateTimeLine.getId());
 		//해당 user가 mate에 소속되어있는지 검사한다.
@@ -219,6 +254,77 @@ public class MateServiceImpl implements MateService {
 	
 	}
 	
+	/**
+     * mateId와 performanceId 에 해당하는 Mate 방의 member의 총 멤버 숫자를 구한다.
+     * @param mateId
+     * @param performanceId
+     * @return int Count
+     */
+	public Integer getMateMemberCountInMateByMateId(int mateId, int performanceId) {
+		return mateDao.getMateMemberCountInMateByMateId(mateId, performanceId);
+	}
+	/**
+	 * user를 mate에 가입하기 전에 해당 유저가 mate방에 참가할 수 있는지 조건을 알 수 있는 기능
+	 * 값이 1 일때만 통과된다.
+	 * @param performanceId 해당 공연 main id
+	 * @param mateId 해당 mate방의 id
+	 * @param userId 유저 id
+	 * @return
+	 */
+	public Map<String, Object> beforAddMateIsPassMate(int performanceId, int mateId, String userId) {
+		
+		 Map<String, Object> messageMap = new HashMap<>();
+		int type = 0;
+		String message = "";
+		//해당 유저를 메이트 테이블에 인서트한다.
+		//해당 유저를 리저브 메인 테이블에 업데이트한다.
+
+		//해당 유저가 리저브 메인테이블에 있는지 확인한다.
+		Reserve reserve = reserveDao.getReserveByUserIdAndPerformanceId(userId, performanceId);
+		if(reserve == null) {
+			message = "예약 정보가없습니다.";
+			messageMap.put("type", type);
+			messageMap.put("message", message);
+			return messageMap;
+		}
+		//해당 유저가 결제했는지 확인한다.
+		Payment payment = paymentDao.getPaymentByReserveId(reserve.getId());
+		if(payment == null) {
+			message = "결제되지 않은 회원입니다.";
+			messageMap.put("type", type);
+			messageMap.put("message", message);
+			return messageMap;
+		}
+		//제한인원수를 체크한다.
+		int mateNowCount = mateDao.getMateMemberCountInMateByMateId(mateId, performanceId);
+		int mateGroupSize = mateDao.getMateByMateId(mateId).getGroupsize();
+		if(mateNowCount >= mateGroupSize) {
+			message = "이미 가득찬 방 입니다.";
+			messageMap.put("type", type);
+			messageMap.put("message", message);
+			return messageMap;
+		}
+		//해당 유저가 이미 메이트에 소속되어있는지확인한다.
+		Reserve savedReserve = reserveDao.getReservedMateByPerformanceIdAndUserId(performanceId, userId);
+		if(savedReserve != null) {
+			message= "이미 메이트에 가입한 회원입니다.";
+			messageMap.put("type", type);
+			messageMap.put("message", message);
+			return messageMap;
+		}
+		type = 1;
+		message = "확인되었습니다.";
+		messageMap.put("type", type);
+		messageMap.put("message", message);
+		
+		
+		return messageMap;
+	}
+	//Mateid와 userId 를 입력받아서 해당 유저가 있는지 여부를 확인하는 메소드
+	public User getMateUserByMateIdAndUserId(String userId, int mateId) {
+		return mateDao.getMateUserByMateIdAndUserId(userId, mateId);
+	}
+	
 	private void isExistMateException(int mateId) {
 		Mate mate = mateDao.getMateByMateId(mateId);
 		if(mate == null) {
@@ -232,5 +338,4 @@ public class MateServiceImpl implements MateService {
 			throw new RuntimeException("해당 공연 회차가 존재하지 않습니다.");
 		}
 	}
-	
 }

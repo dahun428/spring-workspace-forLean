@@ -26,6 +26,8 @@
 		<typeAlias type="com.sample.web.view.PerformanceSeatPrice" alias="PerformanceSeatPrice"/>
 		<typeAlias type="com.sample.dto.PerformanceDto" alias="PerformanceDto"/>
 		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
+		<typeAlias type="com.sample.dto.NoticeDto" alias="NoticeDto"/>
+		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
 		<typeAlias type="com.sample.dto.MypageLastestReserveDto" alias="LastestPerformance"/>
 	</typeAliases>
 	<mappers>
@@ -34,5 +36,7 @@
 		<mapper resource="META-INF/mybatis/mappers/notices.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/mates.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/reserve.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/payments.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/qna.xml"/>
 	</mappers>
 </configuration>

@@ -24,6 +24,8 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.color.js"></script>
 <script type="text/javascript" src="/resources/js/custom.js"></script>
+<script type="text/javascript" src="/resources/js/matelist.js"></script>
+
 </head>
 <style>
 </style>
@@ -75,7 +77,9 @@
 												</p>
 												<div class="text-center">
 													<button class="btn btn-primary mt-2" style="width: 130px;">좌석미리보기</button>
-													<a href="matedetail.do" class="btn btn-primary mt-2" style="width: 130px;">참가</a>
+												
+													<button class="btn btn-primary add-mate-btn mt-2" data-mnum=${mate.id } data-pid=${mate.performance.id } style="width: 130px;" type="button">참가2</button>
+												
 												</div>
 												<div class="mt-3"></div>
 												<span class="up-border"></span> <span class="down-border"></span>
@@ -99,15 +103,15 @@
 																<c:when test="${not empty mate.mateMembers }" >
 																	<c:forEach items="${mate.mateMembers }" varStatus="status">
 																		<c:if test="${status.last }">
-																			<span class="ml-2">${status.count }</span>
+																			<span id="mate-mem-now-count" class="ml-2">${status.count }</span>
 																		</c:if>	
 																	</c:forEach>
 																</c:when>
 																<c:otherwise>
-																	<span class="ml-2">0</span>
+																	<span id="mate-mem-now-count" class="ml-2">0</span>
 																</c:otherwise>
 															</c:choose>
-															<span>/</span> <span>${mate.groupsize }</span>
+															<span>/</span> <span id="mate-mem-now-count">${mate.groupsize }</span>
 														</div>
 														<div style="border-bottom: 1px solid gray;">
 															<div class="text-muted">

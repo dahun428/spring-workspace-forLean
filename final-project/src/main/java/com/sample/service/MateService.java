@@ -11,12 +11,22 @@ import com.sample.web.view.User;
 
 public interface MateService {
     void addMate(Mate mate);
-    List<Mate> getMatesByPerformanceId(int performanceId);
     void insertMateTimeLine(int mateId, MateTimeLine mateTimeLine);
     List<MateTag> addHashTag(int mateId, List<String> mateTags);
-    void addMateMember(int mateId, User newMember);
-    void changeCategory(int mateId, String category);
     
+
+	/**
+	 * mateId와 User 객체를 넣어서 해당 메이트를 방에 참여시킨다.
+	 */
+    void addMateMember(int mateId, User newMember, int performanceId);
+    //void changeCategory(int mateId, String category);
+    
+    /**
+     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
+     * @param performanceId
+     * @return
+     */
+    List<Mate> getMatesByPerformanceId(int performanceId);
     /**
      * mate_main 테이블, mate_category 테이블에서
      * mate_category의 id, category(name) 값을 모두 가져온다.
@@ -66,4 +76,17 @@ public interface MateService {
      * @param mateId
      */
     void updateMateCategoryByMateId(int categoryId, int mateId);
+    /**
+     * mateId와 performanceId 에 해당하는 Mate 방의 member의 총 멤버 숫자를 구한다.
+     * @param mateId
+     * @param performanceId
+     * @return int Count
+     */
+    Integer getMateMemberCountInMateByMateId(int mateId, int performanceId);
+    
+    public  Map<String, Object> beforAddMateIsPassMate(int performanceId, int mateId, String userId);
+    
+    User getMateUserByMateIdAndUserId(String userId, int mateId);
+    
+    
 }

@@ -1,9 +1,0 @@
-package kr.co.jhta.web;
-
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class RestProductController {
-
-	
-}

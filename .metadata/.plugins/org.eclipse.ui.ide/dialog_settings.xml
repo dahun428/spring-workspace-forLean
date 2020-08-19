@@ -6,9 +6,11 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
 			<item value="C:\APP\eGovFrameDev-3.9.0-64bit\workspace"/>
+			<item value="C:\APP\eGovFrameDev-3.9.0-64bit\workspace\spring-web"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
+			<item value="C:\APP\eGovFrameDev-3.9.0-64bit\workspace\spring-mvc\src\main\resources\META-INF\mybatis\mappers\orders.xml"/>
 		</list>
 	</section>
 	<section name="NewWizardAction">

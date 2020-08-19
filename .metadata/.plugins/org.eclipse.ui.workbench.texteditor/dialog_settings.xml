@@ -2,13 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getBlogByNo" key="selection"/>
+		<item value="pShowTime" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="maven-com"/>
-			<item value="getBlogByNo"/>
-			<item value="&#x09;&lt;construct-arg name=&quot;password&quot; value=&quot;zcv1234&quot;&gt;&lt;/construct-arg&gt;"/>
+			<item value="pShowTime"/>
+			<item value="performanceMap"/>
+			<item value="getMateUserByPerformanceId"/>
+			<item value=".num"/>
+			<item value="num"/>
+			<item value="더보기"/>
+			<item value="transition"/>
+			<item value="head"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -1,9 +1,0 @@
-package kr.co.jhta.form;
-
-public class LoginForm {
-
-	private String userid;
-	
-	
-	
-}
