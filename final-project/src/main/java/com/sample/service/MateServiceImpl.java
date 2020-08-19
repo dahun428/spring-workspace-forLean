@@ -321,8 +321,12 @@ public class MateServiceImpl implements MateService {
 		return messageMap;
 	}
 	//Mateid와 userId 를 입력받아서 해당 유저가 있는지 여부를 확인하는 메소드
-	public User getMateUserByMateIdAndUserId(String userId, int mateId) {
-		return mateDao.getMateUserByMateIdAndUserId(userId, mateId);
+	public boolean getMateUserByMateIdAndUserId(String userId, int mateId) {
+		User user = mateDao.getMateUserByMateIdAndUserId(userId, mateId);
+		if(user != null) {
+			return true;
+		}
+		return false;
 	}
 	
 	private void isExistMateException(int mateId) {

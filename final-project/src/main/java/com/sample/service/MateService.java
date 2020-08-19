@@ -86,7 +86,7 @@ public interface MateService {
     
     public  Map<String, Object> beforAddMateIsPassMate(int performanceId, int mateId, String userId);
     
-    User getMateUserByMateIdAndUserId(String userId, int mateId);
+    boolean getMateUserByMateIdAndUserId(String userId, int mateId);
     
     
 }

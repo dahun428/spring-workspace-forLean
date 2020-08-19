@@ -63,9 +63,11 @@ public class MateController {
 	 */
 	@GetMapping("/matedetail.do")
 	public String matedetail(@RequestParam("pid") int performanceId, 
-			@RequestParam("mnum") int mateId, Model model) {
+			@RequestParam("mnum") int mateId, Model model, HttpSession session) {
+		
 		List<Map<Integer, String>> categories = mateService.getMateAllCategory();
 		List<User> users = mateService.getMateUserByMateId(mateId);
+		
 		model.addAttribute("mate", users);
 		model.addAttribute("pid", performanceId);
 		model.addAttribute("mnum", mateId);
@@ -97,6 +99,7 @@ public class MateController {
 		List<Mate> mates = mateService.getMatesByPerformanceId(performanceId);
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
+		
 		
 		model.addAttribute("mateList", mates);
 		model.addAttribute("category", mateCat);

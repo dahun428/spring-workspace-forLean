@@ -266,7 +266,7 @@ WHERE mmain.id = 1;
 	
 	<!-- 해당 메이트가 메이트 아이디에 따라서 있는지 확인하는 쿼리 -->
 	<select id="getMateUserByMateIdAndUserId" resultType="User" >
-			SELECT userId, id FROM mate_members
+			SELECT userId FROM mate_members
 			WHERE id = #{mateId}
 			AND userId = #{userId}
 	</select>
