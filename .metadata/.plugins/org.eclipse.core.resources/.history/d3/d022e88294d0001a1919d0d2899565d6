@@ -1,6 +1,0 @@
-package kr.co.jhta.service;
-
-public class UserServiceImpl implements UserService{
-
-	
-}

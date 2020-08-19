@@ -1,9 +1,0 @@
-package kr.co.jhta.app;
-
-public class Main {
- 
-	
-	public static void main(String[] args) {
-		String conf = "classpath:/spring/context.xml";
-	}
-}

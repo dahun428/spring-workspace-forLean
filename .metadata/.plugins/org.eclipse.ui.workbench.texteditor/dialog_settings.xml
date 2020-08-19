@@ -2,10 +2,12 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getBlogByNo" key="selection"/>
+		<item value="mateTagName" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getMatesByPerformanceId"/>
+			<item value="hidden"/>
 			<item value="maven-com"/>
 			<item value="getBlogByNo"/>
 			<item value="&#x09;&lt;construct-arg name=&quot;password&quot; value=&quot;zcv1234&quot;&gt;&lt;/construct-arg&gt;"/>
