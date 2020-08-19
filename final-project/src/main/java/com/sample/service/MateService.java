@@ -28,12 +28,6 @@ public interface MateService {
      */
     List<Mate> getMatesByPerformanceId(int performanceId);
     /**
-     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
-     * @param performanceId
-     * @return
-     */
-    List<Mate> getMatesByPerformanceId(int performanceId);
-    /**
      * mate_main 테이블, mate_category 테이블에서
      * mate_category의 id, category(name) 값을 모두 가져온다.
      * @return List<Map<Integer, String>>

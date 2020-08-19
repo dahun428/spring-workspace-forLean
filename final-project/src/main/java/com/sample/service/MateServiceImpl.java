@@ -122,11 +122,6 @@ public class MateServiceImpl implements MateService {
 		mateDao.addTimeLine(mateTimeLine);
 		
 	}
-<<<<<<< HEAD
-		
-=======
-	
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	/**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
      * @param performanceId

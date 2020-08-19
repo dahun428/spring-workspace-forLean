@@ -25,7 +25,6 @@ public interface ReserveDao {
     Reserve getReserveByUserIdAndPerformanceId(
     		@Param("userId") String userId,
     		@Param("performanceId") int performanceId);
-<<<<<<< HEAD
     
     /**
      * performanceId와 userId를 입력받아 Reserve객체를 한개 반환받는다.
@@ -44,6 +43,4 @@ public interface ReserveDao {
      */
     void updateReserve(Reserve reserve);
     
-=======
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }
