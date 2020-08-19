@@ -77,9 +77,14 @@
 												</p>
 												<div class="text-center">
 													<button class="btn btn-primary mt-2" style="width: 130px;">좌석미리보기</button>
+<<<<<<< HEAD
 												
 													<button class="btn btn-primary add-mate-btn mt-2" data-mnum=${mate.id } data-pid=${mate.performance.id } style="width: 130px;" type="button">참가2</button>
 												
+=======
+													<a href="addMate.do?mnum=${mate.id }&pid=${mate.performance.id}" class="btn btn-primary mt-2" style="width: 130px;">참가</a>
+													<button class="btn btn-primary add-mate-btn" data-mnum=${mate.id } data-pid=${mate.performance.id } type="button">참가2</button>
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 												</div>
 												<div class="mt-3"></div>
 												<span class="up-border"></span> <span class="down-border"></span>

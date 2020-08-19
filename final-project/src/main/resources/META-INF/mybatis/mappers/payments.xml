@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<<<<<<< HEAD
 <mapper namespace="com.sample.dao.PaymentDao">
+=======
+<mapper namespace="com.sample.dao.PeymentDao">
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	<!-- 
 	payment 테이블에 insert query
 	reserveId 외래키, pay 결제가격, method 결제방법, regDate 결제일, userdPoint 사용한 포인트
@@ -12,7 +16,11 @@
 			VALUES
 			(#{reserve.id}, #{pay}, #{method}, NOW(), #{usedPoint})
 	</insert>
+<<<<<<< HEAD
 	<select id="getPaymentByReserveId" parameterType="int" resultType="Payment">
+=======
+	<select id="getPaymentByReserveId" parameterType="int" resultType="Reserve">
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		SELECT  
 			pmain.id,
 			pmain.reserveId 		as "reserve.id",

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.sample.dao.PerformanceDao;
 import com.sample.dao.ReserveDao;
 import com.sample.dao.UserDao;
+<<<<<<< HEAD
 import com.sample.dto.PerformanceDetailDto;
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 import com.sample.dto.PerformanceDto;
 import com.sample.web.view.Performance;
 import com.sample.web.view.Reserve;
@@ -60,18 +63,28 @@ public class ReserveServiceImpl implements ReserveService{
      */
 	public Reserve getReserveByUserIdAndPerformanceId(String userId, int performanceId) {
 
+<<<<<<< HEAD
 		System.out.println(userId);
 		System.out.println(performanceId);
 		
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		User user = userDao.getUserById(userId);
 		if(user == null) {
 			throw new RuntimeException("해당 유저가 없습니다.");
 		}
+<<<<<<< HEAD
 		PerformanceDetailDto performance = performanceDao.getPerformanceByPerformanceMainId(performanceId);
 		if(performance == null) {
 			throw new RuntimeException("해당 회차의 공연이 없습니다.");
 		}
 		
+=======
+		PerformanceDto performance = performanceDao.selectPerformanceByPerformanceMainId(performanceId);
+		if(performance == null) {
+			throw new RuntimeException("해당 회차의 공연이 없습니다.");
+		}
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		Reserve reserve = reserveDao.getReserveByUserIdAndPerformanceId(userId, performanceId);
 		if(reserve == null) {
 			throw new RuntimeException("해당 예약정보가 없습니다.");
@@ -79,6 +92,7 @@ public class ReserveServiceImpl implements ReserveService{
 		
 		return reserve;
 	}
+<<<<<<< HEAD
 	 /**
      * performanceId와 userId를 입력받아 Reserve객체를 한개 반환받는다.
      * user가 메이트 방에 참여하지 않아, mateId가  null 일경우 null을 반환받는다.
@@ -91,4 +105,6 @@ public class ReserveServiceImpl implements ReserveService{
 		return reserveDao.getReservedMateByPerformanceIdAndUserId(performanceId, userId);
 	}
 	
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }

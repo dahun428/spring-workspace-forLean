@@ -11,6 +11,7 @@ $(function(){
 		//이미 메이트가 있는 회원입니다.
 		//결제되지 않은 회원입니다.
 		//location.href = 'addMate.do?mnum=mnum&pid=pid'
+<<<<<<< HEAD
 			
 			
 			$.ajax({
@@ -37,5 +38,19 @@ $(function(){
 				}
 			
 			})
+=======
+//			$.ajax({
+//				type:'POST',
+//				url:'/mate/beforeAddMate.do',
+//				data:{
+//					"mnum":mnum,
+//					"pid":pid
+//				},
+//				success:function(data){
+//					
+//				}
+//			
+//			})
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		});
 })

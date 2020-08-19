@@ -39,6 +39,7 @@ public class MateController {
 	PerformanceService performanceService;
 	@Autowired
 	ReserveService reserveService;
+<<<<<<< HEAD
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
 	public String runtimeExceptionHandler(RuntimeException e) {
@@ -50,6 +51,8 @@ public class MateController {
 		e.printStackTrace();
 		return "error/server-error";
 	}	
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	
 	/**
 	 * matelist 페이지에서 '참가'버튼을 클릭하면 해당 방으로 입장가능하다.
@@ -88,12 +91,24 @@ public class MateController {
 		 */
 		User user = (User) session.getAttribute("LOGIN_USER");
 		
+<<<<<<< HEAD
 
 		
 		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
 		if(reserve == null) {
 			return "redirect:/home.do";
 		}
+=======
+		PerformanceDto performance = performanceService.getPerformanceByPerformanceMainId(performanceId);
+		if(performance == null) {
+			return "redirect:/home.do";
+		}
+		
+//		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+//		if(reserve == null) {
+//			return "redirect:/home.do";
+//		}
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 //		
 		
 		List<Mate> mates = mateService.getMatesByPerformanceId(performanceId);
@@ -219,19 +234,32 @@ public class MateController {
 	
 	//해당 공연을 예약한 유저가 해당 메이트방 참가 신청을하면 더하는 것
 	@Auth
+<<<<<<< HEAD
 	@RequestMapping("/addMateMember.do")
+=======
+	@RequestMapping("/addMate.do")
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	public String addMate(@RequestParam("pid") int performanceId,
 					@RequestParam("mnum") int mateId, HttpSession session, Model model) {
 		
 		User user = (User) session.getAttribute("LOGIN_USER");
+<<<<<<< HEAD
 		//유저 입장
 		mateService.addMateMember(mateId, user, performanceId);
+=======
+
+	//	Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+	//	if(reserve == null) {
+	//		return "redirect:/home.do";
+	//	}
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 		
 		model.addAttribute("mnum",mateId);
 		model.addAttribute("pid", performanceId);
 		
 		return "redirect:matedetail.do";
 	}
+<<<<<<< HEAD
 	//ajax 통신, 참가버튼을 누르면 ajax와 사전에 통신하여 유효값 검증을 한다.
 	@Auth
 	@RequestMapping("/beforeAddMate.do")
@@ -240,6 +268,14 @@ public class MateController {
 		User user = (User) session.getAttribute("LOGIN_USER");
 		//세션확인
 		return mateService.beforAddMateIsPassMate(performanceId, mateId, user.getId());
+=======
+	@Auth
+	@RequestMapping("/beforeAddMate.do")
+	public @ResponseBody int beforeAddMate(@RequestParam("pid") int performanceId,
+			@RequestParam("mnum") int mateId) {
+		//로직
+		return 0;
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	}
 	
 	

@@ -148,6 +148,7 @@ public interface MateDao {
     void updateMateCategoryByMateId(@Param("catId") int categoryId
     		, @Param("mateId") int mateId);
     
+<<<<<<< HEAD
     /**
      * mateId와 performanceId 에 해당하는 Mate 방의 member의 총 멤버 숫자를 구한다.
      * @param mateId
@@ -167,4 +168,6 @@ public interface MateDao {
     User getMateUserByMateIdAndUserId(@Param("userId") String userId, @Param("mateId") int mateId);
     
     
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }

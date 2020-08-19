@@ -3,4 +3,8 @@ externalMigrateFromAuthorizationDatabase/isMigrated=true
 migrateFromAuthorizationDatabase/isMigrated=true
 repositories/10060e77f2da001a193487654d960792=10060e77f2da001a193487654d960792;https\://192.168.10.65/svn/lecture/spring-web;https\://192.168.10.65/svn/lecture/spring-web;branches;tags;trunk;true;08f387ab-d2dd-5e4b-af7b-205e4bd6139a;https\://192.168.10.65/svn/lecture;;false;;;0
 repositories/10a3947bb1cb001a1608d05d886dd976=10a3947bb1cb001a1608d05d886dd976;https\://localhost/svn/lecture/spring-pom;https\://localhost/svn/lecture/spring-pom;branches;tags;trunk;true;;;;false;;;0
+<<<<<<< HEAD
 repositories/4063f88cf6da001a193487654d960792=4063f88cf6da001a193487654d960792;https\://192.168.10.65/svn/repo2;https\://192.168.10.65/svn/repo2;branches;tags;trunk;true;326aa274-c5f9-8b48-81b2-3458635fd096;https\://192.168.10.65/svn/repo2;;false;;;0
+=======
+repositories/30cfd30c5ce1001a19c7d8da6faf1618=30cfd30c5ce1001a19c7d8da6faf1618;https\://192.168.10.65/svn/repo2/final-project;https\://192.168.10.65/svn/repo2/final-project;branches;tags;trunk;true;;;;false;;;0
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68

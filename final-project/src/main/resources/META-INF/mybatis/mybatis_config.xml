@@ -37,6 +37,9 @@
 		<mapper resource="META-INF/mybatis/mappers/mates.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/reserve.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/payments.xml"/>
+<<<<<<< HEAD
 		<mapper resource="META-INF/mybatis/mappers/qna.xml"/>
+=======
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 	</mappers>
 </configuration>

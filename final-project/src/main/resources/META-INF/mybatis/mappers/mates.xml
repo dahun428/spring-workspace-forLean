@@ -256,6 +256,7 @@ WHERE mmain.id = 1;
 		AND mmain.id = #{mateId}
 	</select>
 
+<<<<<<< HEAD
  	<!-- 해당 메이트를 메이트 멤버 테이블에 인서트 시킨다. -->
 	<insert id="insertMateMember">
 		INSERT INTO mate_members
@@ -270,5 +271,12 @@ WHERE mmain.id = 1;
 			WHERE id = #{mateId}
 			AND userId = #{userId}
 	</select>
+=======
+<!-- mate add 관련 query -->
+
+
+
+
+>>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 
 </mapper>
