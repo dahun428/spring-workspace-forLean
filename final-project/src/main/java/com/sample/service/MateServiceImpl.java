@@ -11,12 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sample.dao.MateDao;
 import com.sample.dao.PaymentDao;
+import com.sample.dao.PerformanceDao;
 import com.sample.dao.ReserveDao;
 import com.sample.dao.UserDao;
 import com.sample.dto.MateDetailDto;
+import com.sample.dto.MateUserDto;
+import com.sample.dto.PerformanceDetailDto;
+import com.sample.web.form.MateSearchForm;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
 import com.sample.web.view.MateTimeLine;
+import com.sample.web.view.Pagination;
 import com.sample.web.view.Payment;
 import com.sample.web.view.Performance;
 import com.sample.web.view.Reserve;
@@ -38,6 +43,9 @@ public class MateServiceImpl implements MateService {
 	@Autowired
 	ReserveDao reserveDao;
 
+	@Autowired
+	PerformanceDao performanceDao;
+	
 	/**
 	 * 특정 메이트 방에 해시태그를 등록하는 서비스 기능
 	 */
@@ -121,6 +129,27 @@ public class MateServiceImpl implements MateService {
 		mateTimeLine.setContent(newMember.getId()+" 님이 입장하셨습니다. 환영해주세요!");
 		mateDao.addTimeLine(mateTimeLine);
 		
+	}
+	
+	public List<Mate> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm) {
+		
+		int totalRows = mateDao.getCountMateByPerformanceId(performanceId);
+		Pagination pagenation = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
+		System.out.println(pagenation);
+		mateSearchForm.setBeginIndex(pagenation.getBeginIndex());
+		mateSearchForm.setEndIndex(pagenation.getEndIndex());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("performanceId", performanceId);
+		map.put("userId", userId);
+		map.put("categoryId", mateSearchForm.getCategoryId());
+		map.put("groupSize", mateSearchForm.getGroupsize());
+		map.put("isFull", mateSearchForm.getIsFull());
+		map.put("isEmpty", mateSearchForm.getIsEmpty());
+		System.out.println(map);
+		
+		
+		return mateDao.getAllMates(map);
 	}
 	/**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
@@ -319,6 +348,29 @@ public class MateServiceImpl implements MateService {
 		
 		return messageMap;
 	}
+	 /**
+     * performanceId, userId로 메이트에 참가되어있는 객체를 한개 반환 받는다.
+     * @param performanceId
+     * @param userId
+     * @return MateUserDto
+     */
+	public MateUserDto getUserExistMate(int performanceId, String userId) {
+		Performance performance = mateDao.getMatePerformanceByPerformanceId(performanceId);
+		if(performance == null) {
+			throw new RuntimeException("해당 회차의 공연이 존재하지 않습니다.");
+		}
+		MateUserDto mateUser = mateDao.getUserExistMate(performanceId, userId);
+		if(mateUser == null) {
+			throw new RuntimeException("해당 메이트 정보가 존재하지 않습니다.");
+		}
+		//mateUser.setPerformance(mateDao.getMatePerformanceByPerformanceId(performanceId));
+		//mateUser.setUser(userDao.getUserById(userId));
+		
+		return mateUser;
+	}
+	
+	
+	
 	//Mateid와 userId 를 입력받아서 해당 유저가 있는지 여부를 확인하는 메소드
 	public boolean getMateUserByMateIdAndUserId(String userId, int mateId) {
 		User user = mateDao.getMateUserByMateIdAndUserId(userId, mateId);

@@ -11,17 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sample.dto.MateDetailDto;
+import com.sample.dto.MateUserDto;
 import com.sample.dto.PerformanceDetailDto;
 import com.sample.dto.PerformanceDto;
 import com.sample.service.MateService;
 import com.sample.service.PerformanceService;
 import com.sample.service.ReserveService;
+import com.sample.web.form.MateSearchForm;
 import com.sample.web.security.Auth;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
@@ -76,19 +79,74 @@ public class MateController {
 		return "mate/matedetail";
 	}
 	/**
-	 * 퍼포먼스 메인 아이디에 해당하는 메이트 방 리스트를 조회한다.
-	 * @return mate/matelist.jsp 페이지
+	 * 검색하여 이후 로딩되었을 때
+	 * @param performanceId
+	 * @param mateSearchForm
+	 * @param session
+	 * @param model
+	 * @return
 	 */
-	@GetMapping("/mate.do")
-	public String mate(@RequestParam("pid") int performanceId, HttpSession session, Model model) {
-		
+	@PostMapping("/mate.do")
+	public String mateSearch(@RequestParam("pid") int performanceId,
+			@ModelAttribute("mateSearchForm") MateSearchForm mateSearchForm,
+			HttpSession session, Model model) {
+
+		//Search 폼
+		System.out.println(mateSearchForm);
 		/*
 		 * 해 당 아이디가 접근 권한이 있는지 체크하기
 		 * 유저가 특정 공연을 결제를 완료했으면 접근가능
 		 */
 		User user = (User) session.getAttribute("LOGIN_USER");
-		
 
+		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+		if(reserve == null) {
+			return "redirect:/home.do";
+		}
+		PerformanceDetailDto performance = performanceService.getPerformanceByPerformanceMainId(performanceId);
+		if(performance == null) {
+			return "redirect:/home.do";
+		}
+
+		//Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
+		//if(reserve == null) {
+		//	return "redirect:/home.do";
+		//}
+		//
+
+		List<Mate> mateInfo = mateService.getMatesByPerformanceId(performanceId);
+		List<Mate> mateList = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
+		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
+		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
+
+		model.addAttribute("mateList", mateList);
+		model.addAttribute("mateInfo", mateInfo);
+		model.addAttribute("category", mateCat);
+		model.addAttribute("mateCount", mateCount);
+		model.addAttribute("mateUser", mateUser);
+		model.addAttribute("mateSearchForm", mateSearchForm);
+
+		return "mate/matelist";
+	}
+	/**
+	 * 맨 처음 로딩되었을때
+	 * @param performanceId
+	 * @param mateSearchForm
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/mate.do")
+	public String mate(@RequestParam("pid") int performanceId,
+					HttpSession session, Model model) {
+		
+		//Search 폼
+		/*
+		 * 해 당 아이디가 접근 권한이 있는지 체크하기
+		 * 유저가 특정 공연을 결제를 완료했으면 접근가능
+		 */
+		User user = (User) session.getAttribute("LOGIN_USER");
 		
 		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
 		if(reserve == null) {
@@ -104,22 +162,30 @@ public class MateController {
 //			return "redirect:/home.do";
 //		}
 //		
+		MateSearchForm mateSearchForm = new MateSearchForm();
+		mateSearchForm.setPageNo(1);
+		mateSearchForm.setIsEmpty("Y");
+		mateSearchForm.setIsFull("Y");
 		
-		List<Mate> mates = mateService.getMatesByPerformanceId(performanceId);
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
-		
-		
-		model.addAttribute("mateList", mates);
+		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
+		List<Mate> mateInfo = mateService.getMatesByPerformanceId(performanceId);
+		List<Mate> mateList = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		model.addAttribute("mateInfo", mateInfo);
+		model.addAttribute("mateList", mateList);
 		model.addAttribute("category", mateCat);
 		model.addAttribute("mateCount", mateCount);
+		model.addAttribute("mateUser", mateUser);
+		model.addAttribute("mateSearchForm", mateSearchForm);
 		
 		return "mate/matelist";
 	}
 	@GetMapping("/jsonmate.do")
-	public @ResponseBody List<Mate> jsonMate(@RequestParam("pid") int performanceId){
+	public @ResponseBody MateUserDto jsonMate(@RequestParam("pid") int performanceId, HttpSession session){
+		User user = (User) session.getAttribute("LOGIN_USER");
 		
-		return mateService.getMatesByPerformanceId(performanceId);
+		return mateService.getUserExistMate(performanceId, user.getId());
 	}
 	/**
 	 * 해당 방의 정보를 ajax 데이터와 연결하여 불러온다.
@@ -255,13 +321,6 @@ public class MateController {
 		//세션확인
 		return mateService.beforAddMateIsPassMate(performanceId, mateId, user.getId());
 	}	
-	@Auth
-	@RequestMapping("/beforeAddMate.do")
-	public @ResponseBody int beforeAddMate(@RequestParam("pid") int performanceId,
-			@RequestParam("mnum") int mateId) {
-		//로직
-		return 0;
-	}
 	
 	
 }

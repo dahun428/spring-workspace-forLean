@@ -3,21 +3,10 @@ approved.defs.file.last.changed.time=1594835793000
 codemix.dont.show.upsell.until=1597537007377
 configurationInstallLocation=/C\:/APP/eGovFrameDev-3.9.0-64bit/eclipse/
 eclipse.preferences.version=1
-<<<<<<< HEAD
-elearning.dont.show.until=1598746834030
-iconcolormode=primary
-last.download.attempt.time=1597710021034
-lastConfiguration=1597715687992
-=======
 elearning.dont.show.until=1598796308919
 iconcolormode=primary
-last.download.attempt.time=1597759507945
-<<<<<<< HEAD
-lastConfiguration=1597849808767
-=======
-lastConfiguration=1597759483728
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
->>>>>>> 17543ad727db730d10fd4d18eae834cf73061fc4
+last.download.attempt.time=1597849844593
+lastConfiguration=1597853880678
 newinstall=false
 showWelcomeDialog=false
 workbench.theme=Dark Gray

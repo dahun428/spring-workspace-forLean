@@ -64,4 +64,13 @@ public class Pagination {
 	public int getEndPage() {
 		return endPage;
 	}
+
+	@Override
+	public String toString() {
+		return "Pagination [rowsPerPage=" + rowsPerPage + ", pagesPerBlock=" + pagesPerBlock + ", pageNo=" + pageNo
+				+ ", totalRows=" + totalRows + ", totalPages=" + totalPages + ", totalBlocks=" + totalBlocks
+				+ ", currentBlock=" + currentBlock + ", beginIndex=" + beginIndex + ", endIndex=" + endIndex
+				+ ", beginPage=" + beginPage + ", endPage=" + endPage + "]";
+	}
+	
 }

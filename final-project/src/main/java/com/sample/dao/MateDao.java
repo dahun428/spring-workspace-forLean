@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.sample.dto.MateUserDto;
+import com.sample.web.form.MateSearchForm;
 import com.sample.web.view.HallInfo;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
@@ -166,6 +168,28 @@ public interface MateDao {
     void insertMateMember(@Param("userId") String userId, @Param("mateId") int mateId);
     
     User getMateUserByMateIdAndUserId(@Param("userId") String userId, @Param("mateId") int mateId);
+    
+    /**
+     * performance_main id와 userId로 현재 존재하는 유저를 구한다. 
+     * 유저가 메이트에 소속되어있지 않으면 null을 반환한다.
+     * @param performanceId
+     * @param userId
+     * @return MateUserDto 객체
+     */
+    MateUserDto getUserExistMate(@Param("performanceId") int performanceId,
+    		@Param("userId") String userId);
+    
+    
+    /*
+     * 
+     */
+    
+    List<Mate> getAllMates(Map<String, Object> map);
+    
+    
+    
+    
+    
     
     
 }
