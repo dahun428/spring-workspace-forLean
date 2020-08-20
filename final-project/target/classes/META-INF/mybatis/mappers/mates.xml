@@ -104,8 +104,40 @@ WHERE mmain.id = 1;
 					AND mmain.`status` IN ('모집완료') 
 				</if>
 			</where>
-				
+			limit #{beginIndex}, #{endIndex}	
 											
+	</select>
+	<select id="getAllMatesCount" parameterType="map" resultType="int">
+			SELECT
+				count(*)
+			FROM mate_main mmain
+			JOIN mate_category mcat ON mcat.id = mmain.category
+			<where>
+				mmain.seatRate = (SELECT mmain.seatRate 
+												FROM mate_main mmain
+												JOIN mate_members mmem ON mmain.id = mmem.id
+												WHERE mmain.performanceId = #{performanceId}
+												AND mmem.userId = #{userId}) 
+				<if test="categoryId != 0">
+					and mmain.category in (#{categoryId})
+				</if>
+				<if test="groupSize != 0">
+					and mmain.groupSize in (#{groupSize})
+				</if>
+				<if test="isFull != null and isEmplty !=null">
+					AND mmain.`status` IN ('모집중','빈방') 
+				</if>
+				<if test="isFull != null and isEmpty == null">
+					AND mmain.`status` IN ('모집중') 
+				</if>
+				<if test="isFull == null and isEmpty != null">
+					AND mmain.`status` IN ('빈방') 
+				</if>
+				<if test="isFull == null and isEmpty == null">
+					AND mmain.`status` IN ('모집완료') 
+				</if>
+			</where>
+				
 	</select>
 
 <!-- seatRate 별 -->

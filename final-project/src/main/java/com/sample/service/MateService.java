@@ -24,7 +24,7 @@ public interface MateService {
     //void changeCategory(int mateId, String category);
     
     
-    List<Mate> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm);
+    Map<String, Object> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm);
     
     /**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.

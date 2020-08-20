@@ -181,11 +181,13 @@ public interface MateDao {
     
     
     /*
-     * 
+     * pagenation mate
      */
-    
     List<Mate> getAllMates(Map<String, Object> map);
-    
+    /*
+     * pagenation mate count
+     */
+    int getAllMatesCount(Map<String, Object> map);
     
     
     

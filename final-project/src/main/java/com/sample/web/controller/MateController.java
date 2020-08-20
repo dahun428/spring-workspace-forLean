@@ -29,6 +29,7 @@ import com.sample.web.security.Auth;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
 import com.sample.web.view.MateTimeLine;
+import com.sample.web.view.Pagination;
 import com.sample.web.view.Reserve;
 import com.sample.web.view.User;
 
@@ -113,13 +114,20 @@ public class MateController {
 		//	return "redirect:/home.do";
 		//}
 		//
+		Map<String, Object> searchMap = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		int totalRows = (int) searchMap.get("searchCount");
+		
+		Pagination pagination = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
 
 		List<Mate> mateInfo = mateService.getMatesByPerformanceId(performanceId);
-		List<Mate> mateList = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		List<Mate> mateList = (List<Mate>) searchMap.get("searchList");
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
 		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
 
+		System.out.println("pagination"+pagination);
+		
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("mateList", mateList);
 		model.addAttribute("mateInfo", mateInfo);
 		model.addAttribute("category", mateCat);
@@ -166,12 +174,20 @@ public class MateController {
 		mateSearchForm.setPageNo(1);
 		mateSearchForm.setIsEmpty("Y");
 		mateSearchForm.setIsFull("Y");
+
 		
-		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
+		Map<String, Object> searchMap = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		int totalRows = (int) searchMap.get("searchCount");
+		
+		Pagination pagination = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
+		List<Mate> mateInfo = mateService.getMatesByPerformanceId(performanceId);
+		List<Mate> mateList = (List<Mate>) searchMap.get("searchList");List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId);
 		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
-		List<Mate> mateInfo = mateService.getMatesByPerformanceId(performanceId);
-		List<Mate> mateList = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
+		
+		System.out.println("pagination"+pagination);
+		
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("mateInfo", mateInfo);
 		model.addAttribute("mateList", mateList);
 		model.addAttribute("category", mateCat);

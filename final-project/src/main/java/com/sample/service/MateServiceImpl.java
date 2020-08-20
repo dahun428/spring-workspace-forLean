@@ -130,14 +130,11 @@ public class MateServiceImpl implements MateService {
 		mateDao.addTimeLine(mateTimeLine);
 		
 	}
-	
-	public List<Mate> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm) {
+	/**
+	 * mateSearchList
+	 */
+	public Map<String, Object> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm) {
 		
-		int totalRows = mateDao.getCountMateByPerformanceId(performanceId);
-		Pagination pagenation = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
-		System.out.println(pagenation);
-		mateSearchForm.setBeginIndex(pagenation.getBeginIndex());
-		mateSearchForm.setEndIndex(pagenation.getEndIndex());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("performanceId", performanceId);
@@ -146,11 +143,22 @@ public class MateServiceImpl implements MateService {
 		map.put("groupSize", mateSearchForm.getGroupsize());
 		map.put("isFull", mateSearchForm.getIsFull());
 		map.put("isEmpty", mateSearchForm.getIsEmpty());
-		System.out.println(map);
+		int totalRows = mateDao.getAllMatesCount(map);
+		Pagination pagenation = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
+		map.put("beginIndex", pagenation.getBeginIndex() -1 );
+		map.put("endIndex", pagenation.getEndIndex());
+		mateDao.getAllMates(map);
+		mateDao.getAllMatesCount(map);
 		
-		
-		return mateDao.getAllMates(map);
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchList", mateDao.getAllMates(map));
+		searchMap.put("searchCount", mateDao.getAllMatesCount(map));
+
+		System.out.println(searchMap);
+		return searchMap;
 	}
+	
+	
 	/**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
      * @param performanceId

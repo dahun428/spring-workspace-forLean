@@ -1,5 +1,29 @@
 $(function(){
-	
+
+		
+		$('.mate-search-page').click(function(){
+			console.log($(this).data('page'));
+			$('#pageNo').val($(this).data('page'));
+			$('#mate-search-form').submit();
+		});
+
+		$('#mate-search-page-before').click(function(){
+			
+			var pageNo = $('#pageNo').val();
+			$('#pageNo').val(Number(pageNo) - 1);
+			$('#mate-search-form').submit();
+		})
+		
+		$('#mate-search-page-after').click(function(){
+			
+			var pageNo = $('#pageNo').val();
+			$('#pageNo').val(Number(pageNo) + 1);
+			$('#mate-search-form').submit();
+			
+		})
+		
+		
+		
 		$('#isFull').click(function(){
 			if($('#isFull').is(':checked')){
 				$('#isFull').val('Y');

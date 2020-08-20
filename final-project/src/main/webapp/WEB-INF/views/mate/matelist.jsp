@@ -246,13 +246,26 @@
 									<td>
 										<nav>
 											<ul class="pagination justify-content-center mt-3">
-												<li class="page-item disabled"><a class="page-link"
-													href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
-												<li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-												<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-												<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-												<li class="page-item"><a class="page-link text-dark" href="#">Next</a>
-												</li>
+											
+											<c:if test="${pagination.pageNo > 1 }">
+												<li class="page-item"><button class="page-link"	id="mate-search-page-before"
+													type="button" tabindex="-1" aria-disabled="true">이전</button></li>
+											</c:if>
+											<c:choose>
+												<c:when test="${not empty mateList }">
+													<c:forEach begin="${pagination.beginPage }" end="${pagination.endPage }" var="page">
+														<li class="page-item"><button class="page-link text-dark mate-search-page" type="button" data-page="${page }">${page }</button></li>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+														<li class="page-item"><button class="page-link text-dark mate-search-page" type="button" data-page="1">1</button></li>
+												</c:otherwise>
+											</c:choose>
+											
+											<c:if test="${pagination.pageNo < pagination.totalPages }">
+												<li class="page-item"><button class="page-link text-dark" id="mate-search-page-after" type="button">다음</button></li>
+											</c:if>	
+											
 											</ul>
 										</nav>
 									</td>
@@ -293,7 +306,7 @@
 					<small><span class="ml-2">개설</span> <span>${mateCount }</span> <span>개</span>
 					</small>
 				</div>
-				<form:form method="post" action="mate.do"  modelAttribute="mateSearchForm">
+				<form:form method="post" action="mate.do" id="mate-search-form"  modelAttribute="mateSearchForm">
 				<div class="col-12">
 					<div class="input-group">
 						<div class="input-group-prepend">
@@ -330,7 +343,7 @@
 							class="input-control"  value="Y" />
 					</div>
 					<form:input type="hidden" path="pid" name="pid" value="${mateUser.performance.id }" />
-					<form:input type="hidden" path="pageNo" name="pageNo" value="${mateSearchForm.pageNo eq 0 ? 1 : mateSearchForm.pageNo}"/>
+					<form:input type="hidden" path="pageNo" name="pageNo" id="pageNo" value="1"/>
 					<div class="mt-1">
 						<button type="submit" class="btn btn-primary btn-lg btn-block">찾기</button>
 					</div>
