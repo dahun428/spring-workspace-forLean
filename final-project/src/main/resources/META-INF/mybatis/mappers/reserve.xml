@@ -78,6 +78,73 @@
 				AND rmain.reserveUser = #{reserveUser.id}
 	</update>
 	
+	<insert id="insertReserve" parameterType="Reserve" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			reserve_main
+			(id, reserveUser, performanceId, receiveType)
+		VALUES
+			(#{id}, #{reserveUser.id}, #{performance.id}, #{receiveType})
+			
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() as id
+		</selectKey>
+	</insert>
 	
+	<resultMap type="Reserve" id="reserveDetail">
+		<result property="id" column="id"/>
+		<result property="regDate" column="regDate"/>
+		<result property="status" column="status"/>
+		<association property="reserveUser" javaType="User">
+			<result property="id" column="reserveUser"/>
+			<result property="nickname" column="nickname"/>
+		</association>
+		<association property="performance" javaType="Performance">
+			<result property="title" column="title"/>
+			<result property="startDate" column="startDate"/>
+			<result property="endDate" column="endDate"/>
+			<result property="imagePath" column="imagePath"/>
+			<collection property="schedule" ofType="PerformanceSchedule" javaType="List">
+				<association property="hallinfo" javaType="HallInfo">
+					<result property="id" column="hallId"/>
+					<result property="name" column="name"/>
+				</association>
+			</collection>
+		</association>
+		<association property="mate" javaType="Mate">
+			<result property="seatGroup" column="seatGroup"/>
+			<result property="seatRate" column="seatRate"/>
+		</association>
+	</resultMap>
 	
+	<select id="getReservesByUserId" parameterType="string" resultMap="reserveDetail">
+		select a.id, a.reserveUser, e.nickname,
+		date_format(a.regDate, '%Y.%m.%d') as regDate,
+		date_format(c.startDate, '%Y.%m.%d') as startDate,
+		date_format(c.endDate, '%Y.%m.%d') as endDate,
+		c.title,f.seatGroup,f.seatRate,a.status,c.imagePath,
+		d.id as hallId, d.name
+		from reserve_main a
+		join performance_main b on a.performanceId = b.id
+		join performance_info c on b.infoId = c.id
+		join hall_info_main d on c.hallInfoId = d.id
+		join user_main e on a.reserveUser = e.id
+		join mate_main f on a.mateId = f.id
+		where a.reserveUser = #{userId}
+		order by a.regDate desc
+	</select>
+	<select id="getReserveDetail" parameterType="int" resultMap="reserveDetail">
+	select a.id, a.reserveUser, e.nickname,
+		date_format(a.regDate, '%Y.%m.%d') as regDate,
+		date_format(c.startDate, '%Y.%m.%d') as startDate,
+		date_format(c.endDate, '%Y.%m.%d') as endDate,
+		c.title,f.seatGroup,f.seatRate,a.status,c.imagePath,
+		d.id as hallId, d.name
+		from reserve_main a
+		join performance_main b on a.performanceId = b.id
+		join performance_info c on b.infoId = c.id
+		join hall_info_main d on c.hallInfoId = d.id
+		join user_main e on a.reserveUser = e.id
+		join mate_main f on a.mateId = f.id
+		where a.id = #{reserveId}
+	</select>
 </mapper>

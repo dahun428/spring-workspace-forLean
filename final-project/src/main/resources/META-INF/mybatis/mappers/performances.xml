@@ -17,6 +17,7 @@
 		<result column="explain" property="explain"/>
 		<result column="hallName" property="hallName"/>
 		<result column="hallAddress" property="hallAddress"/>	
+		<result column="reserveCount" property="reserveCount" />
 		<collection property="genres" select="getGenreById" column="id" ofType="string"/>
 		<collection property="seatPrices" select="getPerformanceSeatPrice" column="id" ofType="PerformanceSeatPrice"/>
 	</resultMap>
@@ -36,7 +37,8 @@
 					A.imagePath		as imagePath, 
 					A.`explain`		as `explain`, 
 					C.name			as hallName, 
-					C.address		as hallAddress					
+					C.address		as hallAddress,	
+					A.reserveCount  as reserveCount	
 		FROM 
 			performance_info A
 		JOIN 
@@ -84,7 +86,8 @@
 					A.imagePath		as imagePath, 
 					A.`explain`		as `explain`, 
 					C.name			as hallName, 
-					C.address		as hallAddress					
+					C.address		as hallAddress,
+					A.reserveCount  as reserveCount						
 		FROM 
 			performance_info A
 		JOIN 
@@ -136,7 +139,8 @@
 						A.imagePath		as imagePath, 
 						A.`explain`		as `explain`, 
 						C.name			as hallName, 
-						C.address		as hallAddress					
+						C.address		as hallAddress,
+						A.reserveCount  as reserveCount						
 			FROM 
 				performance_info A
 			JOIN 
@@ -238,8 +242,34 @@
 		WHERE category= #{value}	
 	</select>
 	
+	<select id="getAllHallInfos" resultType="HallInfo">
+		SELECT 
+			id 			as id, 
+			`name` 		as `name`, 
+			address 	as address, 
+			gpsX		as gpsX, 
+			gpsY		as gpsY
+		FROM 
+			hall_info_main
+		ORDER BY
+			id	
+	</select>
 	
-	<select id="selectPerformanceByDate" parameterType="Date" resultType="PerformanceSchedule">
+	<select id="getHallInfoById" parameterType="int" resultType="HallInfo">
+		SELECT 
+			id 			as id, 
+			`name` 		as `name`, 
+			address 	as address, 
+			gpsX		as gpsX, 
+			gpsY		as gpsY
+		FROM 
+			hall_info_main
+		WHERE 
+			id = #{value}
+	
+	</select>
+	
+	<select id="selectPerformanceByIdAndDate" parameterType="map" resultType="PerformanceSchedule">
 	 	SELECT
 			id,
 			infoId,
@@ -250,7 +280,9 @@
 		FROM
 			performance_main
 		WHERE
-			showDate = #{value};
+			infoId = #{no}
+		AND
+			showDate = #{date}
 	 </select>
 
 	
@@ -269,7 +301,8 @@
 					A.imagePath		as imagePath, 
 					A.`explain`		as `explain`, 
 					C.name			as hallName, 
-					C.address		as hallAddress					
+					C.address		as hallAddress,
+					A.reserveCount  as reserveCount						
 		FROM 
 			performance_info A
 		JOIN 
@@ -299,7 +332,8 @@
 					A.imagePath		as imagePath, 
 					A.`explain`		as `explain`, 
 					C.name			as hallName, 
-					C.address		as hallAddress					
+					C.address		as hallAddress,
+					A.reserveCount  as reserveCount						
 		FROM 
 			performance_info A
 		JOIN 
@@ -328,7 +362,8 @@
 					A.imagePath		as imagePath, 
 					A.`explain`		as `explain`, 
 					C.name			as hallName, 
-					C.address		as hallAddress					
+					C.address		as hallAddress,
+					A.reserveCount  as reserveCount						
 		FROM 
 			performance_info A
 		JOIN 
