@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.sample.dto.MateUserDto;
+import com.sample.web.form.MateSearchForm;
 import com.sample.web.view.HallInfo;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
@@ -148,7 +150,7 @@ public interface MateDao {
     void updateMateCategoryByMateId(@Param("catId") int categoryId
     		, @Param("mateId") int mateId);
     
-<<<<<<< HEAD
+
     /**
      * mateId와 performanceId 에 해당하는 Mate 방의 member의 총 멤버 숫자를 구한다.
      * @param mateId
@@ -167,7 +169,29 @@ public interface MateDao {
     
     User getMateUserByMateIdAndUserId(@Param("userId") String userId, @Param("mateId") int mateId);
     
+    /**
+     * performance_main id와 userId로 현재 존재하는 유저를 구한다. 
+     * 유저가 메이트에 소속되어있지 않으면 null을 반환한다.
+     * @param performanceId
+     * @param userId
+     * @return MateUserDto 객체
+     */
+    MateUserDto getUserExistMate(@Param("performanceId") int performanceId,
+    		@Param("userId") String userId);
     
-=======
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
+    
+    /*
+     * pagenation mate
+     */
+    List<Mate> getAllMates(Map<String, Object> map);
+    /*
+     * pagenation mate count
+     */
+    int getAllMatesCount(Map<String, Object> map);
+    
+    
+    
+    
+    
+    
 }

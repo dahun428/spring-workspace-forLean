@@ -19,7 +19,6 @@ public interface ReserveService {
      * @return Reserve 객체 1개
      */
     Reserve getReserveByUserIdAndPerformanceId(String userId, int performanceId);
-<<<<<<< HEAD
     /**
      * performanceId와 userId를 입력받아 Reserve객체를 한개 반환받는다.
      * user가 메이트 방에 참여하지 않아, mateId가  null 일경우 null을 반환받는다.
@@ -29,6 +28,4 @@ public interface ReserveService {
      * @return null or Reserve 객체
      */
     Reserve getReservedMateByPerformanceIdAndUserId(String userId, int performanceId);
-=======
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 }

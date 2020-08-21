@@ -9,6 +9,7 @@ public class Mate {
     private String category;
     private int groupsize;
     private String seatRate;
+    private String status;
     private List<User> mateMembers;
     private List<MateTag> mateTags;
 
@@ -19,7 +20,14 @@ public class Mate {
     public void setId(int id) {
         this.id = id;
     }
-   
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Performance getPerformance() {
 		return performance;

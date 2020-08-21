@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.sample.dto.MateDetailDto;
+import com.sample.dto.MateUserDto;
+import com.sample.web.form.MateSearchForm;
 import com.sample.web.view.Mate;
 import com.sample.web.view.MateTag;
 import com.sample.web.view.MateTimeLine;
@@ -21,12 +23,9 @@ public interface MateService {
     void addMateMember(int mateId, User newMember, int performanceId);
     //void changeCategory(int mateId, String category);
     
-    /**
-     * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
-     * @param performanceId
-     * @return
-     */
-    List<Mate> getMatesByPerformanceId(int performanceId);
+    
+    Map<String, Object> getMatesByPerformanceIdSearch(int performanceId, String userId,MateSearchForm mateSearchForm);
+    
     /**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
      * @param performanceId
@@ -92,7 +91,14 @@ public interface MateService {
     
     public  Map<String, Object> beforAddMateIsPassMate(int performanceId, int mateId, String userId);
     
+    //안씀
     boolean getMateUserByMateIdAndUserId(String userId, int mateId);
     
-    
+    /**
+     * performanceId, userId로 메이트에 참가되어있는 객체를 한개 반환 받는다.
+     * @param performanceId
+     * @param userId
+     * @return MateUserDto
+     */
+    MateUserDto getUserExistMate(int performanceId, String userId);
 }

@@ -66,6 +66,112 @@ WHERE mmain.id = 1;
 		<collection property="mateTags" select="getMateTagByMateId" column="id"/>
 	</resultMap>
 
+<!-- mateSeach -->
+		<!-- 유저 아이디 , 퍼포먼스를 입력 받아, 좌석 등급에 해당하는 메이트 정보를 모두 구함 -->
+	<select id="getAllMates" resultMap="mateMap" parameterType="map">
+			SELECT
+				 mmain.id,
+			 	 mmain.performanceId, 
+				 mmain.seatGroup,
+				 mcat.category, 
+				 mmain.groupSize, 
+				 mmain.seatRate,
+				 mmain.status
+			FROM mate_main mmain
+			JOIN mate_category mcat ON mcat.id = mmain.category
+			<where>
+				mmain.seatRate = (SELECT mmain.seatRate 
+												FROM mate_main mmain
+												JOIN mate_members mmem ON mmain.id = mmem.id
+												WHERE mmain.performanceId = #{performanceId}
+												AND mmem.userId = #{userId}) 
+				<if test="categoryId != 0">
+					and mmain.category in (#{categoryId})
+				</if>
+				<if test="groupSize != 0">
+					and mmain.groupSize in (#{groupSize})
+				</if>
+				<if test="isFull != null and isEmplty !=null">
+					AND mmain.`status` IN ('모집중','빈방') 
+				</if>
+				<if test="isFull != null and isEmpty == null">
+					AND mmain.`status` IN ('모집중') 
+				</if>
+				<if test="isFull == null and isEmpty != null">
+					AND mmain.`status` IN ('빈방') 
+				</if>
+				<if test="isFull == null and isEmpty == null">
+					AND mmain.`status` IN ('모집완료') 
+				</if>
+			</where>
+			limit #{beginIndex}, #{endIndex}	
+											
+	</select>
+	<select id="getAllMatesCount" parameterType="map" resultType="int">
+			SELECT
+				count(*)
+			FROM mate_main mmain
+			JOIN mate_category mcat ON mcat.id = mmain.category
+			<where>
+				mmain.seatRate = (SELECT mmain.seatRate 
+												FROM mate_main mmain
+												JOIN mate_members mmem ON mmain.id = mmem.id
+												WHERE mmain.performanceId = #{performanceId}
+												AND mmem.userId = #{userId}) 
+				<if test="categoryId != 0">
+					and mmain.category in (#{categoryId})
+				</if>
+				<if test="groupSize != 0">
+					and mmain.groupSize in (#{groupSize})
+				</if>
+				<if test="isFull != null and isEmplty !=null">
+					AND mmain.`status` IN ('모집중','빈방') 
+				</if>
+				<if test="isFull != null and isEmpty == null">
+					AND mmain.`status` IN ('모집중') 
+				</if>
+				<if test="isFull == null and isEmpty != null">
+					AND mmain.`status` IN ('빈방') 
+				</if>
+				<if test="isFull == null and isEmpty == null">
+					AND mmain.`status` IN ('모집완료') 
+				</if>
+			</where>
+				
+	</select>
+
+<!-- seatRate 별 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<select id="getMateRoomByPerformanceIdAndMateId" parameterType="int" resultMap="mateMap">
 		SELECT 
 				mmain.id, 
@@ -249,14 +355,13 @@ WHERE mmain.id = 1;
 	</update>
 	
 	<!--  해당 메이트방의 멤버의 숫자를 구한다.-->
-	<select id="getMateMemberCountInMateByMateId" parameterType="int" resultType="int">
+	<select id="getMateMemberCountInMateByMateId" resultType="int">
 		SELECT COUNT(*) FROM mate_main mmain
 		JOIN mate_members mmem ON mmain.id = mmem.id
 		WHERE performanceId = #{performanceId}
 		AND mmain.id = #{mateId}
 	</select>
 
-<<<<<<< HEAD
  	<!-- 해당 메이트를 메이트 멤버 테이블에 인서트 시킨다. -->
 	<insert id="insertMateMember">
 		INSERT INTO mate_members
@@ -271,12 +376,22 @@ WHERE mmain.id = 1;
 			WHERE id = #{mateId}
 			AND userId = #{userId}
 	</select>
-=======
 <!-- mate add 관련 query -->
+	<select id="getUserExistMate" resultType="com.sample.dto.MateUserDto">
+		SELECT 
+			mmain.id 				as "mate.id",
+			mmain.performanceId 	as "performance.id",
+			mmem.userId 			as "user.id"
+		FROM mate_members mmem
+		JOIN mate_main mmain ON mmem.id = mmain.id
+		JOIN performance_main pmain ON pmain.id = mmain.performanceId
+		WHERE pmain.id = #{performanceId}
+		and mmem.userId = #{userId}
+				
+	
+	</select>
 
 
 
-
->>>>>>> 10711eab5279fba630157db80d66eb26d3d6be68
 
 </mapper>
