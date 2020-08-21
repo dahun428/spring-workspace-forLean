@@ -8,10 +8,11 @@
 	<insert id="insertPayment" parameterType="Payment">
 		INSERT INTO 
 			payment_main
-			(reserveId, pay, method, regDate, usedPoint)
+			(reserveId, pay, method, usedPoint)
 			VALUES
-			(#{reserve.id}, #{pay}, #{method}, NOW(), #{usedPoint})
+			(#{reserve.id}, #{pay}, #{method}, #{usedPoint})
 	</insert>
+	
 	<select id="getPaymentByReserveId" parameterType="int" resultType="Payment">
 		SELECT  
 			pmain.id,

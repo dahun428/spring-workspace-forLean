@@ -10,6 +10,7 @@
 			regDate		as regDate, 
 			adminid		as "admin.id", 
 			badge		as badge
+			hits		as hits
 		from notice_main
 		order by id DESC
 	</select>
@@ -30,9 +31,9 @@
 	
 	<insert id="insertNoticeMain" parameterType="Notice">
 		insert into notice_main
-		(title, category, regDate, adminid, badge)
+		(title, category, regDate, adminid, badge, imoticon)
 		values
-		(#{title}, #{category}, now(), #{admin.id}, #{badge})
+		(#{title}, #{category}, now(), #{admin.id}, #{badge}, #{imoticon})
 	</insert>
 	
 	<insert id="insertNoticeImagePath" parameterType="java.util.Map">
@@ -57,18 +58,18 @@
 			insert into notice_inside_content
 			(id, title, content, position)
 			values
-		<foreach collection="noticeListDto" item="item" index="index" open="(" separator="," close=")">
-			<if test="position == 1">
-				#{no}, #{item.title}, '', 1			
+		<foreach collection="noticeListDto" item="item" index="index" separator=",">
+			<if test="item.position == 1">
+				(#{no}, #{item.title}, '', 1)
 			</if>
-			<if test="position == 2">
-				#{no}, '', #{item.content}, 2
+			<if test="item.position == 2">
+				(#{no}, '', #{item.content}, 2)
 			</if>
-			<if test="position == 3">
-				#{no}, #{item.title}, '', 3
+			<if test="item.position == 3">
+				(#{no}, #{item.title}, '', 3)
 			</if>
-			<if test="position == 4">
-				#{no}, '', #{item.content}, 4
+			<if test="item.position == 4">
+				(#{no}, '', #{item.content}, 4)
 			</if>
 		</foreach>
 	</insert>	
@@ -82,6 +83,7 @@
 			<if test="keyword != ''">
 				and title like concat('%', #{keyword}, '%')
 			</if>
+		and deleted = 'N'
 		</where>
 	</select>
 	
@@ -92,6 +94,7 @@
 		, regDate		as regDate
 		, adminid		as "admin.id"
 		, badge			as badge
+		, hits			as hits
 		from notice_main
 		<where>
 			<if test="status != '전체'" >
@@ -99,7 +102,8 @@
 			</if>
 			<if test="keyword != ''">
 				and title like concat('%', #{keyword}, '%')
-			</if>		
+			</if>
+		and deleted = 'N'
 		</where>
 		order by id desc
 		limit #{beginIndex}, #{endIndex}
@@ -111,8 +115,96 @@
 		where id = #{noticeId}
 	</update>
 	
+	<resultMap type="NoticeDetailDto" id="noticeDetail">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="category" column="category"/>
+		<result property="regDate" column="regDate"/>
+		<result property="badge" column="badge"/>
+		<result property="hits" column="hits"/>
+		<result property="imoticon" column="imoticon"/>
+		<association property="admin" javaType="User">
+			<result property="id" column="adminId"/>
+		</association>
+		<collection property="images" column="id" javaType="list" ofType="NoticeImage" select="getNoticeImagesById">
+		</collection>
+		<collection property="insideContents" column="id" javaType="list" ofType="NoticeInsideContentDto" select="getNoticeInsideContentDtoById">
+		</collection>
+	</resultMap>
 	
+	<!-- id에 실행시킬 메소드를 명시하고 실행결과를 resultMap(noticeDetail)에 담는다. -->
+	<select id="getNoticeById" parameterType="int" resultMap="noticeDetail">
+		SELECT a.id, a.title, a.category, a.regDate, a.adminId, a.badge, a.hits, a.imoticon, c.imagePath
+		FROM notice_main a,  notice_image_path c
+		WHERE a.id = c.id
+		AND a.id = #{value}
+	</select>
 	
+	<!-- id에 실행시킬 메소드를 명시하고 실행결과를 resultMap(noticeDetail)에 담는다. -->
+	<select id="getNoticeInsideContentDtoById" parameterType="int" resultType="NoticeInsideContentDto">
+		select id, title, content, position
+		from notice_inside_content
+		where id = #{value}
+	</select>
 	
+	<select id="getNoticeImagesById" parameterType="int" resultType="NoticeImage">
+		select id, imagePath
+		from notice_image_path
+		where id = #{value}
+	</select>
+	
+	<select id="getPreNoticeInfo" parameterType="int" resultType="Notice">
+		select id, title, category, regDate
+		from notice_main
+		where id &lt;= #{value}
+		and deleted = 'N'
+		order by id desc
+		limit 1 offset 1
+	</select>
+	
+	<select id="getNextNoticeInfo" parameterType="int" resultType="Notice">
+		select id, title, category, regDate
+		from notice_main
+		where id &gt;= #{value} 
+		and deleted = 'N'
+		order by id
+		limit 1 offset 1
+	</select>
+	
+	<update id="deleteNotice" parameterType="int">
+		UPDATE notice_main
+		SET deleted = 'Y'
+		WHERE id = #{value}
+	</update>
+	
+	<update id="modifyNoticeMain" parameterType="NoticeForm">
+		update notice_main
+		set 
+			title = #{mainTitle}
+			, category = #{categoryNo}
+			, badge = #{badge}
+			, imoticon = #{mainEmoticon}
+		where 
+			id = #{noticeId} 
+	</update>
+	
+	<update id="modifyNoticeImg" parameterType="NoticeImage">
+		update notice_image_path
+		set
+			imagePath = #{imagePath}
+		where 
+			id =  #{id}
+	</update>
+	
+	<update id="modifyNoticeTitlesAndContents" parameterType="map">
+		update notice_inside_content
+		set
+			title =  #{TitleAndContent.title}
+			, content = #{TitleAndContent.content}
+		where
+			id = #{noticeId}
+		and
+			position = #{TitleAndContent.position}
+	</update>
 	
 </mapper>

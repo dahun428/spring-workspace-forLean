@@ -139,9 +139,39 @@ WHERE mmain.id = 1;
 			</where>
 				
 	</select>
-
-<!-- seatRate 별 -->
-
+<!-- mate Info -->
+	<select id="getAllMatesInfo" resultMap="mateMap">
+				SELECT
+					 mmain.id,
+				 	 mmain.performanceId, 
+					 mmain.seatGroup,
+					 mcat.category, 
+					 mmain.groupSize, 
+					 mmain.seatRate,
+					 mmain.status
+				FROM mate_main mmain
+				JOIN mate_category mcat ON mcat.id = mmain.category
+				where
+				mmain.seatRate = (SELECT mmain.seatRate 
+									FROM mate_main mmain
+									JOIN mate_members mmem ON mmain.id = mmem.id
+									WHERE mmain.performanceId = #{performanceId}
+									AND mmem.userId = #{userId}) 
+												
+		</select>
+		<select id="getAllMatesInfoCount" resultType="int">
+				SELECT
+					count(*)
+				FROM mate_main mmain
+				JOIN mate_category mcat ON mcat.id = mmain.category
+				where
+				mmain.seatRate = (SELECT mmain.seatRate 
+									FROM mate_main mmain
+									JOIN mate_members mmem ON mmain.id = mmem.id
+									WHERE mmain.performanceId = #{performanceId}
+									AND mmem.userId = #{userId}) 
+												
+		</select>
 
 
 
@@ -179,7 +209,8 @@ WHERE mmain.id = 1;
 				mmain.seatGroup,
 				mcat.category,
 				mmain.groupSize, 
-				mmain.seatRate 
+				mmain.seatRate,
+				mmain.status 
 		FROM mate_main mmain
 		JOIN mate_category mcat ON mmain.category = mcat.id
 		WHERE mmain.id = #{mateId}
@@ -192,7 +223,8 @@ WHERE mmain.id = 1;
 				mmain.seatGroup, 
 				mcat.category,
 				mmain.groupSize, 
-				mmain.seatRate
+				mmain.seatRate,
+				mmain.status
 		FROM mate_main mmain
 		JOIN mate_category mcat ON mcat.id = mmain.category
 		WHERE mmain.performanceId = #{value}

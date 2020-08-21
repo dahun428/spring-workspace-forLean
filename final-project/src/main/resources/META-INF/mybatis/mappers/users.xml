@@ -55,10 +55,17 @@
 		WHERE A.id = #{id}
 	</select>
 	
-	<select id="getIdByEmail" parameterType="string" resultType="USER">
-		select id
-		from user_main
-		where email= #{email}
+	<select id="getUserByEmail" parameterType="string" resultMap="getUserResult">
+		SELECT A.id as id, A.password, A.nickname, 
+			   A.birthday, A.gender, A.email, A.tel, 
+			   A.admin, B.regDate, B.deleted, B.point, 
+			   B.getLike, B.getNotify, B.iconId, B.grade, 
+			   B.totalPoint, B.shutout, C.postalCode, C.sido, 
+			   C.sigungu, C.addr 
+		FROM user_main A
+		JOIN user_sub B ON A.id = B.id
+		left outer JOIN user_address C ON A.id = C.id
+		WHERE A.email = #{email}
 	</select>
 	
 	<select id="getCouponsByUserId" parameterType="string" resultType="Coupon">
@@ -96,6 +103,12 @@
 		values
 		(#{id},#{postalCode}, #{sido}, #{sigungu}, #{addr})
 	</insert>
+
+	<update id="updateUser" parameterType="User">
+		UPDATE user_sub
+			SET point = #{point}
+		WHERE id = #{id}
+	</update>
 
 </mapper>
 
