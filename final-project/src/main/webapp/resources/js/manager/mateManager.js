@@ -116,23 +116,59 @@ $(function(){
 	$( ".selectable" ).selectable();
 	
 	$('#R-change-btn').click(function(){
-		$('button.ui-selected').removeClass('bg-warning').removeClass('bg-secondary').removeClass('no-class-seat')
-						 .addClass('bg-primary').addClass('R-class-seat');
+		$('button.ui-selected')
+			.removeClass('bg-primary')
+			.removeClass('bg-warning')
+			.removeClass('bg-secondary')
+			.removeClass('bg-danger')
+			.removeClass('S-class-seat')
+			.removeClass('R-class-seat')
+			.removeClass('A-class-seat')
+			.removeClass('no-class-seat')
+			.addClass('bg-primary')
+			.addClass('R-class-seat')
 		changeSeat();
 	})
 	$('#S-change-btn').click(function(){
-		$('button.ui-selected').removeClass('bg-primary').removeClass('bg-secondary').removeClass('no-class-seat')
-		 				 .addClass('bg-warning').addClass('S-class-seat');
+		$('button.ui-selected')
+			.removeClass('bg-primary')
+			.removeClass('bg-warning')
+			.removeClass('bg-secondary')
+			.removeClass('bg-danger')
+			.removeClass('S-class-seat')
+			.removeClass('R-class-seat')
+			.removeClass('A-class-seat')
+			.removeClass('no-class-seat')
+			.addClass('bg-warning')
+		 	.addClass('S-class-seat');
 		changeSeat();
 	})
 	$('#A-change-btn').click(function(){
-		$('button.ui-selected').removeClass('bg-primary').removeClass('bg-warning').removeClass('no-class-seat')
-						 .addClass('bg-danger').addClass('A-class-seat');
+		$('button.ui-selected')
+			.removeClass('bg-primary')
+			.removeClass('bg-warning')
+			.removeClass('bg-secondary')
+			.removeClass('bg-danger')
+			.removeClass('S-class-seat')
+			.removeClass('R-class-seat')
+			.removeClass('A-class-seat')
+			.removeClass('no-class-seat')
+			.addClass('bg-danger')
+			.addClass('A-class-seat');
 		changeSeat();
 	})
 	$('#N-change-btn').click(function(){
-		$('button.ui-selected').removeClass('bg-primary').removeClass('bg-warning').removeClass('bg-danger')
-						 .addClass('bg-secondary').addClass('no-class-seat');
+		$('button.ui-selected')
+			.removeClass('bg-primary')
+			.removeClass('bg-warning')
+			.removeClass('bg-secondary')
+			.removeClass('bg-danger')
+			.removeClass('S-class-seat')
+			.removeClass('R-class-seat')
+			.removeClass('A-class-seat')
+			.removeClass('no-class-seat')
+			.addClass('bg-secondary')
+			.addClass('no-class-seat');
 		changeSeat();
 	})
 	
@@ -307,9 +343,15 @@ $(function(){
 	
 	//메이트 생성
 	$('#auto-mate-selected-btn').click(function(){
+		$('button.seatBtn').text('');
+		var AbtnArrayAll = $('button.seatBtn')
+		for(var i = 0; i < AbtnArrayAll.length; i++){
+			AbtnArrayAll[i].removeAttribute('data-mate');
+		}
 		
 		var AbtnArray = new Array();
-		AbtnArray = $('button.seatBtn');
+		AbtnArray = $('button.seatBtn:not(.no-class-seat)')
+		//AbtnArray = $('button.seatBtn');
 		var index = Number($('#mate-select-val').val());
 		var j = 1;
 		
@@ -319,9 +361,9 @@ $(function(){
 				AbtnArray[i-1].setAttribute('data-mate',j)
 				AbtnArray[i].setAttribute('data-mate',j)
 				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
-				console.log(i,j)
 				j++;
 			}
+			
 		} else if (index == 3){
 			
 			for(var i = index-1; i < AbtnArray.length; i+= index ){
@@ -329,20 +371,34 @@ $(function(){
 				AbtnArray[i-2].setAttribute('data-mate',j)
 				AbtnArray[i-1].setAttribute('data-mate',j)
 				AbtnArray[i].setAttribute('data-mate',j)
-				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').addClass('small').text(j);
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 				j++;
 			}
+			
 		} else if (index == 4){
 			for(var i = index-1; i < AbtnArray.length; i+= index ){
 				AbtnArray[i-3].setAttribute('data-mate',j)
 				AbtnArray[i-2].setAttribute('data-mate',j)
 				AbtnArray[i-1].setAttribute('data-mate',j)
 				AbtnArray[i].setAttribute('data-mate',j)
-				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').addClass('small').text(j);
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 				j++;
+			}
+
+		}
+		if($('button.seatBtn:not(.no-class-seat):not([data-mate])').length > 0){
+			var array = new Array();
+			array = $('button.seatBtn:not(.no-class-seat):not([data-mate])');
+			for(var i = 0; i < array.length; i++){
+				
+				array[i].setAttribute('data-mate',j)
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 			}
 		}
 		$('#mate-room-cnt').val(j-1);
+		if($('button.seatBtn:not(.no-class-seat):not([data-mate])').length > 0){
+			console.log(11234);
+		}
 	})
 
 	
