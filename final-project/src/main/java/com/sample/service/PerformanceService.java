@@ -13,7 +13,7 @@ import com.sample.web.view.PerformanceSeatPrice;
 public interface PerformanceService {
     void addPerformance(Performance performance);
 
-    List<Performance> getAllPerformances();
+    List<PerformanceDetailDto> getAllPerformances();
     List<Performance> searchPerformances(Performance performance);    
     PerformanceDto getPerformanceDetail(int performanceId);        
     List<PerformanceSchedule> getPerformanceDetailByMap(Map<String, Object> data);

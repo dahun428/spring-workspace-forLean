@@ -436,4 +436,25 @@
 	
 	 
 -->	
+	<select id="getAllPerformances" resultMap="PerformanceDetailDtoResultMap">
+		SELECT 
+			a.id, 
+			title, 
+			category, 
+			startDate, 
+			endDate, 
+			rating, 
+			runningTime, 
+			provider, 
+			imagePath,
+			`explain`, 
+			hallInfoId, 
+			c.name 				as hallName, 
+			c.address 			as hallAddress
+		from performance_info a
+		left outer join hall_info_main c on a.hallInfoId = c.id 
+		ORDER BY a.id 	
+	</select>
+
+
 </mapper>

@@ -61,9 +61,8 @@ public class PerformanceServiceImpl implements PerformanceService {
 		return performanceDao.getPerformanceByPerformanceMainId(performanceMainId);
 	}
 	@Override
-	public List<Performance> getAllPerformances() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PerformanceDetailDto> getAllPerformances() {
+		return performanceDao.getAllPerformances();
 	}
 
 	@Override

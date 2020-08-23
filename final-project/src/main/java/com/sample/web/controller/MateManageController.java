@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sample.dto.PerformanceDetailDto;
+import com.sample.dto.PerformanceDto;
 import com.sample.service.PerformanceService;
 import com.sample.web.view.Performance;
 
@@ -30,13 +32,13 @@ public class MateManageController {
 		
 		return "mate/mateManager";
 	}
-	@PostMapping("/mateManager.do")
+	@RequestMapping("/mateManagerJson.do")
 	public @ResponseBody Map<String, Object> MateManagerAjax() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<Performance> performanceList = performanceService.getAllPerformances();
-		map.put("performanceList", performanceList);
+		List<PerformanceDetailDto> performanceList = performanceService.getAllPerformances();
 		
+		map.put("performanceList", performanceList);
 		
 		return map;
 	}

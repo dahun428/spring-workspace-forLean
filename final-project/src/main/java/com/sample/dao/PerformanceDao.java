@@ -113,4 +113,11 @@ public interface PerformanceDao {
    List<PerformanceSeatPrice> getPerformanceSeatPrice(int performanceId);
    
    List<PerformanceDto> getPerformanceByUserId(String userId);
+   
+   /**
+    * 모든 공연 정보를 가져오는 메소드
+    * @return
+    */
+   List<PerformanceDetailDto> getAllPerformances();
+   
 }
