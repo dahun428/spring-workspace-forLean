@@ -251,14 +251,13 @@
 											<div class="input-group-append">
 												<button class="btn btn-outline-secondary" type="button">선택</button>
 											</div>
-											<select name="" id="" class="custom-select">
+											<select name="mate-select-val" id="mate-select-val" class="custom-select">
 												<option value="2">2인</option>
 												<option value="3">3인</option>
 												<option value="4">4인</option>
-												<option value="5">5인</option>
 											</select>
 											<div class="input-group-append">
-												<button class="btn btn-outline-secondary">자동배정</button>
+												<button type="button" id="auto-mate-selected-btn" class="btn btn-outline-secondary">자동배정</button>
 											</div>
 										</div>
 									</div>
@@ -268,7 +267,7 @@
 												<label for="" class="input-group-text">개설된 메이트 방 수</label>
 											</div>
 											<input type="number" class="form-control text-right"
-												readonly="readonly" />
+												readonly="readonly" id="mate-room-cnt"/>
 											<div class="input-group-append">
 												<label for="" class="input-group-text">개</label>
 											</div>

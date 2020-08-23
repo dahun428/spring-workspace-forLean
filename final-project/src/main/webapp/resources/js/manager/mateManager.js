@@ -40,8 +40,8 @@ $(function(){
 				var seat = document.createElement('button');
 				seat.style.width='15px'
 				seat.style.height='15px'
-				seat.style.padding='3px'
-				seat.style.margin='3px'
+				seat.style.padding='1px'
+				seat.style.margin='0'
 							
 				seat.setAttribute("class"," btn btn-sm btn-outline-secondary seatBtn")
 				var seatClass = '';
@@ -72,12 +72,12 @@ $(function(){
 				var seatNo = seatClass + j
 				seat.setAttribute('data-seatrow', i);
 				seat.setAttribute('data-seatNo', seatNo);
-				var possibleSeat = randomSeat();
-				seat.innerHTML = `
-				    <svg class="${possibleSeat}" width="5" height="5">
-				      <use href="#${possibleSeat}"></use>
-				    </svg>
-				    `;	
+			//	var possibleSeat = randomSeat();
+			//	seat.innerHTML = `
+			//	    <svg class="${possibleSeat}" width="5" height="5">
+			//	      <use href="#${possibleSeat}"></use>
+			//	    </svg>
+			//	    `;	
 				$div.append(seat);
 			}
 		}
@@ -306,27 +306,45 @@ $(function(){
 	
 	
 	//메이트 생성
-	var AbtnArray = new Array();
-	AbtnArray = $('.A Button.seatBtn');
-	var index = 2;
-	var j = 1;
-	for(var i = index-1; i < AbtnArray.length; i+= index ){
-		$(AbtnArray[i-1]).data('mateNo',j).css('border','1px solid red');
-		$(AbtnArray[i]).data('mateNo',j).css('border','1px solid red');
-		j++;
-	}
-//	console.log($AbtnArray[i-1], $AbtnArray[i])
-	
-//	var $AbtnArray = new Array();
-//	$AbtnArray = $('.A Button.seatBtn');
-//	var index = 3;
-//	for(var i = index-1; i < $AbtnArray.length; i+= index ){
-//		console.log(i-2,i-1,i)
-//	}	
-	//$AbtnArray.each(function(index, element){
-	//	console.log(index);
-	//})
-	
+	$('#auto-mate-selected-btn').click(function(){
+		
+		var AbtnArray = new Array();
+		AbtnArray = $('button.seatBtn');
+		var index = Number($('#mate-select-val').val());
+		var j = 1;
+		
+		if(index == 2){
+			for(var i = index-1; i < AbtnArray.length; i+= index ){
+				
+				AbtnArray[i-1].setAttribute('data-mate',j)
+				AbtnArray[i].setAttribute('data-mate',j)
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
+				console.log(i,j)
+				j++;
+			}
+		} else if (index == 3){
+			
+			for(var i = index-1; i < AbtnArray.length; i+= index ){
+				
+				AbtnArray[i-2].setAttribute('data-mate',j)
+				AbtnArray[i-1].setAttribute('data-mate',j)
+				AbtnArray[i].setAttribute('data-mate',j)
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').addClass('small').text(j);
+				j++;
+			}
+		} else if (index == 4){
+			for(var i = index-1; i < AbtnArray.length; i+= index ){
+				AbtnArray[i-3].setAttribute('data-mate',j)
+				AbtnArray[i-2].setAttribute('data-mate',j)
+				AbtnArray[i-1].setAttribute('data-mate',j)
+				AbtnArray[i].setAttribute('data-mate',j)
+				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').addClass('small').text(j);
+				j++;
+			}
+		}
+		$('#mate-room-cnt').val(j-1);
+	})
+
 	
 	
 	
