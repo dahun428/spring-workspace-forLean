@@ -2,6 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
+<<<<<<< HEAD
+		<item value="R-seats1" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="custom-color"/>
+			<item value="getCountMateByPerformanceId"/>
+			<item value="getMatesByPerformanceId"/>
+=======
 		<item value="getNotices" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
@@ -10,6 +19,7 @@
 			<item value="getMatesByPerformanceId"/>
 			<item value="getUserExistMate"/>
 			<item value="getMateMemberCountInMateByMateId"/>
+>>>>>>> 02f9de824a0ccfe76d82e8a7621daba1fea88f35
 		</list>
 		<list key="replacehistory">
 		</list>

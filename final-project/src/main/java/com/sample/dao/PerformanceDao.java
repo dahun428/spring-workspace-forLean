@@ -6,6 +6,9 @@ import java.util.Map;
 
 import com.sample.dto.PerformanceDto;
 import com.sample.web.view.HallInfo;
+import com.sample.web.view.Performance;
+import com.sample.web.view.PerformanceGenre;
+import com.sample.web.view.Performance;
 import com.sample.web.view.PerformanceSchedule;
 import com.sample.web.view.PerformanceSeatPrice;
 import com.sample.dto.PerformanceDetailDto;
@@ -80,6 +83,32 @@ public interface PerformanceDao {
 	 */
 	HallInfo getHallInfoById(int HallInfoid);
 	
+	/**
+	 * 공연장정보를 데이터베이스에 저장한다.
+	 * @param hallInfo
+	 */
+	void insertHallInfo(HallInfo hallInfo);
+	
+	/**
+	 * 특정공연과 장르를 연결지어 데이터베이스에 저장한다.
+	 * 해당 공연에 대한 장르를 설정한다.
+	 * @param performanceGenre
+	 */
+	void insertGenre(PerformanceGenre performanceGenre);
+	
+	
+	/**
+	 * 공연에 대한 좌석정보를 데이터베이스에 저장한다. 
+	 * @param performanceSeatPrice
+	 */
+	void insertPerformanceSeatPrice(PerformanceSeatPrice performanceSeatPrice);
+	
+	/**
+	 * 공연정보를 데이터베이스에 저장한다.
+	 * performance_info 정보를 performance_info 테이블에 저장한다.
+	 * @param performance
+	 */
+	void insertPerformance(Performance performance);	
 	
    /**
     * 공연 상영날짜와 공연번호로 공연 찾아오는 메소드
@@ -119,5 +148,21 @@ public interface PerformanceDao {
     * @return
     */
    List<PerformanceDetailDto> getAllPerformances();
+   
+   
+   /**
+    * 유저 관심공연 리스트를 가져오는 메서드.
+    * @param String userId
+    * @return List<Performance>
+    */
+   List<Performance> getLikesList(String userId);
+   
+   
+   /**
+    * mate_main, performance_main, hall_seats Table 과 연동하여 mate Insert 시 함께 사용
+    * @param performanceSchedule
+    */
+   void insertPerformanceSchedule(PerformanceSchedule performanceSchedule);
+   
    
 }

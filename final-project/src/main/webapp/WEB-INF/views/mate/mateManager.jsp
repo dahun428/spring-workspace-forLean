@@ -54,7 +54,7 @@
 													<tbody id="performance-table" class="text-center">
 														<tr>
 															<td rowspan="4">
-																<img id="pImg" src="/resources/sample-images/movie_image.jpg" height="200px" class="rounded float-left" alt="" />
+																<img id="pImg" src="/resources/sample-images/noimage.png" height="200px" class="rounded float-left" alt="" />
 															</td>
 														</tr>
 														<tr>
@@ -67,7 +67,7 @@
 															<td>
 															<span class="form-group">
 																<label for="">날짜선택</label>
-																<input class="form-control" type="date"/>
+																<input class="form-control" type="date" id="show-date-selected"/>
 															</span>
 															</td>
 														</tr>
@@ -101,7 +101,7 @@
 															</td>
 															<td>쇼넘버(회차)
 																<div id="pShowTime">
-																	<select name="" id="" class="custom-select">
+																	<select name="showtimeSelectBox" id="pShowtime-select" class="custom-select">
 																		<option value="1">1</option>
 																		<option value="2">2</option>
 																		<option value="3">3</option>
@@ -133,31 +133,31 @@
 								</div>
 								<div class="row">
 									<div class="offset-3 col-6 offset-3 mt-4">
-										<div class="row selectable">
-											<div id="R-seats1" class="col-6 A"></div>
-											<div id="R-seats2" class="col-6 B"></div>
+										<div class="row">
+											<div id="R-seats1" class="selectable col-6 A"></div>
+											<div id="R-seats2" class="selectable col-6 B"></div>
 										</div>
 									</div>
 								</div>
 								<br />
 								<div class="row">
 									<div class="col-12">
-										<div class="row selectable">
-											<div id="S-seats1" class="col-3 C"></div>
-											<div id="S-seats2" class="col-3 D"></div>
-											<div id="S-seats3" class="col-3 E"></div>
-											<div id="S-seats4" class="col-3 F"></div>
+										<div class="row">
+											<div id="S-seats1" class="selectable col-3 C"></div>
+											<div id="S-seats2" class="selectable col-3 D"></div>
+											<div id="S-seats3" class="selectable col-3 E"></div>
+											<div id="S-seats4" class="selectable col-3 F"></div>
 										</div>
 									</div>
 								</div>
 								<br />
 								<div class="row"> 
 									<div class="col-12 mb-4">
-										<div class="row selectable">
-											<div id="A-seats1" class="col-3 G"></div>
-											<div id="A-seats2" class="col-3 H"></div>
-											<div id="A-seats3" class="col-3 I"></div>
-											<div id="A-seats4" class="col-3 J"></div>
+										<div class="row">
+											<div id="A-seats1" class="selectable col-3 G"></div>
+											<div id="A-seats2" class="selectable col-3 H"></div>
+											<div id="A-seats3" class="selectable col-3 I"></div>
+											<div id="A-seats4" class="selectable col-3 J"></div>
 										</div>
 									</div>
 								</div>
@@ -223,15 +223,15 @@
 									<div class="col-12 mt-4">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<button class="btn btn-outline-secondary" type="button" id="R-change-btn">R석</button>
+												<button class="btn btn-primary" type="button" id="R-change-btn">R석</button>
 											</div>
 											<input type="number" id="R-class" class="form-control" readonly="readonly" />
 											<div class="input-group-prepend">
-												<button class="btn btn-outline-secondary" type="button" id="S-change-btn">S석</button>
+												<button class="btn btn-warning" type="button" id="S-change-btn">S석</button>
 											</div>
 											<input type="number" id="S-class" class="form-control" readonly="readonly" />
 											<div class="input-group-prepend">
-												<button class="btn btn-outline-secondary" type="button" id="A-change-btn">A석</button>
+												<button class="btn btn-danger" type="button" id="A-change-btn">A석</button>
 											</div>
 											<input type="number" id="A-class" class="form-control" readonly="readonly" />
 											<div class="input-group-prepend">
@@ -245,11 +245,27 @@
 									<div class="col-12 mt-4">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<label for="" class="input-group-text">제한인원수</label>
+												<label for="" class="input-group-text">공연가격</label>
 											</div>
-											<input type="number" class="form-control" />
-											<div class="input-group-append">
-												<button class="btn btn-outline-secondary" type="button">선택</button>
+											<div class="input-group-prepend">
+												<label for="" class="input-group-text">R석</label>
+											</div>
+											<input id="R-ticket-price" type="text" class="form-control" readonly="readonly" />
+											<div class="input-group-prepend">
+												<label for="" class="input-group-text">S석</label>
+											</div>
+											<input id="S-ticket-price" type="text" class="form-control" readonly="readonly"/>
+											<div class="input-group-prepend">
+												<label for="" class="input-group-text">A석</label>
+											</div>
+											<input id="A-ticket-price" type="text" class="form-control" readonly="readonly"/>
+											
+										</div>
+									</div>
+									<div class="col-12 mt-4">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<label for="" class="input-group-text">메이트 인원수</label>
 											</div>
 											<select name="mate-select-val" id="mate-select-val" class="custom-select">
 												<option value="2">2인</option>
@@ -259,6 +275,10 @@
 											<div class="input-group-append">
 												<button type="button" id="auto-mate-selected-btn" class="btn btn-outline-secondary">자동배정</button>
 											</div>
+											<div class="input-group-append">
+												<button type="button" id="rest-mate-selected-btn" class="btn btn-outline-secondary">리셋</button>
+											</div>
+											
 										</div>
 									</div>
 									<div class="col-12 mt-4">
@@ -278,45 +298,11 @@
 											<div class="input-group-prepend">
 												<label for="" class="input-group-text"> 선택된 좌석번호 </label>
 											</div>
-											<input type="text" class="form-control" readonly="readonly" />
+											<textarea rows="7" class="form-control" id="selected-seat-view" readonly="readonly"></textarea>
 										</div>
 									</div>
-									
-									<div class="col-12 mt-4">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label for="" class="input-group-text">프로모션 이름</label>
-											</div>
-											<input type="text" class="form-control" readonly="readonly"/>
-											<div class="input-group-append">
-												<button class="btn btn-outline-secondary">확정</button>
-											</div>
-										</div>
-									</div>
-									<div class="col-12 mt-4">
-										<div class="input-group">
-											<div class="input-group-prepend">
-											<label for="" class="input-group-text">
-													등급
-												</label>
-											</div>
-												<select name="" id="" class="custom-select">
-													<option value="S">S석</option>
-													<option value="R">R석</option>
-													<option value="A">A석</option>
-												</select>
-											<div class="input-group-prepend">
-												<label for="" class="input-group-text">
-													공연가격
-												</label>
-											</div>
-											<input type="number" class="form-control" />
-											<div class="input-group-append">
-												<label for="" class="input-group-text">
-													원
-												</label>
-											</div>
-										</div>
+									<div class="col-12 mt-4 text-right">
+										<button type="button" id="mate-all-submit-btn" class="btn btn-primary">등록</button>
 									</div>
 								</div>
 							</div>
@@ -379,5 +365,10 @@
   </div>
 </div>
 <!-- 공연 리스트 모달 -->
+<!-- input hidden -->
+<input type="hidden" id="hidden-performance-info-id" />
+<input type="hidden" id="hidden-hall-id" />
+
+
 </body>
 </html>

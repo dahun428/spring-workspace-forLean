@@ -69,9 +69,9 @@ $(function(){
 					seatClass = 'J';
 				}
 				
-				var seatNo = seatClass + j
+				seat.setAttribute('data-seatblock', seatClass)
 				seat.setAttribute('data-seatrow', i);
-				seat.setAttribute('data-seatNo', seatNo);
+				seat.setAttribute('data-seatcol', j);
 			//	var possibleSeat = randomSeat();
 			//	seat.innerHTML = `
 			//	    <svg class="${possibleSeat}" width="5" height="5">
@@ -106,14 +106,27 @@ $(function(){
 	$aseatsBtn3.addClass('bg-danger').addClass('A-class-seat');
 	$aseatsBtn4.addClass('bg-danger').addClass('A-class-seat');
 
-	//버튼 클릭시 바뀌는 것
-	$('.seatBtn').click(function(){
-		changeBtnClass($(this));
-	})
+//	//버튼 클릭시 바뀌는 것
+//	$('.seatBtn').click(function(){
+//		changeBtnClass($(this));
+//	})
 	
 	
 	//드래그 & 버튼 클래스 변경
-	$( ".selectable" ).selectable();
+	$( ".selectable" ).selectable({
+		stop: function(event,ui){
+//			console.log(event.target);
+//			console.log($(this).find('button.ui-selected'));
+			var $seatEle = $(this).find('button.ui-selected')
+			var seat =''
+			$seatEle.each(function(i,ele){
+				
+				seat += $(ele).data('seatblock') + $(ele).data('seatrow') + '-' + $(ele).data('seatcol') +', '
+			})
+			$('#selected-seat-view').text(seat);
+			
+		}
+	});
 	
 	$('#R-change-btn').click(function(){
 		$('button.ui-selected')
@@ -174,7 +187,7 @@ $(function(){
 	
 	
 	
-	
+	//페이지 로드시 나타남
 	$.ajax({
 		url:'/manager/mateManagerJson.do',
 		Type:'POST',
@@ -183,10 +196,7 @@ $(function(){
 			
 		},
 		success:function(result){
-			console.log(1);
-			console.log('result',result);
 			var performanceList = result.performanceList;
-			console.log('performanceList',performanceList)
 			var pTitle = new Array();
 			for(var i in performanceList){
 				pTitle[i] = performanceList[i].title;
@@ -211,9 +221,9 @@ $(function(){
 	var $pEndTime = $('#pEndTime');
 	var $pShowTime = $('#pShowTime');
 	
+	//공연 선택버튼 클릭시 이벤트
 	$('#p-search-btn').click(function(){
 		var searchVal = $('#performance-search').val();
-		console.log(searchVal);
 		
 		$.ajax({
 			url:'/manager/mateManagerJson.do',
@@ -227,11 +237,12 @@ $(function(){
 				for(var i in performanceList){
 					var list = performanceList[i];
 					var pTitleArray = list.title;
-					
+					//해당 공연 찾아서 text 넣기
 					if(pTitleArray == searchVal){
-						console.log(list);
 						
-						var id = list.performanceId;
+						//performance_info_id
+						var id = list.id;
+						$('#hidden-performance-info-id').val(id);
 						var title = list.title;
 						var cat = list.category;
 						var startDate = list.startDate;
@@ -239,7 +250,23 @@ $(function(){
 						var rating = list.rating;
 						var imagePath = list.imagePath;
 						var runningTime = list.runningTime;
-						$pImg.attr('src',imagePath);
+						
+						var seatPriceArray = list.seatPrices;
+						var SseatP, RseatP, AseatP;
+						for(var i in seatPriceArray){
+							if(seatPriceArray[i].seatRate == 'A'){
+								AseatP = seatPriceArray[i].price;
+							} else if (seatPriceArray[i].seatRate == 'R'){
+								RseatP = seatPriceArray[i].price;
+							} else if (seatPriceArray[i].seatRate == 'S'){
+								SseatP = seatPriceArray[i].price;
+							}
+						}
+						//hall_info_id
+						var hallId = list.seatPrices[0].infoId;
+						$('#hidden-hall-id').val(hallId);
+						
+						$pImg.attr('src','/resources/sample-images/'+imagePath);
 						$pName.text(title);
 						$pCat.text(cat);
 						$pAthu.text(rating);
@@ -250,8 +277,12 @@ $(function(){
 						$pStartDate.text(startDate);
 						
 						$pEndDate.text(endDate);
-						console.log(runningTime);
 						$pRunningTime.text(runningTime);
+						
+						$('#R-ticket-price').val(RseatP);
+						$('#S-ticket-price').val(SseatP);
+						$('#A-ticket-price').val(AseatP);
+						
 						
 					}
 				}
@@ -259,7 +290,7 @@ $(function(){
 		})
 		
 	})
-	
+	//공연 시간 관련 함수
 	$pStartTime.on('click',function(){
 		if($('#pRunningTime').text() == ''){
 			alert('공연을 먼저 선택해주세요');
@@ -297,7 +328,6 @@ $(function(){
 			},
 			success:function(result){
 				var performanceList = result.performanceList;
-				console.log('performanceList2',performanceList)
 				for(var i in performanceList){
 					var pNo = performanceList[i].id;
 					var pTitle = performanceList[i].title;
@@ -396,15 +426,91 @@ $(function(){
 			}
 		}
 		$('#mate-room-cnt').val(j-1);
-		if($('button.seatBtn:not(.no-class-seat):not([data-mate])').length > 0){
-			console.log(11234);
+	})
+	//리셋
+	$('#rest-mate-selected-btn').click(function(){
+		$('button.seatBtn').text('');
+		var AbtnArrayAll = $('button.seatBtn')
+		for(var i = 0; i < AbtnArrayAll.length; i++){
+			AbtnArrayAll[i].removeAttribute('data-mate');
 		}
 	})
+	
+	//submit
+	$('#mate-all-submit-btn').click(function(){
+		
+		
+		//performance_info_id
+		var pId = $('#hidden-performance-info-id').val();
+		//hall_info_id
+		var hId = $('#hidden-hall-id').val();
+		//showDate
+		var sDate = $('#show-date-selected').val();
+		//showTime
+		var sTime = $('#pStartTime').val();
+		//showNumber
+		var sNum = $('#pShowtime-select').val();
+		//mateAuto 인원수
+		var mateCntindex = $('#mate-select-val').val()
+		
+		//performance_main 에 필요한 요소 담기
+		var pMainData = new Object();
+		pMainData.infoId = pId;
+		pMainData.hallId = hId;
+		pMainData.showDate = sDate;
+		pMainData.showTime = sTime;
+		pMainData.showNumber = sNum;
+		pMainData.index = mateCntindex;
+		//hall_seats 와 mate_main 테이블에 필요한 요소 담기
+		var objArray = new Array();
+		var $hallSeatDataArray = $('button.seatBtn:not(.no-class-seat)');
 
+		$hallSeatDataArray.each(function(index, element){
+
+			var obj = new Object();
+			
+			if($(element).hasClass('R-class-seat')){
+				obj.seatRate = 'R';
+			} else if ($(element).hasClass('S-class-seat')){
+				obj.seatRate = 'S';
+			} else if ($(element).hasClass('A-class-seat')){
+				obj.seatRate = 'A';
+			}
+			
+			obj.seatBlock = $(element).data('seatblock');
+			obj.seatRow = $(element).data('seatrow');
+			obj.seatCol = $(element).data('seatcol');
+			obj.mateNo = $(element).data('mate');
+			objArray.push(obj);
+		})
+//		console.log(pMainData);
+//		console.log(objArray);
+		
+		//mateGroup
+//		$('')
+		
+		
+		var data = {performance: pMainData, seats:objArray}
+
+		$.ajax({
+			type:"POST",
+			url:"/manager/addMate.do",
+			dataType:"json",
+			contentType:'application/json',
+			data:JSON.stringify(data),
+			success:function(result){
+				console.log('success');
+			}
+				
+				
+		})
+		
+
+	})
 	
 	
-	
-	
+	var mateCntindex = $('#mate-select-val').val()
+	$('[data-mate]').length
 	
 	
 	
