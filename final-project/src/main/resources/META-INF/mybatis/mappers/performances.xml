@@ -40,11 +40,9 @@
 					C.address		as hallAddress,	
 					A.reserveCount  as reserveCount	
 		FROM 
-			performance_info A
+			performance_info A		
 		JOIN 
-			performance_main B ON A.id = B.infoId
-		JOIN 
-			hall_info_main C ON C.id =B.hallId
+			hall_info_main C ON C.id =A.hallInfoId
 		JOIN 
 			performance_genre D ON A.id = D.id	
 		WHERE 
@@ -89,11 +87,9 @@
 					C.address		as hallAddress,
 					A.reserveCount  as reserveCount						
 		FROM 
-			performance_info A
+			performance_info A		
 		JOIN 
-			performance_main B ON A.id = B.infoId
-		JOIN 
-			hall_info_main C ON C.id =B.hallId
+			hall_info_main C ON C.id = A.hallInfoId
 		JOIN 
 			performance_genre D ON A.id = D.id	
 		WHERE 
@@ -118,7 +114,9 @@
 		</if>
 		ORDER BY 
 			A.id	
-		limit #{beginIndex}, #{endIndex}		
+		LIMIT 
+			#{endIndex} OFFSET #{beginIndex}	
+		
 	</select>
 	
 	
@@ -142,11 +140,9 @@
 						C.address		as hallAddress,
 						A.reserveCount  as reserveCount						
 			FROM 
-				performance_info A
+				performance_info A		
 			JOIN 
-				performance_main B ON A.id = B.infoId
-			JOIN 
-				hall_info_main C ON C.id =B.hallId
+				hall_info_main C ON C.id =A.hallInfoId
 			JOIN 
 				performance_genre D ON A.id = D.id	
 			WHERE 
@@ -304,11 +300,9 @@
 					C.address		as hallAddress,
 					A.reserveCount  as reserveCount						
 		FROM 
-			performance_info A
+			performance_info A		
 		JOIN 
-			performance_main B ON A.id = B.infoId
-		JOIN 
-			hall_info_main C ON C.id =B.hallId
+			hall_info_main C ON C.id = A.hallInfoId
 		WHERE 
 			A.category=	#{value}
 		AND 
@@ -335,17 +329,56 @@
 					C.address		as hallAddress,
 					A.reserveCount  as reserveCount						
 		FROM 
-			performance_info A
+			performance_info A		
 		JOIN 
-			performance_main B ON A.id = B.infoId
-		JOIN 
-			hall_info_main C ON C.id =B.hallId
+			hall_info_main C ON C.id = A.hallInfoId
 		WHERE 
 			A.id=	#{value}
 		ORDER BY 
 			A.id	
 	</select>
 	
+	<insert id="insertHallInfo" parameterType="HallInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+			hall_info_main 
+			(`name`, address, gpsX, gpsY)
+		VALUES
+			(#{name}, #{address}, #{gpsX}, #{gpsY})
+		<selectKey resultType="int" order="AFTER" keyProperty="id" >
+			select LAST_INSERT_ID() as id
+		</selectKey>		
+	</insert>
+	
+	<insert id="insertGenre" parameterType="PerformanceGenre">
+		INSERT INTO 
+			performance_genre
+			(genre, id)
+		VALUES
+			( #{genre}, #{id})
+	</insert>
+	
+	<insert id="insertPerformanceSeatPrice" parameterType="PerformanceSeatPrice">
+		INSERT INTO 
+			performance_seat_price
+			(infoId, seatRate, price)
+		VALUES
+			(#{infoId}, #{seatRate}, #{price} )	
+	</insert>	
+	
+	<insert id="insertPerformance" parameterType="Performance"
+		useGeneratedKeys="true" keyProperty="id">		
+		INSERT INTO 
+			performance_info
+			(title, category, startDate, endDate, rating, runningTime, provider, 
+			imagePath, `explain`, hallInfoId)
+		VALUES
+			(#{title}, #{category}, #{startDate}, #{endDate}, #{rating}, #{runningTime}, #{provider}, 
+			#{imagePath}, #{explain}, #{hallInfoId})
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() as no	
+		</selectKey>		
+	</insert>
 	
 	<select id="getPerformanceByPerformanceMainId" parameterType="int" resultMap="PerformanceDetailDtoResultMap">
 	SELECT 
@@ -436,4 +469,71 @@
 	
 	 
 -->	
+	<select id="getAllPerformances" resultMap="PerformanceDetailDtoResultMap">
+		SELECT 
+			a.id, 
+			title, 
+			category, 
+			startDate, 
+			endDate, 
+			rating, 
+			runningTime, 
+			provider, 
+			imagePath,
+			`explain`, 
+			hallInfoId, 
+			c.name 				as hallName, 
+			c.address 			as hallAddress
+		from performance_info a
+		left outer join hall_info_main c on a.hallInfoId = c.id 
+		ORDER BY a.id 	
+	</select>
+	<resultMap type="Performance" id="likes">
+		<id column="id" property="id"/>
+		<result column="title" property="title"/>
+		<result column="category" property="category"/>
+		<result column="provider" property="provider"/>
+		<result column="runningTime" property="runningTime"/>
+		<result column="startDate" property="startDate"/>
+		<result column="endDate" property="endDate"/>
+		<result column="imagePath" property="imagePath"/>
+		<result column="explain" property="explain"/>
+		<association property="hallInfo" javaType="HallInfo">
+			<result property="name" column="name"/>
+		</association>
+		<collection property="genre" select="getGenreById" column="id" ofType="string"/>
+	</resultMap>
+	
+	<select id="getLikesList" parameterType="string" resultMap="likes">
+		select b.id, title, category, 
+		date_format(b.startDate, '%Y.%m.%d') as startDate,
+		date_format(b.endDate, '%Y.%m.%d') as endDate,
+		time_format(b.runningTime, '%H:%i:%S') as runningTime,
+		provider, imagePath, `explain`, c.name
+		from user_likes a
+		join performance_info b on a.infoId = b.id
+		join hall_info_main c on b.hallInfoId = c.id
+		where a.id = #{userId}
+	</select>
+
+
+
+<!-- performance Main Table insert -->
+	<insert id="insertPerformanceSchedule" parameterType="PerformanceSchedule" 
+						useGeneratedKeys="true"  keyProperty="id">
+			
+		INSERT INTO performance_main
+		(infoId, hallId, showDate, showTime, showNumber)
+		VALUES
+		(#{infoId}, #{hallinfo.id}, #{showDate}, #{showTime}, #{showNumber})
+	
+	 <selectKey resultType="int" order="AFTER" keyProperty="id">
+		 SELECT LAST_INSERT_ID() as id
+	 </selectKey>
+	</insert>
+
+
+
+
+
 </mapper>

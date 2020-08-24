@@ -16,7 +16,14 @@ import com.sample.web.view.PerformanceSchedule;
 import com.sample.web.view.User;
 
 public interface MateDao {
-    void insertMate(Mate mate);
+    /**
+     * mate_main, performance_main, hall_seats 테이블과 함께 insert 
+     * @param mate
+     */
+	void insertMate(Mate mate);
+    
+    
+    
     List<MateTimeLine> getTimelinesByMateId(int mateId);
     /**
      * performanceId에 따른 mate 방의 모든 리스트를 가져온다.
@@ -211,5 +218,6 @@ public interface MateDao {
     int getAllMatesInfoCount(@Param("performanceId") int performanceId,
 			@Param("userId") String userId);
     
+    Mate getMateTicket(int mateId);
     
 }

@@ -7,7 +7,10 @@ content_assist_proposals_foreground=233,235,237
 eclipse.preferences.version=1
 fontPropagated=true
 org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
+<<<<<<< HEAD
 org.eclipse.wst.jsdt.internal.ui.navigator.layout=1
+=======
+>>>>>>> 02f9de824a0ccfe76d82e8a7621daba1fea88f35
 org.eclipse.wst.jsdt.ui.editor.tab.width=
 org.eclipse.wst.jsdt.ui.formatterprofiles.version=11
 org.eclipse.wst.jsdt.ui.javadoclocations.migrated=true

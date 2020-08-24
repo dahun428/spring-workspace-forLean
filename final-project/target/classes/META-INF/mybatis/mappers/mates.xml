@@ -230,9 +230,10 @@ WHERE mmain.id = 1;
 		WHERE mmain.performanceId = #{value}
 	</select>
 	<select id="getMateUserByMateId" parameterType="int" resultType="User">
-		SELECT mmem.userId as id
+		SELECT mmem.userId as id, umain.nickname
 			FROM mate_members mmem
 			JOIN mate_main mmain ON mmain.id = mmem.id
+			JOIN user_main umain ON mmem.userId = umain.id
 			WHERE mmain.id = #{value}
 	</select>
 	<select id="getMateTagByMateId" resultType="com.sample.web.view.MateTag" parameterType="int">
@@ -422,8 +423,43 @@ WHERE mmain.id = 1;
 				
 	
 	</select>
+	
+
+	<resultMap type="Mate" id="mateTicket">		
+		<result property="id" column="id"/>
+		<result property="seatGroup" column="seatGroup"/>
+		<result property="seatRate" column="seatRate"/>
+		<result property="category" column="category"/>
+		<result property="groupsize" column="groupsize"/>
+		<result property="groupCnt" column="groupCnt"/>
+		<collection property="mateTags" ofType="com.sample.web.view.MateTag" javaType="list" select="getMateTagByMateId" column="id">
+			<result property="mateId" column="mateId"/>
+			<result property="tagName" column="tagName"/>
+		</collection>
+		<collection property="mateMembers" ofType="User" column="id" javaType="list" select="getMateUserByMateId">
+			<result property="id" column="id"/>
+		</collection>
+	</resultMap>
+
+	<select id="getMateTicket" parameterType="int" resultMap="mateTicket">
+		select a.id, a.performanceId, a.seatGroup, b.category, a.groupsize, a.groupCnt
+		from mate_main a
+		join mate_category b on a.category = b.id
+		where a.id = #{mateId}
+	</select>
 
 
-
+	<!-- mate_main Insert Table -->
+	<insert id="insertMate" parameterType="Mate" useGeneratedKeys="true"  keyProperty="id">
+		INSERT INTO mate_main
+		(performanceId, seatGroup, groupSize, seatRate)
+		VALUES
+		(#{performance.id}, #{seatGroup}, #{groupsize}, #{seatRate})
+		
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+		 SELECT LAST_INSERT_ID() as id
+		 </selectKey>
+		
+	</insert>
 
 </mapper>

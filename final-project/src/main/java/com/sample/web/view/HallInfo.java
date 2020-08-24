@@ -46,5 +46,11 @@ public class HallInfo {
     public void setGpsY(String gpsY) {
         this.gpsY = gpsY;
     }
+
+	@Override
+	public String toString() {
+		return "HallInfo [id=" + id + ", name=" + name + ", address=" + address + ", gpsX=" + gpsX + ", gpsY=" + gpsY
+				+ "]";
+	}
     
 }

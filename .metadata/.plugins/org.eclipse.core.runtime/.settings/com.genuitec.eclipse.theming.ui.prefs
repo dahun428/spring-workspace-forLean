@@ -5,8 +5,13 @@ configurationInstallLocation=/C\:/APP/eGovFrameDev-3.9.0-64bit/eclipse/
 eclipse.preferences.version=1
 elearning.dont.show.until=1598746834030
 iconcolormode=primary
+<<<<<<< HEAD
 last.download.attempt.time=1597968345559
 lastConfiguration=1598227742202
+=======
+last.download.attempt.time=1597940298893
+lastConfiguration=1598026121494
+>>>>>>> 02f9de824a0ccfe76d82e8a7621daba1fea88f35
 newinstall=false
 showWelcomeDialog=false
 workbench.theme=Dark Gray

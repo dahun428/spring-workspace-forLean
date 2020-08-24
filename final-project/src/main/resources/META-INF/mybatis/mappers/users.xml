@@ -55,6 +55,22 @@
 		WHERE A.id = #{id}
 	</select>
 	
+	<select id="getAllUsers" resultType="User">
+		SELECT a.id, a.nickname, b.regDate
+			FROM 
+				user_main a, user_sub b
+			WHERE 
+				a.id = b.id
+			AND 
+				b.deleted = 'N'
+			ORDER BY
+				b.regDate DESC
+	</select>
+	
+	
+	
+	
+	
 	<select id="getUserByEmail" parameterType="string" resultMap="getUserResult">
 		SELECT A.id as id, A.password, A.nickname, 
 			   A.birthday, A.gender, A.email, A.tel, 
@@ -109,6 +125,13 @@
 			SET point = #{point}
 		WHERE id = #{id}
 	</update>
+
+	<insert id="insertUserPoint" parameterType="UserPoint">
+		INSERT into user_point_history
+			(userId, paymentId, status, value)
+		VALUES
+			(#{user.id}, #{payment.id}, #{status}, #{value})
+	</insert>
 
 </mapper>
 
