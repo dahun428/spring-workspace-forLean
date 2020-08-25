@@ -4,6 +4,7 @@ public class JsonHallSeat {
 
 	private int performanceId;
 	private int hallId;
+	private int groupSize;
 	private String seatBlock;
 	private int seatRow;
 	private int seatCol;
@@ -12,6 +13,13 @@ public class JsonHallSeat {
 	
 	public JsonHallSeat() {}
 
+	
+	public int getGroupSize() {
+		return groupSize;
+	}
+	public void setGroupSize(int groupSize) {
+		this.groupSize = groupSize;
+	}
 	public int getPerformanceId() {
 		return performanceId;
 	}
@@ -69,12 +77,31 @@ public class JsonHallSeat {
 		this.seatRate = seatRate;
 	}
 
+
 	@Override
 	public String toString() {
-		return "JsonHallSeat [performanceId=" + performanceId + ", hallId=" + hallId + ", seatBlock=" + seatBlock
-				+ ", seatRow=" + seatRow + ", seatCol=" + seatCol + ", seatRate=" + seatRate + ", mateNo=" + mateNo
-				+ "]";
+		return "JsonHallSeat [performanceId=" + performanceId + ", hallId=" + hallId + ", groupSize=" + groupSize
+				+ ", seatBlock=" + seatBlock + ", seatRow=" + seatRow + ", seatCol=" + seatCol + ", seatRate="
+				+ seatRate + ", mateNo=" + mateNo + "]";
 	}
+
+
+	@Override
+	public int hashCode() {
+		return (mateNo+seatRow+seatCol+seatRate).hashCode();
+	}
+
+
+	public boolean equals(Object obj) {
+		JsonHallSeat other = (JsonHallSeat) obj;
+		if((other.mateNo == this.mateNo)){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 
 	
 	

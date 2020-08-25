@@ -303,6 +303,16 @@
 										</div>
 									</div>
 									<div class="col-12 mt-4 text-right">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<label class="input-group-text">메이트 그룹 만들기</label>
+											</div>
+												<button type="button" id="mate-group-selected-btn" class="btn btn-outline-secondary">확정</button>
+												<input type="hidden" id="mate-last-index" />
+											</div>
+										</div>
+									</div>
+									<div class="col-12 mt-4 text-right">
 										<button type="button" id="mate-all-submit-btn" class="btn btn-primary">등록</button>
 									</div>
 								</div>
@@ -312,7 +322,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<div class="footer">
 		<%@ include file="../common/footer.jsp"%>
 	</div>

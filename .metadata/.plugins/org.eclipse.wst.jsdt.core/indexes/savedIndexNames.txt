@@ -1,30 +1,9 @@
 INDEX VERSION 1.4+C:\APP\eGovFrameDev-3.9.0-64bit\workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-<<<<<<< HEAD
-2742670347.index
-=======
-2472973898.index
-2742670347.index
-2446633146.index
 4103131090.index
-4103131090.index
-2742670347.index
-966955362.index
-343696463.index
-3115191406.index
-2025446581.index
->>>>>>> 77423fabd7a34d9406bbd6e66e67f3421d72fef0
 4051294018.index
 1336806931.index
-<<<<<<< HEAD
-3074231523.index
 2247997331.index
-3115191406.index
-=======
-813448968.index
-1786352049.index
-813448968.index
->>>>>>> 77423fabd7a34d9406bbd6e66e67f3421d72fef0
 2730531055.index
+3115191406.index
+1786352049.index
 2446633146.index
-2472973898.index
-813448968.index

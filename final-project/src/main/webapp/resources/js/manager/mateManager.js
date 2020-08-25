@@ -72,12 +72,6 @@ $(function(){
 				seat.setAttribute('data-seatblock', seatClass)
 				seat.setAttribute('data-seatrow', i);
 				seat.setAttribute('data-seatcol', j);
-			//	var possibleSeat = randomSeat();
-			//	seat.innerHTML = `
-			//	    <svg class="${possibleSeat}" width="5" height="5">
-			//	      <use href="#${possibleSeat}"></use>
-			//	    </svg>
-			//	    `;	
 				$div.append(seat);
 			}
 		}
@@ -106,17 +100,10 @@ $(function(){
 	$aseatsBtn3.addClass('bg-danger').addClass('A-class-seat');
 	$aseatsBtn4.addClass('bg-danger').addClass('A-class-seat');
 
-//	//버튼 클릭시 바뀌는 것
-//	$('.seatBtn').click(function(){
-//		changeBtnClass($(this));
-//	})
-	
 	
 	//드래그 & 버튼 클래스 변경
 	$( ".selectable" ).selectable({
 		stop: function(event,ui){
-//			console.log(event.target);
-//			console.log($(this).find('button.ui-selected'));
 			var $seatEle = $(this).find('button.ui-selected')
 			var seat =''
 			$seatEle.each(function(i,ele){
@@ -375,9 +362,11 @@ $(function(){
 	$('#auto-mate-selected-btn').click(function(){
 		$('button.seatBtn').text('');
 		var AbtnArrayAll = $('button.seatBtn')
-		for(var i = 0; i < AbtnArrayAll.length; i++){
-			AbtnArrayAll[i].removeAttribute('data-mate');
-		}
+//		for(var i = 0; i < AbtnArrayAll.length; i++){
+//			AbtnArrayAll[i].removeAttribute('data-mate');
+//			AbtnArrayAll[i].removeAttribute('data-groupsize');
+//			
+//		}
 		
 		var AbtnArray = new Array();
 		AbtnArray = $('button.seatBtn:not(.no-class-seat)')
@@ -388,8 +377,11 @@ $(function(){
 		if(index == 2){
 			for(var i = index-1; i < AbtnArray.length; i+= index ){
 				
-				AbtnArray[i-1].setAttribute('data-mate',j)
-				AbtnArray[i].setAttribute('data-mate',j)
+				$(AbtnArray[i-1]).attr('data-mate',j)
+				$(AbtnArray[i]).attr('data-mate',j)
+				$(AbtnArray[i-1]).attr('data-groupsize',index)
+				$(AbtnArray[i]).attr('data-groupsize',index)
+				$('#mate-last-index').val($(AbtnArray[AbtnArray.length-1]).data('mate'));
 				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 				j++;
 			}
@@ -401,6 +393,10 @@ $(function(){
 				AbtnArray[i-2].setAttribute('data-mate',j)
 				AbtnArray[i-1].setAttribute('data-mate',j)
 				AbtnArray[i].setAttribute('data-mate',j)
+				AbtnArray[i-2].setAttribute('data-groupsize',index)
+				AbtnArray[i-1].setAttribute('data-groupsize',index)
+				AbtnArray[i].setAttribute('data-groupsize',index)
+				$('#mate-last-index').val($(AbtnArray[AbtnArray.length-1]).data('mate'));
 				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 				j++;
 			}
@@ -411,6 +407,12 @@ $(function(){
 				AbtnArray[i-2].setAttribute('data-mate',j)
 				AbtnArray[i-1].setAttribute('data-mate',j)
 				AbtnArray[i].setAttribute('data-mate',j)
+				AbtnArray[i-3].setAttribute('data-groupsize',index)
+				AbtnArray[i-2].setAttribute('data-groupsize',index)
+				AbtnArray[i-1].setAttribute('data-groupsize',index)
+				AbtnArray[i].setAttribute('data-groupsize',index)
+				$('#mate-last-index').val($(AbtnArray[AbtnArray.length-1]).data('mate'));
+				
 				$('[data-mate='+j+']').addClass('text-dark').addClass('font-weight-bold').text(j);
 				j++;
 			}
@@ -427,12 +429,54 @@ $(function(){
 		}
 		$('#mate-room-cnt').val(j-1);
 	})
+	$('#mate-group-selected-btn').click(function(){
+		var $seatArray = $('.seatBtn:not(.no-class-seat)');
+		//var lastIndex = $($seatArray[$seatArray.length-1]).data('mate')
+		var $selectedSeats = $('button.ui-selected');
+		//현재 존재하는 data-mate, date-groupsize 제거
+		$selectedSeats.text('');
+		var nextIndex = Number($('#mate-last-index').val())+1;
+		var newMateLength = $selectedSeats.length;
+		for(var i = 0; i < $selectedSeats.length; i++){
+			$selectedSeats[i].removeAttribute('data-mate');
+			$selectedSeats[i].removeAttribute('data-groupsize');
+			//$($selectedSeats[i]).attr('data-groupsize',$selectedSeats.length);
+			//$($selectedSeats[i]).attr('data-mate',nextIndex);
+			//$selectedSeats[i].setAttribute('data-mate',nextIndex);
+			//$selectedSeats[i].setAttribute('data-groupsize',$selectedSeats.length);
+		
+		}
+		$selectedSeats.text(nextIndex);
+		$('#mate-last-index').val(nextIndex);
+		$('[data-mate]').addClass('text-dark').addClass('font-weight-bold')
+		if(newMateLength == 0){
+			return;
+		
+		}
+		if($("#mate-room-cnt").val() == 0){
+			$("#mate-room-cnt").val($("#mate-room-cnt").val() + newMateLength)
+		} else {
+			$("#mate-room-cnt").val($("#mate-room-cnt").val() - newMateLength + 1);
+		}
+		var mateArray = $('[data-mate]');
+		for(var i = 0; i < mateArray.length; i++){
+			var mate = $(mateArray[i]).data('mate');
+			console.log(mate.length);
+		}
+		
+		
+	})
+	
+	
+	
 	//리셋
 	$('#rest-mate-selected-btn').click(function(){
 		$('button.seatBtn').text('');
+		$('#mate-last-index').val(0);
 		var AbtnArrayAll = $('button.seatBtn')
 		for(var i = 0; i < AbtnArrayAll.length; i++){
 			AbtnArrayAll[i].removeAttribute('data-mate');
+			AbtnArrayAll[i].removeAttribute('data-groupsize');
 		}
 	})
 	
@@ -476,19 +520,13 @@ $(function(){
 			} else if ($(element).hasClass('A-class-seat')){
 				obj.seatRate = 'A';
 			}
-			
+			obj.groupSize = $(element).data('groupsize');
 			obj.seatBlock = $(element).data('seatblock');
 			obj.seatRow = $(element).data('seatrow');
 			obj.seatCol = $(element).data('seatcol');
 			obj.mateNo = $(element).data('mate');
 			objArray.push(obj);
 		})
-//		console.log(pMainData);
-//		console.log(objArray);
-		
-		//mateGroup
-//		$('')
-		
 		
 		var data = {performance: pMainData, seats:objArray}
 
