@@ -45,15 +45,16 @@
 								<tr>
 									<th>
 										<div class="h2 mt-2 text-center">
+										<!-- 메이트 방 타이틀 -->
 										<c:if test="${not empty mateInfo }">
 										<c:forEach begin="1" end="1" var="mate" items="${mateInfo }">
 											<span style="display: none;cursor: pointer; " id="mate-card-left"><i class="fas fa-chevron-left"></i></span>
 											<span class="h1 font-weight-bold text-warning">${mate.performance.title }</span>
 										</c:forEach>
 										</c:if>
+										<!-- 메이트방 타이틀 -->
 										</div>
 										<div class="h1 text-center font-italic mt-5">
-											
 											<span style="border: 1px solid white; padding: 1rem;">PERFORMANCE WITH MATE</span>
 										</div>
 										<div class="h4 text-center mt-5 text-monospace font-weight-bold">
@@ -63,14 +64,14 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:if test="${not empty mateInfo }">
-							<c:forEach items="${mateInfo }" var="mate">
-									<c:if test="${not empty mateUser && LOGIN_USER.id eq mateUser.user.id && mate.id eq mateUser.mate.id }">
+							<!-- 메이트 티켓, 참여한 메이트 방이 있을 시에  -->
+							<c:if test="${mate ne null}">
 										<tr>
 											<td class="table-secondary">
 											<div class="item">
 												<c:forEach var="schedule" items="${mate.performance.schedule }" >
 													<div class="item-right">
+														<h3 class="text-danger font-weight-bold text-center">${mate.seatRate }<span>석</span></h3>
 														<h2 class="num">
 														<fmt:formatDate value="${schedule.showDate }" pattern="MM/dd" />
 														</h2>
@@ -138,9 +139,7 @@
 																	<div class="text-muted">
 																		<c:set var="seatGroup" value="${mate.seatGroup }" />
 																		<i class="fas fa-couch"></i> 좌석번호 : 
-																		<span>${fn:substring(seatGroup,0,2) }</span>
-																		<span>~</span>
-																		<span>${fn:substring(seatGroup,2,4) }</span>
+																		<span>${seatGroup }</span>
 																	</div>
 																</div>
 															</div>
@@ -150,9 +149,9 @@
 												</div>
 											</td>
 										</tr>
-									</c:if>
-								</c:forEach>
 								</c:if>
+								<!-- 메이트 티켓, 참여한 메이트 방이 있을 시에  -->
+								<!-- 메이트 티켓, 참여한 메이트 방이 없을 시에 -->
 								<c:if test="${not empty mateList }">
 								<c:forEach items="${mateList }" var="mate">
 									<c:if test="${mate.id ne mateUser.mate.id }">
@@ -161,6 +160,7 @@
 											<div class="item">
 												<c:forEach var="schedule" items="${mate.performance.schedule }" >
 													<div class="item-right">
+														<h3 class="text-danger font-weight-bold text-center">${mate.seatRate }<span>석</span></h3>
 														<h2 class="num">
 														<fmt:formatDate value="${schedule.showDate }" pattern="MM/dd" />
 														</h2>
@@ -177,7 +177,7 @@
 															</c:when>
 															<c:otherwise>
 																<button class="btn btn-primary add-mate-btn mt-2" data-mnum=${mate.id } data-pid=${mate.performance.id } 
-																	disabled="${not empty mateUser ? true : false }"  
+																	${empty mateUser.mate ? "" : "disabled" }
 																style="width: 130px;" type="button">참가하기</button>
 															</c:otherwise>
 														</c:choose>
@@ -236,11 +236,9 @@
 																<div class="fix"></div>
 																<div class="loc">
 																	<div class="text-muted">
-																	<c:set var="seatGroup" value="${mate.seatGroup }" />
+																		<c:set var="seatGroup" value="${mate.seatGroup }" />
 																		<i class="fas fa-couch"></i> 좌석번호 : 
-																		<span>${fn:substring(seatGroup,0,2) }</span>
-																		<span>~</span>
-																		<span>${fn:substring(seatGroup,2,4) }</span>
+																		<span>${seatGroup}</span>
 																	</div>
 																</div>
 															</div>
@@ -255,6 +253,7 @@
 										</c:if>
 								</c:forEach>
 								</c:if>
+								<!-- 메이트 티켓, 참여한 메이트 방이 없을 시에 -->
 								<tfoot  style="background-color: #353535" class="text-white">
 									<tr>
 									<td>
@@ -268,7 +267,7 @@
 											<c:choose>
 												<c:when test="${not empty mateList }">
 													<c:forEach begin="${pagination.beginPage }" end="${pagination.endPage }" var="page">
-														<li class="page-item"><button class="page-link text-dark mate-search-page" type="button" data-page="${page }">${page }</button></li>
+														<li class="page-item ${pagination.pageNo eq page ? 'active' : ' ' }"><button class="page-link text-dark mate-search-page" type="button" data-page="${page }">${page }</button></li>
 													</c:forEach>
 												</c:when>
 												<c:otherwise>
@@ -304,7 +303,7 @@
 				<i class="far fa-times-circle fa-2x"></i>	
 			</div>
 		<div class='image'
-			style='background-image: url("${mate.performance.imagePath }")'>
+			style='background-image: url("/resources/sample-images/${mate.performance.imagePath }")'>
 		</div>
 
 		<div class='wave'></div>
@@ -316,29 +315,15 @@
 			<div class="row mt-4">
 				<div class="col-12 mt-4">
 					<h4 style="display: inline-block;">
-						<span class="text-danger font-weight-bold">${mate.seatRate }</span>석 메이트
+						${mate.performance.title }
 					</h4>
 					<small class="text-info"><span class="ml-2">개설</span> <span>${mateCount }</span> <span>개</span>
 					</small>
 				</div>
 				<div class="col-12">
-					<c:set var="recruting" value="0" />
-					<c:set var="isEmpty" value="0" />
-					<c:set var="isFull" value="0" />
-					<c:forEach items="${mateList }" var="mate">
-						<c:if test="${mate.status eq '모집중' }">
-							<c:set var="recruting" value="${recruting + 1 }" />
-						</c:if>
-						<c:if test="${mate.status eq '빈방' }">
-							<c:set var="isEmpty" value="${isEmpty + 1 }" />
-						</c:if>
-						<c:if test="${mate.status eq '모집완료' }">
-							<c:set var="isFull" value="${isFull + 1 }" />
-						</c:if>
-					</c:forEach>
-					<span>모집중 :</span><span><strong> <c:out value="${recruting }"/></strong></span>
-					<span>빈방 : </span><span><strong><c:out value="${isEmpty }" /></strong> </span>
-					<span>모집완료 : </span><span><strong><c:out value="${isFull }" /></strong> </span>
+					<span>모집중 :</span><span><strong> <c:out value="${MateProgressCount }"/></strong></span>
+					<span>빈방 : </span><span><strong><c:out value="${MateEmptyCount }" /></strong> </span>
+					<span>모집완료 : </span><span><strong><c:out value="${MateCompleteCount }" /></strong> </span>
 				</div>
 				<div class="col-12 mt-1">
 					<div class="input-group">
@@ -376,7 +361,7 @@
 							class="input-control"  value="Y" />
 					</div>
 					<form:input type="hidden" path="pid" name="pid" value="${mateUser.performance.id }" />
-					<form:input type="hidden" path="pageNo" name="pageNo" id="pageNo" value="1"/>
+					<form:input type="hidden" path="pageNo" name="pageNo" id="pageNo" value="${pagination.pageNo }"/>
 					<div class="mt-1">
 						<button type="submit" class="btn btn-primary btn-lg btn-block">찾기</button>
 					</div>

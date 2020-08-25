@@ -80,11 +80,12 @@ WHERE mmain.id = 1;
 			FROM mate_main mmain
 			JOIN mate_category mcat ON mcat.id = mmain.category
 			<where>
-				mmain.seatRate = (SELECT mmain.seatRate 
-												FROM mate_main mmain
-												JOIN mate_members mmem ON mmain.id = mmem.id
-												WHERE mmain.performanceId = #{performanceId}
-												AND mmem.userId = #{userId}) 
+				mmain.performanceId = #{performanceId}
+				and mmain.seatRate in (	SELECT distinct
+										 seatRate
+									FROM reserve_main 
+									WHERE reserveUser = #{userId}
+									 AND performanceId = #{performanceId}) 
 				<if test="categoryId != 0">
 					and mmain.category in (#{categoryId})
 				</if>
@@ -113,11 +114,13 @@ WHERE mmain.id = 1;
 			FROM mate_main mmain
 			JOIN mate_category mcat ON mcat.id = mmain.category
 			<where>
-				mmain.seatRate = (SELECT mmain.seatRate 
-												FROM mate_main mmain
-												JOIN mate_members mmem ON mmain.id = mmem.id
-												WHERE mmain.performanceId = #{performanceId}
-												AND mmem.userId = #{userId}) 
+				mmain.performanceId = #{performanceId}
+				and mmain.seatRate in (	SELECT distinct
+										 seatRate
+									FROM reserve_main 
+									WHERE reserveUser = #{userId}
+									 AND performanceId = #{performanceId}) 
+									 
 				<if test="categoryId != 0">
 					and mmain.category in (#{categoryId})
 				</if>
@@ -151,58 +154,28 @@ WHERE mmain.id = 1;
 					 mmain.status
 				FROM mate_main mmain
 				JOIN mate_category mcat ON mcat.id = mmain.category
-				where
-				mmain.seatRate = (SELECT mmain.seatRate 
-									FROM mate_main mmain
-									JOIN mate_members mmem ON mmain.id = mmem.id
-									WHERE mmain.performanceId = #{performanceId}
-									AND mmem.userId = #{userId}) 
+				WHERE mmain.performanceId = #{performanceId}
+				and mmain.seatRate in (	SELECT distinct
+										 seatRate
+									FROM reserve_main 
+									WHERE reserveUser = #{userId}
+									 AND performanceId = #{performanceId})
 												
 		</select>
 		<select id="getAllMatesInfoCount" resultType="int">
 				SELECT
-					count(*)
+					 count(*)
 				FROM mate_main mmain
 				JOIN mate_category mcat ON mcat.id = mmain.category
-				where
-				mmain.seatRate = (SELECT mmain.seatRate 
-									FROM mate_main mmain
-									JOIN mate_members mmem ON mmain.id = mmem.id
-									WHERE mmain.performanceId = #{performanceId}
-									AND mmem.userId = #{userId}) 
+				WHERE mmain.performanceId = #{performanceId}
+				and mmain.seatRate in (	SELECT distinct
+										 seatRate
+									FROM reserve_main 
+									WHERE reserveUser = #{userId}
+									 AND performanceId = #{performanceId})
 												
 		</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<select id="getMateRoomByPerformanceIdAndMateId" parameterType="int" resultMap="mateMap">
+	<select id="getMate" parameterType="int" resultMap="mateMap">
 		SELECT 
 				mmain.id, 
 				mmain.performanceId, 
@@ -216,19 +189,6 @@ WHERE mmain.id = 1;
 		WHERE mmain.id = #{mateId}
 		AND mmain.performanceId = #{performanceId}
 	</select>
-	<select id="getMatesByPerformanceId" parameterType="int" resultMap="mateMap">
-		SELECT 
-				mmain.id, 
-				mmain.performanceId, 
-				mmain.seatGroup, 
-				mcat.category,
-				mmain.groupSize, 
-				mmain.seatRate,
-				mmain.status
-		FROM mate_main mmain
-		JOIN mate_category mcat ON mcat.id = mmain.category
-		WHERE mmain.performanceId = #{value}
-	</select>
 	<select id="getMateUserByMateId" parameterType="int" resultType="User">
 		SELECT mmem.userId as id, umain.nickname
 			FROM mate_members mmem
@@ -236,6 +196,7 @@ WHERE mmain.id = 1;
 			JOIN user_main umain ON mmem.userId = umain.id
 			WHERE mmain.id = #{value}
 	</select>
+
 	<select id="getMateTagByMateId" resultType="com.sample.web.view.MateTag" parameterType="int">
 			SELECT mmain.id 		as mateId,
 				   mtag.tag 		as tagName
@@ -284,19 +245,15 @@ WHERE mmain.id = 1;
 		JOIN performance_main pmain ON pmain.hallId = hmain.id
 		WHERE pmain.id = #{value}
 	</select>
+	
 	<resultMap type="java.util.Map" id="categoryMap">
 		<result property="id" column="id" javaType="java.lang.Integer" />
 		<result property="category" column="category" javaType="java.lang.String"/>
 	</resultMap>
-	
-	
 	<select id="getMateAllCategory" resultMap="categoryMap">
 		SELECT id, category FROM mate_category
 	</select>
-	<select id="getCountMateByPerformanceId" parameterType="int" resultType="int">
-		SELECT COUNT(*) FROM mate_main
-		WHERE performanceid = #{value}
-	</select>
+
 	
 	<!-- MateTimeLine -->
 	<resultMap type="MateTimeLine" id="timelineMap">
@@ -411,7 +368,7 @@ WHERE mmain.id = 1;
 	</select>
 <!-- mate add 관련 query -->
 	<select id="getUserExistMate" resultType="com.sample.dto.MateUserDto">
-		SELECT 
+		SELECT distinct
 			mmain.id 				as "mate.id",
 			mmain.performanceId 	as "performance.id",
 			mmem.userId 			as "user.id"
@@ -422,6 +379,14 @@ WHERE mmain.id = 1;
 		and mmem.userId = #{userId}
 				
 	
+	</select>
+	<select id="getReservedUser" resultType="com.sample.dto.MateUserDto">
+	SELECT distinct
+		 reserveUser AS "user.id",
+		 performanceId AS "performance.id" 
+		 FROM reserve_main 
+	WHERE reserveUser = #{userId}
+	 AND performanceId = #{performanceId}
 	</select>
 	
 
@@ -461,5 +426,41 @@ WHERE mmain.id = 1;
 		 </selectKey>
 		
 	</insert>
+	<select id="getMateStatusCountComplete"  resultType="int" >
+		SELECT count(*)
+		FROM mate_main mmain 
+		WHERE mmain.`status` = '모집완료' 
+		AND mmain.performanceId = #{performanceId}
+		AND mmain.seatRate IN (SELECT distinct
+										 seatRate
+								FROM reserve_main 
+								WHERE reserveUser = #{userId}
+								AND performanceId = #{performanceId})
+	</select>
+	<select id="getMateStatusCountEmpty"  resultType="int" >
+		SELECT count(*)
+		FROM mate_main mmain 
+		WHERE mmain.`status` = '빈방' 
+		AND mmain.performanceId = #{performanceId}
+		AND mmain.seatRate IN (SELECT distinct
+										 seatRate
+								FROM reserve_main 
+								WHERE reserveUser = #{userId}
+								AND performanceId = #{performanceId})
+	</select>
+	<select id="getMateStatusCountProgress"   resultType="int">
+		SELECT count(*)
+		FROM mate_main mmain 
+		WHERE mmain.`status` = '모집중' 
+		AND mmain.performanceId = #{performanceId}
+		AND mmain.seatRate IN (SELECT distinct
+										 seatRate
+								FROM reserve_main 
+								WHERE reserveUser = #{userId}
+								AND performanceId = #{performanceId})
+			
+	
+	</select>
+	
 
 </mapper>

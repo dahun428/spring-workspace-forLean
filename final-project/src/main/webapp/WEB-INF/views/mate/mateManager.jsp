@@ -24,6 +24,7 @@
 <script type="text/javascript" src="/resources/js/jquery.color.js"></script>
 <script type="text/javascript" src="/resources/js/custom.js"></script>
 <script type="text/javascript" src="/resources/js/manager/mateManager.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.MultiFile.min.js"></script>
 <style>
   .selectable .ui-selecting { background: white  !important; }
   .selectable .ui-selected { background: white !important; color: white; }
@@ -369,6 +370,6 @@
 <input type="hidden" id="hidden-performance-info-id" />
 <input type="hidden" id="hidden-hall-id" />
 
-
+ 
 </body>
 </html>
