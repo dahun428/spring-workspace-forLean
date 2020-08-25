@@ -30,7 +30,7 @@ public interface MateDao {
      * @param performanceId
      * @return
      */
-    List<Mate> getMatesByPerformanceId(int performanceId);
+  //  List<Mate> getMatesByPerformanceId(int performanceId);
     List<Mate> getOldMates();
     
     /**
@@ -52,7 +52,7 @@ public interface MateDao {
      * @param performanceId
      * @return Mate
      */
-    Mate getMateRoomByPerformanceIdAndMateId(@Param("mateId") int mateId,
+    Mate getMate(@Param("mateId") int mateId,
     									@Param("performanceId") int performanceId);
     /**
      * mate_main, mate_members 테이블 에서
@@ -219,5 +219,39 @@ public interface MateDao {
 			@Param("userId") String userId);
     
     Mate getMateTicket(int mateId);
+    
+    /**
+     * 예약된 유저를 찾아서 반환
+     * @param performanceId
+     * @param userId
+     * @return
+     */
+    MateUserDto getReservedUser(@Param("performanceId") int performanceId,
+			@Param("userId") String userId);
+    
+    /**
+     * status = 모집완료
+     * @param performanceId
+     * @return
+     */
+    int getMateStatusCountComplete(@Param("performanceId") int performanceId,
+			@Param("userId") String userId);
+    /**
+     * status = 빈방
+     * @param performanceId
+     * @return
+     */
+    int getMateStatusCountEmpty(@Param("performanceId") int performanceId,
+			@Param("userId") String userId);
+    /**
+     * status = 모집중
+     * @param performanceId
+     * @return
+     */
+    int getMateStatusCountProgress(@Param("performanceId") int performanceId,
+			@Param("userId") String userId);
+    
+    
+    
     
 }

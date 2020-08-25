@@ -42,6 +42,9 @@
 		select id			as id
 		, userid			as "questionUser.id"
 		, questionTitle		as questionTitle
+		, questionContent	as questionContent
+		, answerTitle		as answerTitle
+		, answerContent		as answerContent
 		, regDate			as regDate
 		, category			as category
 		, opened			as opened
@@ -60,11 +63,56 @@
 		limit #{beginIndex}, #{endIndex}
 	</select>
 	
+	<select id="getQnaDetail" parameterType="int" resultType="Qna">
+		select id			as id
+		, userid			as "questionUser.id"
+		, questionTitle		as questionTitle
+		, questionContent	as questionContent
+		, answerTitle		as answerTitle
+		, answerContent		as answerContent
+		, regDate			as regDate
+		, category			as category
+		, opened			as opened
+		, hits				as hits
+		from qna_main
+		where id = #{value}
+	</select>
+	
 	<insert id="insertQna" parameterType="Qna">
 		insert into qna_main
 		(questionTitle, userId, questionContent, regDate, category, opened)
 		values
 		(#{questionTitle}, #{questionUser.id}, #{questionContent}, now(), #{category}, #{opened})
 	</insert>
+	
+	<insert id="insertAnswer" parameterType="map">
+		update qna_main
+		set
+			answerTitle = #{answerForm.answerTitle}
+			, answerContent = #{answerForm.answerContent}
+			, adminId = #{answerForm.adminId}
+			, answerDate = now()
+		where 
+			id = #{answerForm.qnaId}
+	</insert>
+	
+	<update id="updateQna" parameterType="map">
+		update qna_main
+		set
+			questionTitle = #{qnaForm.qnaTitle}
+			, questionContent = #{qnaForm.qnaContent}
+			, opened = #{qnaForm.qnaOpened}
+			, category = #{qnaForm.qnaCategory}
+		where
+			id = #{qnaForm.qnaId}
+	</update>
+	
+	<update id="deleteQna" parameterType="int">
+		update qna_main
+		set
+			deleted = 'Y'
+		where id = ${value}
+	</update>
+	
 </mapper>
 

@@ -101,4 +101,8 @@ public interface MateService {
      * @return MateUserDto
      */
     MateUserDto getUserExistMate(int performanceId, String userId);
+    
+    int getStatusByPerformanceId(int performanceId, String userId, String status);
+    
+    Mate getMate(int performanceId, String userId);
 }

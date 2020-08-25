@@ -92,16 +92,13 @@ public class MateController {
 			@ModelAttribute("mateSearchForm") MateSearchForm mateSearchForm,
 			HttpSession session, Model model) {
 
-		//Search 폼
-		System.out.println(mateSearchForm);
 		/*
 		 * 해 당 아이디가 접근 권한이 있는지 체크하기
 		 * 유저가 특정 공연을 결제를 완료했으면 접근가능
 		 */
 		User user = (User) session.getAttribute("LOGIN_USER");
 
-		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
-		if(reserve == null) {
+		if(reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId) == null) {
 			return "redirect:/home.do";
 		}
 		PerformanceDetailDto performance = performanceService.getPerformanceByPerformanceMainId(performanceId);
@@ -109,11 +106,7 @@ public class MateController {
 			return "redirect:/home.do";
 		}
 
-		//Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
-		//if(reserve == null) {
-		//	return "redirect:/home.do";
-		//}
-		//
+		
 		Map<String, Object> searchMap = mateService.getMatesByPerformanceIdSearch(performanceId, user.getId(), mateSearchForm);
 		int totalRows = (int) searchMap.get("searchCount");
 		
@@ -124,8 +117,21 @@ public class MateController {
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId, user.getId());
 		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
+		System.out.println("mateUserDTO : " + mateUser);
+		if(mateUser == null) {
+			return "redirect:/home.do";
+		}
 
 		System.out.println("pagination"+pagination);
+		
+		Mate mate = mateService.getMate(performanceId, user.getId());
+		if(mate != null) {
+			
+			model.addAttribute("mate", mate);
+		}
+		model.addAttribute("MateProgressCount", mateService.getStatusByPerformanceId(performanceId, user.getId(), "모집중"));
+		model.addAttribute("MateCompleteCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"모집완료"));
+		model.addAttribute("MateEmptyCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"빈방"));
 		
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("mateList", mateList);
@@ -156,8 +162,7 @@ public class MateController {
 		 */
 		User user = (User) session.getAttribute("LOGIN_USER");
 		
-		Reserve reserve = reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId);
-		if(reserve == null) {
+		if(reserveService.getReserveByUserIdAndPerformanceId(user.getId(), performanceId) == null) {
 			return "redirect:/home.do";
 		}
 		PerformanceDetailDto performance = performanceService.getPerformanceByPerformanceMainId(performanceId);
@@ -184,9 +189,23 @@ public class MateController {
 		List<Mate> mateList = (List<Mate>) searchMap.get("searchList");
 		List<Map<Integer, String>> mateCat = mateService.getMateAllCategory();
 		Integer mateCount = mateService.getCountMateByPerformanceId(performanceId, user.getId());
-		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
 		
-		System.out.println("pagination"+pagination);
+		MateUserDto mateUser = mateService.getUserExistMate(performanceId, user.getId());
+		System.out.println("mateUserDTO : " + mateUser);
+		if(mateUser == null) {
+			return "redirect:/home.do";
+		}
+		
+		Mate mate = mateService.getMate(performanceId, user.getId());
+		if(mate != null) {
+			
+			model.addAttribute("mate", mate);
+		}
+		
+		model.addAttribute("MateProgressCount", mateService.getStatusByPerformanceId(performanceId, user.getId(), "모집중"));
+		model.addAttribute("MateCompleteCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"모집완료"));
+		model.addAttribute("MateEmptyCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"빈방"));
+		
 		
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("mateInfo", mateInfo);

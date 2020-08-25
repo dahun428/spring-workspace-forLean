@@ -55,18 +55,27 @@
 		WHERE A.id = #{id}
 	</select>
 	
-	<select id="getAllUsers" resultType="User">
-		SELECT a.id, a.nickname, b.regDate
-			FROM 
-				user_main a, user_sub b
-			WHERE 
-				a.id = b.id
-			AND 
-				b.deleted = 'N'
-			ORDER BY
-				b.regDate DESC
+	<select id="getAllUsers" resultType="UserInfoDto">
+		SELECT a.id, a.nickname, b.regDate,
+			(select count(likedUser)
+			from user_like_user
+			where likedUser=a.id) getlike
+			from user_main a, user_sub b
+			WHERE a.id = b.id
+			ORDER BY b.regDate DESC
 	</select>
 	
+	<select id="getUserInfoDetail" parameterType="string" resultType="UserInfoDto">
+		SELECT a.id, a.nickname, b.regDate, a.password, a.gender,a.birthday,a.tel, a.email,b.point,c.postalCode, c.sido,c.sigungu,c.addr,
+			(select count(likedUser)
+			from user_like_user
+			where likedUser=a.id) getlike
+			from user_main a, user_sub b, user_address c
+			WHERE a.id = b.id
+			AND a.id = c.id
+			and a.id = #{value}
+			ORDER BY b.regDate DESC
+	</select>
 	
 	
 	

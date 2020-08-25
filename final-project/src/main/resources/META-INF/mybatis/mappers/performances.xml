@@ -504,7 +504,7 @@
 		<collection property="genre" select="getGenreById" column="id" ofType="string"/>
 	</resultMap>
 	
-	<select id="getLikesList" parameterType="string" resultMap="likes">
+	<select id="getLikesList" resultMap="likes">
 		select b.id, title, category, 
 		date_format(b.startDate, '%Y.%m.%d') as startDate,
 		date_format(b.endDate, '%Y.%m.%d') as endDate,
@@ -514,6 +514,7 @@
 		join performance_info b on a.infoId = b.id
 		join hall_info_main c on b.hallInfoId = c.id
 		where a.id = #{userId}
+		limit 5 offset #{offset}
 	</select>
 
 

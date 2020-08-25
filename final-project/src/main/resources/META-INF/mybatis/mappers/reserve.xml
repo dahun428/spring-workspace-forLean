@@ -83,9 +83,9 @@
 	<insert id="insertReserve" parameterType="Reserve" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO
 			reserve_main
-			(reserveUser, performanceId, receiveType)
+			(reserveUser, performanceId, receiveType, seatRate)
 		VALUES
-			(#{reserveUser.id}, #{performance.id}, #{receiveType})
+			(#{reserveUser.id}, #{performance.id}, #{receiveType}, #{seatRate})
 			
 		<selectKey resultType="int" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() as id
@@ -124,7 +124,7 @@
 		</association>
 	</resultMap>
 	
-	<select id="getReservesByUserId" parameterType="string" resultMap="reserveDetail">
+	<select id="getReservesByUserId" resultMap="reserveDetail">
 		select a.id, a.reserveUser, e.nickname,
 		date_format(a.regDate, '%Y.%m.%d') as regDate,
 		date_format(c.startDate, '%Y.%m.%d') as startDate,
@@ -139,11 +139,12 @@
 		join performance_info c on b.infoId = c.id
 		join hall_info_main d on c.hallInfoId = d.id
 		join user_main e on a.reserveUser = e.id
-		join mate_main f on a.mateId = f.id
-		join mate_category g on f.category = g.id
-		join performance_seat_price h on h.infoId = c.id and h.seatRate = f.seatRate
+		left outer join mate_main f on a.mateId = f.id
+		left outer join mate_category g on f.category = g.id
+		left outer join performance_seat_price h on h.infoId = c.id and h.seatRate = f.seatRate
 		where a.reserveUser = #{userId}
 		order by a.regDate desc
+		limit 5 offset #{ offset}
 	</select>
 	<select id="getReserveDetail" parameterType="int" resultMap="reserveDetail">
 		select a.id, a.reserveUser, e.nickname,
@@ -160,9 +161,9 @@
 		join performance_info c on b.infoId = c.id
 		join hall_info_main d on c.hallInfoId = d.id
 		join user_main e on a.reserveUser = e.id
-		join mate_main f on a.mateId = f.id
-		join mate_category g on f.category = g.id
-		join performance_seat_price h on h.infoId = c.id and h.seatRate = f.seatRate
+		left outer join mate_main f on a.mateId = f.id
+		left outer join mate_category g on f.category = g.id
+		left outer join performance_seat_price h on h.infoId = c.id and h.seatRate = f.seatRate
 		where a.id = #{reserveId}
 	</select>
 </mapper>

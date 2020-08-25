@@ -108,18 +108,31 @@ public class MateServiceImpl implements MateService {
 		if(userDao.getUserById(newMember.getId()) == null) {
 			throw new RuntimeException("해당 유저가 존재하지 않습니다.");
 		}
-		Reserve reserve = reserveDao.getReserveByUserIdAndPerformanceId(newMember.getId(), performanceId);
-		if(reserve == null) {
+		List<Reserve> reserves = reserveDao.getReserveByUserIdAndPerformanceId(newMember.getId(), performanceId);
+		Reserve savedReserve = new Reserve();
+		for(Reserve reserve : reserves) {
+			savedReserve.setId(reserve.getId());
+			savedReserve.setMate(reserve.getMate());
+			savedReserve.setPerformance(reserve.getPerformance());
+			savedReserve.setReceiveType(reserve.getReceiveType());
+			savedReserve.setRegDate(reserve.getRegDate());
+			savedReserve.setReserveUser(reserve.getReserveUser());
+			savedReserve.setStatus(reserve.getStatus());
+			savedReserve.setSeatPrice(reserve.getSeatPrice());
+			savedReserve.setSeatRate(reserve.getSeatRate());
+		}
+				
+		if(reserveDao.getReserveByUserIdAndPerformanceId(newMember.getId(), performanceId) == null) {
 			throw new RuntimeException("예약 정보가 없습니다.");
 		}
 		//해당 유저가 결제했는지 확인한다.
-		Payment payment = paymentDao.getPaymentByReserveId(reserve.getId());
+		Payment payment = paymentDao.getPaymentByReserveId(savedReserve.getId());
 		if(payment == null) {
 			throw new RuntimeException("결제되지 않은 회원입니다.");
 		}
 		Mate mate = mateDao.getMateByMateId(mateId);
-		reserve.setMate(mate);
-		reserveDao.updateReserve(reserve);
+		savedReserve.setMate(mate);
+		reserveDao.updateReserve(savedReserve);
 		//해당 유저 인서트
 		mateDao.insertMateMember(newMember.getId(), mateId);
 		// 메이트 타임 라인 자동으로 남기기
@@ -144,9 +157,10 @@ public class MateServiceImpl implements MateService {
 		map.put("isFull", mateSearchForm.getIsFull());
 		map.put("isEmpty", mateSearchForm.getIsEmpty());
 		int totalRows = mateDao.getAllMatesCount(map);
-		Pagination pagenation = new Pagination(10, 5, mateSearchForm.getPageNo(), totalRows);
+		int rows = 10;
+		Pagination pagenation = new Pagination(rows, 5, mateSearchForm.getPageNo(), totalRows);
 		map.put("beginIndex", pagenation.getBeginIndex() -1 );
-		map.put("endIndex", pagenation.getEndIndex());
+		map.put("endIndex", rows);
 		mateDao.getAllMates(map);
 		mateDao.getAllMatesCount(map);
 		
@@ -200,7 +214,7 @@ public class MateServiceImpl implements MateService {
 		isExistPerformanceTime(performanceId);
 		
 		//메이트 아이디와 공연회차 아이디로 메이트에 대한 정보 저장
-		matedetail.setMate(mateDao.getMateRoomByPerformanceIdAndMateId(mateId, performanceId));
+		matedetail.setMate(mateDao.getMate(mateId, performanceId));
 		// 메이트 아이디로 타임라인 정보 저장
 		matedetail.setTimeline(mateDao.getMateTimelineByMateId(mateId));
 		// 메이트 아이디로 해당 메이트 방 카테고리 정보 저장
@@ -316,15 +330,29 @@ public class MateServiceImpl implements MateService {
 		//해당 유저를 리저브 메인 테이블에 업데이트한다.
 
 		//해당 유저가 리저브 메인테이블에 있는지 확인한다.
-		Reserve reserve = reserveDao.getReserveByUserIdAndPerformanceId(userId, performanceId);
-		if(reserve == null) {
+		List<Reserve> reserves = reserveDao.getReserveByUserIdAndPerformanceId(userId, performanceId);
+		if(reserves == null) {
 			message = "예약 정보가없습니다.";
 			messageMap.put("type", type);
 			messageMap.put("message", message);
 			return messageMap;
 		}
+		Reserve newReserve = new Reserve();
+		for(Reserve reserve : reserves) {
+			newReserve.setId(reserve.getId());
+			newReserve.setMate(reserve.getMate());
+			newReserve.setPerformance(reserve.getPerformance());
+			newReserve.setReceiveType(reserve.getReceiveType());
+			newReserve.setRegDate(reserve.getRegDate());
+			newReserve.setReserveUser(reserve.getReserveUser());
+			newReserve.setStatus(reserve.getStatus());
+			newReserve.setSeatPrice(reserve.getSeatPrice());
+			newReserve.setSeatRate(reserve.getSeatRate());
+		}
+		
+		
 		//해당 유저가 결제했는지 확인한다.
-		Payment payment = paymentDao.getPaymentByReserveId(reserve.getId());
+		Payment payment = paymentDao.getPaymentByReserveId(newReserve.getId());
 		if(payment == null) {
 			message = "결제되지 않은 회원입니다.";
 			messageMap.put("type", type);
@@ -368,15 +396,31 @@ public class MateServiceImpl implements MateService {
 			throw new RuntimeException("해당 회차의 공연이 존재하지 않습니다.");
 		}
 		MateUserDto mateUser = mateDao.getUserExistMate(performanceId, userId);
-		if(mateUser == null) {
-			throw new RuntimeException("해당 메이트 정보가 존재하지 않습니다.");
-		}
-		//mateUser.setPerformance(mateDao.getMatePerformanceByPerformanceId(performanceId));
-		//mateUser.setUser(userDao.getUserById(userId));
 		
+		if(mateUser == null) {
+			mateUser = mateDao.getReservedUser(performanceId, userId);
+		}
+
 		return mateUser;
 	}
+	public Mate getMate(int performanceId, String userId) {
+		MateUserDto savedMate = mateDao.getUserExistMate(performanceId, userId);
+		return mateDao.getMate(savedMate.getMate().getId(), performanceId);
+	}
 	
+	public int getStatusByPerformanceId(int performanceId, String userId, String status) {
+
+		int count = 0;
+		if("모집완료".equals(status)) {
+			count = mateDao.getMateStatusCountComplete(performanceId, userId);
+		} else if ("모집중".equals(status)) {
+			count = mateDao.getMateStatusCountProgress(performanceId, userId);
+		} else {
+			count = mateDao.getMateStatusCountEmpty(performanceId, userId);
+		}
+		
+		return count;
+	}
 	
 	
 	//Mateid와 userId 를 입력받아서 해당 유저가 있는지 여부를 확인하는 메소드
@@ -401,4 +445,5 @@ public class MateServiceImpl implements MateService {
 			throw new RuntimeException("해당 공연 회차가 존재하지 않습니다.");
 		}
 	}
+	
 }
