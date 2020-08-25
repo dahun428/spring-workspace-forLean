@@ -405,7 +405,11 @@ public class MateServiceImpl implements MateService {
 	}
 	public Mate getMate(int performanceId, String userId) {
 		MateUserDto savedMate = mateDao.getUserExistMate(performanceId, userId);
-		return mateDao.getMate(savedMate.getMate().getId(), performanceId);
+		Mate mate = null;
+		if(savedMate != null) {
+			mate = mateDao.getMate(savedMate.getMate().getId(), performanceId);
+		}
+		return mate;
 	}
 	
 	public int getStatusByPerformanceId(int performanceId, String userId, String status) {

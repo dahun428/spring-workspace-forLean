@@ -65,7 +65,7 @@
 							</thead>
 							<tbody>
 							<!-- 메이트 티켓, 참여한 메이트 방이 있을 시에  -->
-							<c:if test="${not empty mate }">
+							<c:if test="${mate ne null}">
 										<tr>
 											<td class="table-secondary">
 											<div class="item">

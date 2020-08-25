@@ -125,10 +125,8 @@ public class MateController {
 		System.out.println("pagination"+pagination);
 		
 		Mate mate = mateService.getMate(performanceId, user.getId());
-		if(mate != null) {
 			
-			model.addAttribute("mate", mate);
-		}
+		model.addAttribute("mate", mate);
 		model.addAttribute("MateProgressCount", mateService.getStatusByPerformanceId(performanceId, user.getId(), "모집중"));
 		model.addAttribute("MateCompleteCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"모집완료"));
 		model.addAttribute("MateEmptyCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"빈방"));
@@ -197,10 +195,8 @@ public class MateController {
 		}
 		
 		Mate mate = mateService.getMate(performanceId, user.getId());
-		if(mate != null) {
 			
-			model.addAttribute("mate", mate);
-		}
+		model.addAttribute("mate", mate);
 		
 		model.addAttribute("MateProgressCount", mateService.getStatusByPerformanceId(performanceId, user.getId(), "모집중"));
 		model.addAttribute("MateCompleteCount", mateService.getStatusByPerformanceId(performanceId, user.getId(),"모집완료"));
