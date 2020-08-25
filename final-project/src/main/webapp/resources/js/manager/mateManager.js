@@ -446,24 +446,27 @@ $(function(){
 			//$selectedSeats[i].setAttribute('data-groupsize',$selectedSeats.length);
 		
 		}
+		for(var i = 0; i < $selectedSeats.length; i++){
+//			$selectedSeats[i].removeAttribute('data-mate');
+//			$selectedSeats[i].removeAttribute('data-groupsize');
+			//$($selectedSeats[i]).attr('data-groupsize',$selectedSeats.length);
+			//$($selectedSeats[i]).attr('data-mate',nextIndex);
+			$selectedSeats[i].setAttribute('data-mate',nextIndex);
+			$selectedSeats[i].setAttribute('data-groupsize',$selectedSeats.length);
+		
+		}
 		$selectedSeats.text(nextIndex);
 		$('#mate-last-index').val(nextIndex);
 		$('[data-mate]').addClass('text-dark').addClass('font-weight-bold')
-		if(newMateLength == 0){
-			return;
-		
-		}
-		if($("#mate-room-cnt").val() == 0){
-			$("#mate-room-cnt").val($("#mate-room-cnt").val() + newMateLength)
-		} else {
-			$("#mate-room-cnt").val($("#mate-room-cnt").val() - newMateLength + 1);
-		}
 		var mateArray = $('[data-mate]');
+		var newArray = new Array();
 		for(var i = 0; i < mateArray.length; i++){
-			var mate = $(mateArray[i]).data('mate');
-			console.log(mate.length);
-		}
+			var mate = $(mateArray[i]).attr('data-mate');
 		
+			newArray.push(mate);
+		}
+		console.log(newArray.length);
+		console.log(newArray);
 		
 	})
 	
