@@ -4026,3 +4026,12 @@ Caused by: java.lang.ClassNotFoundException: org.springframework.web.method.supp
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-25 09:11:16.481
 !MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.ui 4 4 2020-08-25 09:14:25.999
+!MESSAGE Plug-in 'org.eclipse.pde.ui' contributed an invalid Menu Extension (Path: 'org.eclipse.ui.projectConfigure' is invalid): org.eclipse.pde.ui.ConvertedProjectWizard
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-25 09:14:30.406
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-25 09:14:30.410
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
