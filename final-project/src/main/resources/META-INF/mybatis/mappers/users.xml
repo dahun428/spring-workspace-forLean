@@ -55,14 +55,49 @@
 		WHERE A.id = #{id}
 	</select>
 	
-	<select id="getAllUsers" resultType="UserInfoDto">
+	<select id="getAllUsers" parameterType="map" resultType="UserInfoDto">
 		SELECT a.id, a.nickname, b.regDate,
 			(select count(likedUser)
 			from user_like_user
 			where likedUser=a.id) getlike
 			from user_main a, user_sub b
 			WHERE a.id = b.id
-			ORDER BY b.regDate DESC
+			<choose>
+				<when test="query != null and query == 'birth' ">
+					
+				</when>
+				<when test="query != null and query == 'del' ">
+					and b.deleted = 'Y'
+				</when>
+				<when test="query != null and query == 'black' ">
+					
+				</when>
+			</choose>
+			<choose>
+				<when test="sort == 'date'">
+					ORDER BY b.regDate DESC
+				</when>
+				<when test="sort == 'like'">
+					ORDER BY getlike DESC
+				</when>
+			</choose>
+			LIMIT #{beginIndex},#{endIndex}
+	</select>
+	<select id="getAllUsersCount" parameterType="map"  resultType="int">
+		SELECT count(*)
+			from user_main a, user_sub b
+			WHERE a.id = b.id
+			<choose>
+				<when test="query != null and query == 'birth' ">
+					
+				</when>
+				<when test="query != null and query == 'del' ">
+					and b.deleted = 'Y'
+				</when>
+				<when test="query != null and query == 'black' ">
+					
+				</when>
+			</choose>
 	</select>
 	
 	<select id="getUserInfoDetail" parameterType="string" resultType="UserInfoDto">

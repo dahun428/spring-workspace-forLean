@@ -1,6 +1,7 @@
 package com.sample.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sample.dto.UserInfoDto;
 import com.sample.web.view.Coupon;
@@ -16,10 +17,12 @@ public interface UserService {
     
     User getUserByEmail(String email);
     User getPasswordByEmail(String email);
-    List<UserInfoDto> getAllUsers();
+    List<UserInfoDto> getAllUsers(Map<String, Object> param);
     
     UserInfoDto getUserInfoDetail(String id);
     
     void addUserPointHistory(UserPoint userPoint);
+    
+    int getAllUsersCount(Map<String, Object> param);
     
 }

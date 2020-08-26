@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sample.dto.PaymentDto;
 import com.sample.dto.PerformanceDto;
 import com.sample.service.PaymentService;
 import com.sample.service.PerformanceService;
@@ -66,7 +66,6 @@ public class PaymentController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("no", performanceId);
 		data.put("date", performanceDate);
-		System.out.println(data);
 
 		List<PerformanceSchedule> performanceSchedules = performanceService.getPerformanceDetailByMap(data);
 
@@ -116,5 +115,26 @@ public class PaymentController {
 	public String adminPayment() {
 		
 		return "payment/admin_payment";
+	}
+	
+	@RequestMapping("paymentStatus.do")
+	@ResponseBody
+	public List<PaymentDto> getPaymentStatus(PaymentDto paymentDto) {
+		
+		return paymentService.getPaymentStatus(paymentDto);
+	}
+	
+	@RequestMapping("paymentAll.do")
+	@ResponseBody
+	public List<PaymentDto> getPaymentAll(PaymentDto paymentDto) {
+		
+		return paymentService.getPaymentAll(paymentDto);
+	}
+	
+	@RequestMapping("totalSales.do")
+	@ResponseBody
+	public List<PaymentDto> getTotalSales(PaymentDto paymentDto) {
+		
+		return paymentService.getTotalSales(paymentDto);
 	}
 }

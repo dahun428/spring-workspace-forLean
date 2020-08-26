@@ -2,6 +2,7 @@ package com.sample.service;
 
 import java.util.List;
 
+import com.sample.dto.PaymentDto;
 import com.sample.web.form.PaymentForm;
 import com.sample.web.view.Payment;
 
@@ -18,4 +19,10 @@ public interface PaymentService {
      * @return Payment 객체
      */
     Payment getPaymentByReserveId(int reserveId);
+    
+    List<PaymentDto> getPaymentStatus(PaymentDto paymentDto);
+    
+    List<PaymentDto> getPaymentAll(PaymentDto paymentDto);
+    
+    List<PaymentDto> getTotalSales(PaymentDto paymentDto);
 }

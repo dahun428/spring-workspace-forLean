@@ -2,7 +2,9 @@ package com.sample.web.controller;
 
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -38,7 +40,7 @@ import com.sample.service.UserService;
 
 import com.sample.web.form.FindUserInfo;
 import com.sample.web.form.LoginForm;
-
+import com.sample.web.view.Pagination;
 import com.sample.web.view.User;
 
 @Controller
@@ -318,10 +320,30 @@ public class SigninController {
 	}
 	
 	@GetMapping("/adminProfile.do")
-	public String adminProfile(Model model) {
+	public String adminProfile(Model model, 
+			@RequestParam(value = "pageNo", required=false, defaultValue="1") int pageNo,
+			@RequestParam(value = "sort", required=false, defaultValue="date") String sort,
+			@RequestParam(value = "query", required=false) String query) {
 		
-		List<UserInfoDto> userList = userService.getAllUsers();
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("sort", sort);
+		if (query != null) {
+			param.put("query", query);
+		}
 		
+		int total = userService.getAllUsersCount(param);
+		int row = 4;
+		Pagination pagination = new Pagination(row, 3, pageNo, total);
+		int beginIndex  = pagination.getBeginIndex() - 1;
+		int endIndex = row;
+		
+		param.put("endIndex", endIndex);
+		param.put("beginIndex", beginIndex);
+		
+		List<UserInfoDto> userList = userService.getAllUsers(param);
+		System.out.println(pagination);
+	
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("users", userList);
 		
 		return "user/adminProfile";
@@ -329,11 +351,10 @@ public class SigninController {
 	
 	@RequestMapping("/adminProfileDetail.do")
 	@ResponseBody
-	public UserInfoDto adminProfileDetail(@RequestParam("id") String id, Model model) {
+	public UserInfoDto adminProfileDetail(@RequestParam("id") String id ) {
 		
 		System.out.println(id);
 		UserInfoDto userDetail = userService.getUserInfoDetail(id);
-		
 		//model.addAttribute("user", userDetail);
 		
 		return userDetail;

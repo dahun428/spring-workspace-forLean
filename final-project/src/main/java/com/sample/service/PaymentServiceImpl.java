@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sample.dao.PaymentDao;
 import com.sample.dao.ReserveDao;
 import com.sample.dao.UserDao;
+import com.sample.dto.PaymentDto;
 import com.sample.web.form.PaymentForm;
 import com.sample.web.view.Payment;
 import com.sample.web.view.Performance;
@@ -73,8 +74,7 @@ public class PaymentServiceImpl implements PaymentService{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+		
 	/**
      * unique 키 reserveId로 Payment 객체를 1개 반환한다.
      * @param reserveId
@@ -83,7 +83,19 @@ public class PaymentServiceImpl implements PaymentService{
 	public Payment getPaymentByReserveId(int reserveId) {
 		return paymentDao.getPaymentByReserveId(reserveId);
 	}
-	
-	
-	
+
+	@Override
+	public List<PaymentDto> getPaymentStatus(PaymentDto paymentDto) {
+		return paymentDao.getPaymentStatus(paymentDto);
+	}
+
+	@Override
+	public List<PaymentDto> getPaymentAll(PaymentDto paymentDto) {
+		return paymentDao.getPaymentAll(paymentDto);
+	}
+
+	@Override
+	public List<PaymentDto> getTotalSales(PaymentDto paymentDto) {
+		return paymentDao.getPaymentAll(paymentDto);
+	}	
 }

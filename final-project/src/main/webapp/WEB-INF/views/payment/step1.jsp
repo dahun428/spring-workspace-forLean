@@ -505,8 +505,7 @@ div#A-seats4 button {
 																	<input type="checkbox" id="cancel-check" /> 취소수수료 및 취소기한을 확인하였습니다.
 																</div>
 																<div class="col-6">
-																	<input type="checkbox" id="third-check" /> 제 3자 정보제공 내용에 동의합니다. <a
-																		href="">[상세보기]</a>
+																	<input type="checkbox" id="third-check" /> 제 3자 정보제공 내용에 동의합니다.
 																</div>
 															</div>
 														</div>
@@ -752,10 +751,7 @@ div#A-seats4 button {
 												$('#step3').prop('class', 'col-2');
 												$("#r-seat").val($("#r-seat-price").val());
 												$("#s-seat").val($("#s-seat-price").val());
-												$("#a-seat").val($("#a-seat-price").val());
-												
-												
-												
+												$("#a-seat").val($("#a-seat-price").val());																							
 											}
 											
 											if (destination == 'slide3') {
@@ -818,8 +814,7 @@ div#A-seats4 button {
 													}
 																										
 													$('#reserve-pay-form').submit();
-												})
-												
+												})												
 											}
 											
 											$('input[name=payMethod]').click(function(){												
@@ -828,8 +823,7 @@ div#A-seats4 button {
 												} else {
 													$('#payradio').prop('disabled', true);
 												}
-											});
-											
+											});											
 								}																
 							});	
 					
@@ -863,15 +857,13 @@ div#A-seats4 button {
 						$('#reserve-pay').val(totalBill);
 						
 						currentSlideNo++;
-						$.fn.fullpage.moveSlideRight();	
-						
+						$.fn.fullpage.moveSlideRight();							
 					});
 					
 					$('#prevslide').click(function() {
 						currentSlideNo--;
 						$.fn.fullpage.moveSlideLeft();
-					});
-					
+					});					
 				});
 		
 		$(".selector").flatpickr({ 
@@ -904,14 +896,12 @@ div#A-seats4 button {
 				})	
 			}
 		});
-		
-		
+				
 		$("#performanceShow").on('click', 'a', function(event) {
 			event.preventDefault();
 			var performanceMainId = $(this).data("no");
 			$('#performance-id').val(performanceMainId);
 			var performanceDate = $('#performanceDate').text();
-			console.log(performanceMainId)
 			$.ajax({
 				type:"GET",
 				url:"performanceMain.do",
@@ -973,8 +963,7 @@ div#A-seats4 button {
 			} else {
 				seatRate = 'A';
 			}
-			$('#reserve-seatRate').val(seatRate);
-			
+			$('#reserve-seatRate').val(seatRate);			
 		});
 		
 		var calcBill = function(){
@@ -1034,7 +1023,6 @@ div#A-seats4 button {
 				$pointShow.empty();
 				if (totalBill >= userPoint) {
 					$allIn.append(userPoint);
-					console.log(userPoint)
 					$pointShow.empty();
 					$pointShow.prepend(userPoint);
 					$pointShow.val(userPoint);
@@ -1139,9 +1127,9 @@ div#A-seats4 button {
 			}
 		}
 		
+		// hidden 폼에 들어갈 값들
 		var totalBill = $('#total-bill').val();
 		$('#reserve-pay').val(totalBill);
-
 		
 		$('#receive-type tbody :radio').on('click', function() {			
 			var receiveType = $(this).val();

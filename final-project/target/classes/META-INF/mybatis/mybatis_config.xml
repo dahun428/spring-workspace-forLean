@@ -35,6 +35,7 @@
 		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
 		<typeAlias type="com.sample.dto.UserInfoDto" alias="UserInfoDto"/>
 		<typeAlias type="com.sample.dto.MypageLastestReserveDto" alias="LastestPerformance"/>
+		<typeAlias type="com.sample.dto.PaymentDto" alias="PaymentDto"/>
 		<typeAlias type="com.sample.web.view.PerformanceGenre" alias="performanceGenre" />
 	</typeAliases>
 	<mappers>

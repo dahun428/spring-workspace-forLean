@@ -26,11 +26,27 @@
 			pmain.regDate,
 			pmain.usedPoint
 		FROM payment_main pmain
-		WHERE pmain.reserveId = #{value}
-		
+		WHERE pmain.reserveId = #{value}		
 	</select>
 	
-	
+	<select id="getPaymentStatus" resultType="PaymentDto">
+		select regDate as date,
+		(select count(method) from payment_main where method='현금결제' and month(regDate) = month(a.regDate)) as credit,
+		(select count(method) from payment_main where method='카드결제' and month(regDate) = month(a.regDate)) as card
+		from payment_main a
+		group by month(regDate)
+	</select>
 
+	<select id="getPaymentAll" resultType="PaymentDto">
+		SELECT regDate as date,
+		(SELECT COUNT(id) FROM payment_main WHERE MONTH(regDate) = MONTH(a.regDate)) AS payStatus
+		FROM payment_main a
+		GROUP BY MONTH(regDate)
+	</select>
 
+	<select id="getTotalSales" resultType="PaymentDto">
+		SELECT regDate as date, SUM(pay) as totalSales
+		FROM payment_main
+		GROUP BY day(regDate);
+	</select>
 </mapper>

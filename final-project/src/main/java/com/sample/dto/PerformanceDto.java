@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sample.web.view.HallInfo;
 import com.sample.web.view.HallSeat;
 import com.sample.web.view.PerformanceSchedule;

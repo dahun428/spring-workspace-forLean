@@ -1,5 +1,8 @@
 package com.sample.dao;
 
+import java.util.List;
+
+import com.sample.dto.PaymentDto;
 import com.sample.web.view.Payment;
 
 public interface PaymentDao {
@@ -20,4 +23,9 @@ public interface PaymentDao {
      */
     Payment getPaymentByReserveId(int reserveId);
     
+    List<PaymentDto> getPaymentStatus(PaymentDto paymentDto);
+    
+    List<PaymentDto> getPaymentAll(PaymentDto paymentDto);
+    
+    List<PaymentDto> getTotalSales(PaymentDto paymentDto);
 }

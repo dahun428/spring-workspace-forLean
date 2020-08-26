@@ -1,6 +1,9 @@
 package com.sample.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.sample.dto.UserInfoDto;
 import com.sample.web.view.Coupon;
@@ -23,6 +26,8 @@ public interface UserDao {
     List<Coupon> getCouponsByUserId(String userId);
     List<UserBadge> getBadgesByUserId(String userId);
     List<User> getUsersByMateId(int mateId);
-    List<UserInfoDto> getAllUsers();
+    List<UserInfoDto> getAllUsers(Map<String, Object> param );
+    
     UserInfoDto getUserInfoDetail(String id);
+    int getAllUsersCount(Map<String, Object> param );
 }

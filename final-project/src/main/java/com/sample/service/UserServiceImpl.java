@@ -1,6 +1,7 @@
 package com.sample.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,9 +72,9 @@ public class UserServiceImpl implements UserService{
 		userDao.insertUserPoint(userPoint);		
 	}
 	@Override
-	public List<UserInfoDto> getAllUsers() {
+	public List<UserInfoDto> getAllUsers(Map<String, Object> param) {
 		
-		return userDao.getAllUsers();
+		return userDao.getAllUsers(param);
 	}
 
 	@Override
@@ -82,6 +83,12 @@ public class UserServiceImpl implements UserService{
 		return userDao.getUserInfoDetail(id);
 	}
 
+	
+	@Override
+	public int getAllUsersCount(Map<String, Object> param) {
+	
+		return userDao.getAllUsersCount(param);
+	}
 	
 
 }

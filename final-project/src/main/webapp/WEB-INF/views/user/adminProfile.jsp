@@ -35,26 +35,21 @@
 								<th style="color: white; font-size: 20px;">회원관리</th>
 							</tr>
 							<tr>
-								<th>고객 조회</th>
+								<th><a href="adminProfile.do">최근가입 일자 순</a></th>
 							</tr>
 							<tr>
-								<th>최근가입 일자 순</th>
+								<th><a href="adminProfile.do?sort=like">좋아요 많은 순</a></th>
 							</tr>
 							<tr>
-								<th>좋아요 많은 순</th>
+								<th><a href="adminProfile.do?query=birth">이 달의 생일 고객</a></th>
 							</tr>
 							<tr>
-								<th>이 달의 생일 고객</th>
+								<th><a href="adminProfile.do?query=del">탈퇴한 고객</a></th>
 							</tr>
 							<tr>
-								<th>탈퇴한 고객</th>
+								<th><a href="adminProfile.do?query=black">블랙리스트</a></th>
 							</tr>
-							<tr>
-								<th>블랙리스트</th>
-							</tr>
-							<tr >
-								<th>신고리스트 조회</th>
-							</tr>
+
 						</tbody>
 					</table>	
 				</div>
@@ -85,7 +80,7 @@
 										<td>${userDto.nickname }</td>
 										<td>${userDto.regDate }</td>
 										<td>${userDto.getlike }</td>
-										<td><button class="btn btn-secondary btn-sm userBtn" data-toggle="modal" data-target="#userDetailModal" data-userId="${userDto.id }" 
+										<td><button class="btn btn-secondary btn-sm userBtn"  data-userId="${userDto.id }" 
 										style="margin-left: 15px; background-color: orange">상세보기</button></td>
 									</tr>
 								</c:forEach>
@@ -97,11 +92,25 @@
 		</div>
 		</div>
 		
-		<div >
-			<input type="text" placeholder="search" style="margin-left: 500px; margin-top: 20px;">
-			<button class="btn btn-outline-secondary btn-sm" style="margin-left: 5px; margin-bottom: 5px;">검색</button>
+		<div>
+			<input type="text" id="search-user-id" placeholder="search" style="margin-left: 500px; margin-top: 20px;">
+			<button class="btn btn-outline-secondary btn-sm" style="margin-left: 5px; margin-bottom: 5px;" id="btn-search-user">검색</button>
 		</div>
 	</div>
+	<div>
+		<ul class="pagination pagination-sm pagination-secondary" style="margin-left: 500px; margin-top: 20px;">
+		  <c:if test="${pagination.pageNo > 1 }" >
+		  <li class="page-item"><a class="page-link" href="/adminProfile.do?pageNo=${pagination.pageNo -1}">이전</a></li>
+		  </c:if>
+		  <c:forEach begin="${pagination.beginPage }" end="${pagination.endPage }" var="page">
+		  <li class="page-item ${pagination.pageNo eq page ? 'active': '' }"><a class="page-link" href="/adminProfile.do?pageNo=${page }">${page }</a></li>
+
+			</c:forEach>
+		<c:if test="${pagination.pageNo < pagination.totalPages }">  
+		  <li class="page-item"><a class="page-link" href="/adminProfile.do?pageNo=${pagination.pageNo +1}">다음</a></li>
+		</c:if>	
+		</ul>
+	</div>		
 
 	
 
@@ -114,39 +123,39 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">사용자 상세정보</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" >
 		<div class="row">
 			<div class="col-12">
-				<table border="1" class="table">
+				<table class="table table-bordered" style="color: gray">
 					<tr>
-						<td>ID</td>
+						<td style="background-color: #4444; color: #444444"><strong>ID</strong></td>
 						<td><span id="id"></span></td>
-						<td>닉네임</td>
+						<td style="background-color: #4444; color: #444444"><strong>닉네임</strong></td>
 						<td><span id="nickname"></span></td>
 						
 						
 					</tr>
 					<tr>
-						<td>성별</td>
+						<td style="background-color: #4444; color: #444444"><strong>성별</strong></td>
 						<td><span id="gender"></span></td>
-						<td>생년월일</td>
+						<td style="background-color: #4444; color: #444444"><strong>생년월일</strong></td>
 						<td><span id="birthday"></span></td>
 					</tr>
 					<tr>
-						<td>TEL</td>
+						<td style="background-color: #4444; color: #444444"><strong>TEL</strong></td>
 						<td><span id="tel"></span></td>
-						<td>Email</td>
+						<td style="background-color: #4444; color: #444444"><strong>Email</strong></td>
 						<td><span id="email"></span></td>
 					</tr>
 					<tr>
-						<td>소지 포인트</td>
+						<td style="background-color: #4444; color: #444444"><strong>소지 포인트</strong></td>
 						<td><span id="totalPoint"></span></td>
-						<td>받은 좋아요</td>
+						<td style="background-color: #4444; color: #444444"><strong>받은 좋아요</strong></td>
 						<td><span id="getlike"></span></td>
 					</tr>
 				<!-- 		
@@ -158,7 +167,7 @@
 					</tr>
 				 -->	
 					<tr>
-						<td>주소</td>
+						<td style="background-color: #4444; color: #444444"><strong>주소</strong></td>
 						<td colspan="3"><span id="address"></span></td>
 					</tr>
 				</table>
@@ -166,8 +175,7 @@
 		</div>     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>
@@ -179,13 +187,12 @@
 </body>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src='//code.jquery.com/jquery.min.js'></script>
 <script type="text/javascript">
 
+
 $(function(){
-		$('.userBtn').click(function(){
-			var userid = $(this).data('userid')
-			$('#id').text(userid)
+	
+		function showUserDetail(userid) {
 			
 			$.ajax({
 				url:'/adminProfileDetail.do',
@@ -193,19 +200,14 @@ $(function(){
 				data:{
 					"id":userid
 				},
+				dateType:"json",
 				success:function(data){
-					console.log(data.nickname)
-					console.log(data.gender)
-					console.log(data.birthday)
-					console.log(data.email)
-					console.log(data.tel)
-					console.log(data.getlike)
-					console.log(data.regDate)
-					console.log(data.totalPoint)
-					console.log(data.postalCode)
-					console.log(data.sido)
-					console.log(data.sigungu)
-					console.log(data.addr)
+					if (data == "") {
+						alert("회원정보가 존재하지 않습니다.");
+						return false;
+					}
+					
+					$('#id').text(userid)
 					$('#nickname').text(data.nickname)
 					$('#gender').text(data.gender)
 					$('#birthday').text(data.birthday)
@@ -219,17 +221,31 @@ $(function(){
 					
 					$('#address').text(address)
 				
+					$("#userDetailModal").modal("show");
 				
 				}
 			
 			})
 			
+		}
+	
+		// 검색버튼 클릭시 입력필드에 입력된 아이디로 조회해서 모달창 표시하기
+		$("#btn-search-user").click(function(){
+			var userid = $("#search-user-id").val()
+			if (userid == "") {
+				alert("아이디를 입력하세요")
+				return false;
+			} 
+			showUserDetail(userid);
+			$("#search-user-id").val("")
 			
+		})
+		
+		// 상세보기 버튼 클릭시 아이디 조회해서 모달창 표시하기
+		$('.userBtn').click(function(){
+			var userid = $(this).data('userid')
+			showUserDetail(userid);
 			
-			
-			
-			
-			console.log(userid)
 		})
 })
 
