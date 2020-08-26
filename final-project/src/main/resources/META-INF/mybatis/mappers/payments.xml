@@ -45,7 +45,8 @@
 	</select>
 
 	<select id="getTotalSales" resultType="PaymentDto">
-		SELECT regDate as date, SUM(pay) as totalSales
+		SELECT regDate as lineDate, 
+			   SUM(pay) as totalSales
 		FROM payment_main
 		GROUP BY day(regDate);
 	</select>

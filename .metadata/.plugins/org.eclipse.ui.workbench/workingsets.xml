@@ -25,5 +25,4 @@
 <item elementID="=spring-jdbc/src\/test\/resources" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1595376788429_2" label="Window Working Set" name="Aggregate for window 1595376788428"/>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1598362246044_3" label="Window Working Set" name="Aggregate for window 1598362246044"/>
 </workingSetManager>

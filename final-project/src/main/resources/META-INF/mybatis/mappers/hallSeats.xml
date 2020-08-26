@@ -11,4 +11,17 @@
 	(#{performanceId}, #{hallId}, #{seatBlock}, #{seatRow}, #{seatCol}, #{seatRate}, #{mateNo})
 </insert>
 
+<select id="getHallInfoByPerformanceInfoId" parameterType="int" resultType="HallInfo">
+	SELECT
+		a.name, a.address, a.gpsX, a.gpsY
+	FROM
+		hall_info_main a
+	JOIN
+		performance_info b 
+	ON
+		a.id = b.hallInfoId
+	WHERE
+		b.id = #{value}
+</select>
+
 </mapper>

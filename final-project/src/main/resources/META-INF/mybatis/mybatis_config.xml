@@ -26,17 +26,22 @@
 		<typeAlias type="com.sample.web.view.PerformanceSeatPrice" alias="PerformanceSeatPrice"/>
 		<typeAlias type="com.sample.web.view.NoticeImage" alias="NoticeImage"/>
 		<typeAlias type="com.sample.web.view.UserPoint" alias="UserPoint"/>
+		<typeAlias type="com.sample.web.view.Image" alias="Image"/>
 		<typeAlias type="com.sample.dto.PerformanceDto" alias="PerformanceDto"/>
 		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
 		<typeAlias type="com.sample.dto.NoticeInsideContentDto" alias="NoticeInsideContentDto"/>
 		<typeAlias type="com.sample.dto.NoticeDetailDto" alias="NoticeDetailDto"/>
+		<typeAlias type="com.sample.web.view.Image" alias="Image"/>
 		<typeAlias type="com.sample.web.form.NoticeForm" alias="NoticeForm"/>
 		<typeAlias type="com.sample.web.form.QnaForm" alias="QnaForm"/>
 		<typeAlias type="com.sample.dto.PerformanceDetailDto" alias="PerformanceDetailDto"/>
 		<typeAlias type="com.sample.dto.UserInfoDto" alias="UserInfoDto"/>
 		<typeAlias type="com.sample.dto.MypageLastestReserveDto" alias="LastestPerformance"/>
 		<typeAlias type="com.sample.dto.PaymentDto" alias="PaymentDto"/>
-		<typeAlias type="com.sample.web.view.PerformanceGenre" alias="performanceGenre" />
+		<typeAlias type="com.sample.web.view.PerformanceGenre" alias="PerformanceGenre" />
+		<typeAlias type="com.sample.web.view.PerformanceMain" alias="PerformanceMain"/>
+		<typeAlias type="com.sample.web.form.PerformanceUpdateForm" alias="PerformanceUpdateForm"/>
+		<typeAlias type="com.sample.dto.UserPointHistoryDto" alias="UserPointHistoryDto"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="META-INF/mybatis/mappers/users.xml"/>

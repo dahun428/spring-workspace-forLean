@@ -31,6 +31,7 @@
 			<result property="type" column="type"/>
 			<result property="value" column="value"/>
 			<result property="getDate" column="getDate"/>
+			<result property="expDate" column="expDate"/>
 			<result property="used" column="used" javaType="java.lang.Boolean" jdbcType="CHAR" typeHandler="com.sample.utils.BooleanChecker"/>
 		</collection>
 		<collection column="id" property="badges" select="getBadgesByUserId" ofType="UserBadge" javaType="List">
@@ -40,7 +41,28 @@
             <result property="comment" column="comment"/>
             <result property="iconPath" column="iconPath"/>
 		</collection>
+		<collection property="interest" javaType="List" column="id" ofType="com.sample.web.view.UserIntrest" select="getUserInterest">
+			<result property="id" column="id"/>
+			<result property="interestTag" column="interestTag"/>
+			<result property="interestCategory" column="interestCategory"/>
+		</collection>
+		<collection property="userPointHistory" javaType="List" column="id" ofType="UserPointHistoryDto" select="getUserPointHistory">
+			<result property="id" column="id"/>
+			<result property="regDate" column="regDate"/>
+			<result property="value" column="value"/>
+			<result property="title" column="title"/>
+		</collection>
+		<collection property="intro" javaType="List" column="id" ofType="String" select="getUserIntro"></collection>
 	</resultMap>
+	<select id="getUserPointHistory" parameterType="string" resultType="UserPointHistoryDto">
+		select a.id, a.regDate, a.value, e.title
+		from user_point_history a
+		join payment_main b on a.paymentId = b.id
+		join reserve_main c on b.reserveId = c.id
+		join performance_main d on c.performanceId = d.id
+		join performance_info e on d.infoId = e.id
+		where a.userId = #{userId}
+	</select>
 
 	<select id="getUserById" parameterType="string" resultMap="getUserResult">
 		SELECT A.id as id, A.password, A.nickname, 
@@ -112,7 +134,12 @@
 			ORDER BY b.regDate DESC
 	</select>
 	
-	
+	<select id="getUserInterest" resultType="com.sample.web.view.UserIntrest" parameterType="String">
+		select id,interestTag,interestCategory from user_interest where id = #{userId}
+	</select>
+	<select id="getUserIntro"  resultType="String" parameterType="String">
+		select introTag from user_intro where id = #{userId}
+	</select>
 	
 	
 	<select id="getUserByEmail" parameterType="string" resultMap="getUserResult">
@@ -130,7 +157,7 @@
 	
 	<select id="getCouponsByUserId" parameterType="string" resultType="Coupon">
 		select b.id as id, name, type, 
-			   value, getDate, used 
+			   value, getDate, used, expDate 
 		from user_coupon a 
 		join coupon b on b.id = a.couponId 
 		where a.id = #{id}
