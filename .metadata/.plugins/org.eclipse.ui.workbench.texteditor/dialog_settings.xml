@@ -2,18 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="자동배정" key="selection"/>
+		<item value="collection" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="toStr"/>
-			<item value="selectable"/>
-			<item value="performance-list-modal-btn"/>
-			<item value="pRunningTime"/>
-			<item value="PerformanceDetailDto"/>
-			<item value="getAllPerformances"/>
-			<item value="hidden"/>
-			<item value="getMatesByPerformanceId"/>
+			<item value="foreach"/>
+			<item value="#morris-bar-chart {"/>
+			<item value="insert"/>
+			<item value="pPlace"/>
+			<item value="pImage"/>
+			<item value="mate-group-selected-btn"/>
+			<item value="submit"/>
+			<item value="button.ui-selected"/>
 		</list>
 		<list key="replacehistory">
 		</list>

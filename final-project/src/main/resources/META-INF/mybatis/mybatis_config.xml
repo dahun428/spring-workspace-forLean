@@ -8,6 +8,8 @@
 			설정할 경우 필요한 설정이다. * int, boolean 과 같은 기본자료형 타입의 변수인 경우 null값이 대입되지 않는 문제가 
 			있다. -->
 		<setting name="callSettersOnNulls" value="false" />
+		<!-- 실행시키는 작업의 쿼리등을 보여준다. -->
+		<!--  <setting name="logImpl" value="STDOUT_LOGGING"/>-->
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.sample.web.view.MateTimeLine" alias="MateTimeLine"/>

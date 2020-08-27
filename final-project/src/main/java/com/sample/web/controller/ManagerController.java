@@ -10,7 +10,10 @@ public class ManagerController {
 	@RequestMapping("home.do")
 	public String home() {
 		
-		return "/manager/managerhome";
+		return "/manager/managerhome";  
 	}
+	
+	
+	
 	
 }

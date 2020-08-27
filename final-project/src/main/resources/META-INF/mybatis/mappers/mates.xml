@@ -479,6 +479,7 @@ WHERE mmain.id = 1;
 		<result property="seatRate" column="seatRate"/>
 		<result property="status" column="status"/>
 		<association property="performance" javaType="Performance">
+			<result property="id" column="performanceId"/>
 			<collection property="schedule" ofType="PerformanceSchedule" javaType="list">
 				<result property="showDate" column="showDate"/>
 			</collection>
@@ -491,7 +492,7 @@ WHERE mmain.id = 1;
 	</resultMap>
 	
 	<select id="getMateListByUserId" parameterType="string"  resultMap="mypageMateList">
-		select a.id, seatRate, showDate,groupsize, 
+		select a.id, seatRate, showDate,groupsize, c.id as performanceId,
 		(select category from mate_category where id = a.category) as category, seatGroup, status, groupsize, groupcnt
 		from mate_main a
 		join mate_members b on a.id = b.id

@@ -13,8 +13,9 @@
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="com.sample.dao">
-		<level value="trace" />
+		<level value="debug" />
 	</logger>
+	
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>

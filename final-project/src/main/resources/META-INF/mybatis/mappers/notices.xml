@@ -57,8 +57,8 @@
 		insert into notice_image_path
 		(id, imagePath)
 		values
-		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		#{no}, #{item}
+		<foreach collection="list" item="item" index="index" separator="," >
+		(#{no}, #{item})
 		</foreach>
 	</insert>
 	

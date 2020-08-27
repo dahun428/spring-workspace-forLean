@@ -84,22 +84,29 @@
 			where likedUser=a.id) getlike
 			from user_main a, user_sub b
 			WHERE a.id = b.id
+			
 			<choose>
 				<when test="query != null and query == 'birth' ">
-					
+					and MONTH(a.birthday) = MONTH(current_timestamp)
+					and b.deleted = 'N'
 				</when>
 				<when test="query != null and query == 'del' ">
 					and b.deleted = 'Y'
 				</when>
 				<when test="query != null and query == 'black' ">
-					
+					and ...
+					and b.deleted = 'N'
 				</when>
+				<otherwise>
+					and b.deleted = 'N'
+				</otherwise>
 			</choose>
 			<choose>
 				<when test="sort == 'date'">
 					ORDER BY b.regDate DESC
 				</when>
 				<when test="sort == 'like'">
+					
 					ORDER BY getlike DESC
 				</when>
 			</choose>
@@ -111,14 +118,19 @@
 			WHERE a.id = b.id
 			<choose>
 				<when test="query != null and query == 'birth' ">
-					
+					and MONTH(a.birthday) = MONTH(current_timestamp)
+					and b.deleted = 'N'
 				</when>
 				<when test="query != null and query == 'del' ">
 					and b.deleted = 'Y'
 				</when>
 				<when test="query != null and query == 'black' ">
-					
+					and ...
+					and b.deleted = 'N'
 				</when>
+				<otherwise>
+					and b.deleted = 'N'
+				</otherwise>
 			</choose>
 	</select>
 	
