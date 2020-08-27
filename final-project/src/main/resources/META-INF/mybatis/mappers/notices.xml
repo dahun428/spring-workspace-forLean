@@ -15,10 +15,23 @@
 		order by id DESC
 	</select>
 
-	<select id="getAllNoticeImages" resultType="String">
+	<select id="getAllNoticeImages" resultType="Image">
 		select category, imagePath
 		from images
-		where category = 'notice';
+		where category = 'notice'
+	</select>
+	
+	<select id="getAllImages" resultType="Image">
+		select category, imagePath
+		from images
+		order by date desc
+	</select>
+	
+	<select id="getAllImagesBySearchKeyword" parameterType="string" resultType="Image">
+		select category, imagePath
+		from images
+		where imagePath like concat('%', #{value}, '%')
+		order by date desc
 	</select>
 	
 	<insert id="insertNoticeImages" parameterType="hashMap">
@@ -44,8 +57,8 @@
 		insert into notice_image_path
 		(id, imagePath)
 		values
-		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		#{no}, #{item}
+		<foreach collection="list" item="item" index="index" separator="," >
+		(#{no}, #{item})
 		</foreach>
 	</insert>
 	

@@ -380,6 +380,51 @@
 		</selectKey>		
 	</insert>
 	
+	<select id="getPerformanceMain" parameterType="int" resultType="PerformanceMain">
+		SELECT 
+			id, infoId, hallId, showDate, showTime, showNumber
+		FROM 
+			performance_main
+		WHERE 
+			infoId = #{value}	
+	</select>
+	
+	<delete id="deletePerformanceGenresByPerformanceInfoId" parameterType="int">
+		DELETE FROM performance_genre
+		WHERE 
+			id= #{value}
+	</delete>
+	
+	<delete id="deletePerformanceSeatPricesbyPerformanceInfoId" parameterType="int">
+		DELETE FROM performance_seat_price
+		WHERE 
+			infoid = #{value}
+	</delete>
+	
+	<delete id="deletePerformanceInfo" parameterType="int">
+		DELETE FROM performance_info
+		WHERE 
+			id = #{value};
+	</delete>
+	
+	<update id="updatePerformanceInfo" parameterType="Performance">
+	UPDATE 
+		performance_info
+	SET 
+		category = #{category},
+		title = #{title},
+		startDate = #{startDate},
+		endDate= #{endDate},
+		rating= #{rating},
+		runningTime = #{runningTime}, 
+		provider = #{provider},
+		imagePath = #{imagePath},
+		`explain` = #{explain}
+	WHERE 
+		id = #{id}
+		
+	</update>
+	
 	<select id="getPerformanceByPerformanceMainId" parameterType="int" resultMap="PerformanceDetailDtoResultMap">
 	SELECT 
 			distinct A.id 		as id, 

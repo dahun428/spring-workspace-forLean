@@ -44,7 +44,7 @@ WHERE mmain.id = 1;
 		<result property="category" column="category"/>
 		<result property="endDate" column="endDate"/>
 		<result property="rating" column="rating"/>
-		<result property="runnigTime" column="runnigTime"/>
+		<result property="runningTime" column="runnigTime"/>
 		<result property="provider" column="provider"/>
 		<result property="point" column="point"/>
 		<result property="likes" column="likes"/>
@@ -417,7 +417,7 @@ WHERE mmain.id = 1;
 	<!-- mate_main Insert Table -->
 	<insert id="insertMate" parameterType="Mate" useGeneratedKeys="true"  keyProperty="id">
 		INSERT INTO mate_main
-		(performanceId, seatGroup, groupSize, seatRate)
+		(performanceId, seatGroup, groupSize, seatRate, category)
 		VALUES
 		(#{performance.id}, #{seatGroup}, #{groupsize}, #{seatRate})
 		
@@ -461,6 +461,47 @@ WHERE mmain.id = 1;
 			
 	
 	</select>
+	<insert id="insertMateCat">
+		insert into mate_category 
+		(id,category)
+		values
+		(#{id},#{category})
+	
+	</insert>
+	
+	
+	<resultMap type="Mate" id="mypageMateList">
+		<result property="id" column="id"/>
+		<result property="seatGroup" column="seatGroup"/>
+		<result property="category" column="category"/>
+		<result property="groupsize" column="groupsize"/>
+		<result property="groupCnt" column="groupcnt"/>
+		<result property="seatRate" column="seatRate"/>
+		<result property="status" column="status"/>
+		<association property="performance" javaType="Performance">
+			<result property="id" column="performanceId"/>
+			<collection property="schedule" ofType="PerformanceSchedule" javaType="list">
+				<result property="showDate" column="showDate"/>
+			</collection>
+		</association>
+		<collection property="mateMembers" column="id" select="getMateUserByMateId" ofType="User" javaType="list">
+			<result property="id" column="id"/>
+			<result property="nickname" column="nickname"/>
+		</collection>
+		<collection property="mateTags" column="id" select="getMateTagByMateId" ofType="string" javaType="list"></collection>
+	</resultMap>
+	
+	<select id="getMateListByUserId" parameterType="string"  resultMap="mypageMateList">
+		select a.id, seatRate, showDate,groupsize, c.id as performanceId,
+		(select category from mate_category where id = a.category) as category, seatGroup, status, groupsize, groupcnt
+		from mate_main a
+		join mate_members b on a.id = b.id
+		join performance_main c on a.performanceId = c.id
+		where
+		b.userId = #{userId}
+	</select>
+	
+
 	
 
 </mapper>
