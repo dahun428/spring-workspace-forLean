@@ -3,7 +3,7 @@
 	<nav id="sidebar" class="sidebar-wrapper">
 		<div class="sidebar-content">
 			<div class="sidebar-brand">
-				<a href="#" class="h3"> <img class="ml-3" id="brand-logo"
+				<a href="/admin/home.do" class="h3"> <img class="ml-3" id="brand-logo"
 					style="width: 170px;" src="/resources/logo/gongsaLogo2.png" /> <span
 					class="text-white" style="display: block;">관리자페이지</span>
 				</a>
@@ -18,7 +18,7 @@
 					</a>
 						<div class="sidebar-submenu">
 							<ul>
-								<li><a href="/admin/performance/add/step1.do" class="font-weight-bold">공연등록 </a></li>
+								<li><a href="/performance/add/step1.do" class="font-weight-bold">공연등록 </a></li>
 								<li><a href="#">공연리스트</a></li>
 							</ul>
 						</div></li>
@@ -27,7 +27,7 @@
 					</a>
 						<div class="sidebar-submenu">
 							<ul>
-								<li><a href="#"> 고객리스트 </a></li>
+								<li><a href="/adminProfile.do"> 고객리스트 </a></li>
 							</ul>
 						</div></li>
 					<li class="sidebar-dropdown"><a href="#"> <i
@@ -35,7 +35,7 @@
 					</a>
 						<div class="sidebar-submenu">
 							<ul>
-								<li><a href="#">메이트 등록</a></li>
+								<li><a href="/manager/mateManager.do">메이트 등록</a></li>
 							</ul>
 						</div></li>
 					<li class="sidebar-dropdown"><a href="#"> <i
@@ -63,3 +63,35 @@
 		</div>
 		<!-- sidebar-content  -->
 	</nav>
+<script type="text/javascript">
+$(".sidebar-dropdown > a").click(function() {
+	  $(".sidebar-submenu").slideUp(200);
+	  if (
+	    $(this)
+	      .parent()
+	      .hasClass("active")
+	  ) {
+	    $(".sidebar-dropdown").removeClass("active");
+	    $(this)
+	      .parent()
+	      .removeClass("active");
+	  } else {
+	    $(".sidebar-dropdown").removeClass("active");
+	    $(this)
+	      .next(".sidebar-submenu")
+	      .slideDown(200);
+	    $(this)
+	      .parent()
+	      .addClass("active");
+	  }
+	});
+
+	$("#close-sidebar").click(function() {
+	  $(".page-wrapper").toggleClass("toggled");
+	});
+	$("#show-sidebar").click(function() {
+	  $(".page-wrapper").addClass("toggled");
+	});
+
+
+</script>

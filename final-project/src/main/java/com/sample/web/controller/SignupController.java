@@ -1,6 +1,10 @@
 package com.sample.web.controller;
 
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -12,11 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sample.service.UserService;
 import com.sample.web.form.FindUserInfo;
 import com.sample.web.form.UserSignupForm;
+import com.sample.web.form.UserUpdateForm;
 import com.sample.web.view.User;
 
 
@@ -30,8 +37,9 @@ public class SignupController {
 	private UserService userService;
 	
 	@GetMapping("/signup.do")
-	public String form(Model model) {
+	public String form(Model model, @RequestParam("email") String customerEmail) {
 		UserSignupForm userSignupForm = new UserSignupForm();
+		userSignupForm.setEmail(customerEmail);
 		model.addAttribute("userSignupForm", userSignupForm);
 		return "user/signup";
 				
@@ -51,21 +59,34 @@ public class SignupController {
 		
 		//System.out.println(userForm.getId());
 		// 아이디 중복체크
-		User savedUser = userService.getUserDetail(userForm.getId());
-		System.out.println(savedUser);
+		Map<String, Object> condition = new HashMap<String, Object>();
+
+		condition.put("column", "id");
+		condition.put("value", userForm.getId());		
+		User savedUser = userService.getUserDetailByCondition(condition);
 		if (savedUser != null) {
 			errors.rejectValue("id", null, "이미 사용중인 아이디입니다.");
 		}
 		
-		if (savedUser != null && userForm.getNickname().equals(savedUser.getNickname())) {
+		
+		condition.put("column", "nickname");
+		condition.put("value", userForm.getNickname());		
+		savedUser = userService.getUserDetailByCondition(condition);
+		if (savedUser != null) {
 			errors.rejectValue("nickname", null, "이미 사용중인 닉네임입니다.");
 		}
 		
-		if (savedUser != null && userForm.getEmail().equals(savedUser.getEmail())) {
+		condition.put("column", "email");
+		condition.put("value", userForm.getEmail());
+		savedUser = userService.getUserDetailByCondition(condition);
+		if (savedUser != null ) {
 			errors.rejectValue("email", null, "이미 사용중인 이메일입니다.");
 		}
 		
-		if (savedUser != null && userForm.getTel().equals(savedUser.getTel())) {
+		condition.put("column", "tel");
+		condition.put("value", userForm.getTel());
+		savedUser = userService.getUserDetailByCondition(condition);
+		if (savedUser != null ) {
 			errors.rejectValue("tel", null, "이미 사용중인 전화번호입니다.");
 		}
 		
@@ -90,21 +111,34 @@ public class SignupController {
 		
 		//System.out.println(userForm.getId());
 		// 아이디 중복체크
-		User savedUser = userService.getUserDetail(userForm.getId());
-		System.out.println(savedUser);
+		Map<String, Object> condition = new HashMap<String, Object>();
+
+		condition.put("column", "id");
+		condition.put("value", userForm.getId());		
+		User savedUser = userService.getUserDetailByCondition(condition);
 		if (savedUser != null) {
 			errors.rejectValue("id", null, "이미 사용중인 아이디입니다.");
 		}
 		
+		
+		condition.put("column", "nickname");
+		condition.put("value", userForm.getNickname());		
+		savedUser = userService.getUserDetailByCondition(condition);
 		if (savedUser != null) {
 			errors.rejectValue("nickname", null, "이미 사용중인 닉네임입니다.");
 		}
 		
-		if (savedUser != null) {
+		condition.put("column", "email");
+		condition.put("value", userForm.getEmail());
+		savedUser = userService.getUserDetailByCondition(condition);
+		if (savedUser != null ) {
 			errors.rejectValue("email", null, "이미 사용중인 이메일입니다.");
 		}
 		
-		if (savedUser != null) {
+		condition.put("column", "tel");
+		condition.put("value", userForm.getTel());
+		savedUser = userService.getUserDetailByCondition(condition);
+		if (savedUser != null ) {
 			errors.rejectValue("tel", null, "이미 사용중인 전화번호입니다.");
 		}
 		
@@ -146,4 +180,13 @@ public class SignupController {
 	public String signupComplete() {
 		return "redirect:/home.do";
 	}
+	
+	@RequestMapping("/userUpdate.do")
+	public String updateUserInfo(@ModelAttribute("userUpdateForm") @Valid UserUpdateForm userUpdateForm,BindingResult errors) {
+	
+		return "user/userUpdate";
+		
+	}
+	
+	
 }

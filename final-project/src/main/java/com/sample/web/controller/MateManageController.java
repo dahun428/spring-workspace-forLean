@@ -25,7 +25,7 @@ import com.sample.web.view.Performance;
 
 @Controller
 @RequestMapping("/manager")
-public class mateManageController {
+public class MateManageController {
 
 	@Autowired
 	PerformanceService performanceService;
@@ -35,7 +35,7 @@ public class mateManageController {
 	
 	@Autowired
 	MateService mateService;
-	//메이트 매니저
+	
 	@GetMapping("/mateManager.do")
 	public String MateManager() {
 		
@@ -70,10 +70,5 @@ public class mateManageController {
 		
 		return mateManagerService.countMate(mateForm.getSeats());
 	}
-	
-	
-	//QnA매니저
-	
-	
 	
 }

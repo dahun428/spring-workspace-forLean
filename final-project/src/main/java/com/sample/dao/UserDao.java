@@ -16,10 +16,18 @@ public interface UserDao {
     void insertUser(User user);
     void insertUserSub(User user);
     void insertUserAddr(User user);
+    // 포인트 정보만 업데이트
     void updateUser(User user);
     void insertUserPoint(UserPoint userPoint);
     
+    // 회원정보 수정
+    void fixUserMain(User user);
+    void fixUserAddr(User user);
+    
+    
+    
     User getUserById(String id);
+    User getUserByCondition(Map<String, Object> condition);
     
     User getUserByEmail(String email);
     User getPasswordByEmail(String email);

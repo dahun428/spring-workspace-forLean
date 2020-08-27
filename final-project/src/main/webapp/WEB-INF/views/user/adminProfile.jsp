@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/resources/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="/resources/css/style.css" />
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
@@ -21,12 +22,17 @@
 <script type="text/javascript" src="/resources/js/custom.js"></script>
 </head>
 <body>
-<div class="header">
-<%@ include file="../common/navi.jsp" %>
-</div>
-<div class="container " style="margin-top: 150px;">
+<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../manager/common/managernavi.jsp" %>
+  <!-- sidebar-wrapper  -->
+ <div class="page-content">
+ <div class="container">
+<div class="container-fluid">
 	<div class="row">
-		<div class="col-12">
+		<div class="col-12 mt-5 mb-5">
+			<div class="display-4 text-center">고객리스트</div>
+		</div>
+		<div class="col-12 mt-3">
 			<div class="row"> 
 				<div class="col-2" >
 					<table class="table table-bordered" >
@@ -34,22 +40,18 @@
 							<tr style="background-color: orange">
 								<th style="color: white; font-size: 20px;">회원관리</th>
 							</tr>
-							<tr>
-								<th><a href="adminProfile.do">최근가입 일자 순</a></th>
+							<tr >
+								<th><a href="adminProfile.do" style="color: #766C58">최근가입 일자 순</a></th>
 							</tr>
 							<tr>
-								<th><a href="adminProfile.do?sort=like">좋아요 많은 순</a></th>
+								<th><a href="adminProfile.do?sort=like" style="color: #766C58">좋아요 많은 순</a></th>
 							</tr>
 							<tr>
-								<th><a href="adminProfile.do?query=birth">이 달의 생일 고객</a></th>
+								<th><a href="adminProfile.do?query=birth" style="color: #766C58">이 달의 생일 고객</a></th>
 							</tr>
 							<tr>
-								<th><a href="adminProfile.do?query=del">탈퇴한 고객</a></th>
+								<th><a href="adminProfile.do?query=del" style="color: #766C58">탈퇴한 고객</a></th>
 							</tr>
-							<tr>
-								<th><a href="adminProfile.do?query=black">블랙리스트</a></th>
-							</tr>
-
 						</tbody>
 					</table>	
 				</div>
@@ -205,7 +207,9 @@
     </div>
   </div>
 </div>
-
+</div>
+</div>
+</div>
 
 
 

@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>같이 보자! 공공연한사이</title>
 <link rel="stylesheet" href="/resources/css/jquery.fullPage.css">
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.css">
 <link rel="stylesheet"
@@ -41,9 +42,11 @@
 </style>
 </head>
 <body>
-	<div class="header">
-		<%@ include file="../../common/navi.jsp"%>
-	</div>	
+ <div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../../manager/common/managernavi.jsp" %>
+  <!-- sidebar-wrapper  -->
+ <div class="page-content">
+ <div class="container">
 	
 	<div class="body" style="margin-top: 50px;">
 		<div class="container-fluid">		
@@ -144,9 +147,9 @@
 			
 		</div> <!-- container 끝 -->
 	</div><!-- body 끝 -->
-	
-	<div class="footer" style="height: 200px;"></div>
-	
+	</div>
+	</div>
+	</div>
 <script type="text/javascript" src="/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/resources/bootstrap/js/bootstrap.min.js"></script>

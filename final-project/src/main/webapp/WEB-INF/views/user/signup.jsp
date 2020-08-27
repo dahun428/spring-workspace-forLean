@@ -58,18 +58,21 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-12">
-      							<form:input type="text" class="form-control" id="password2" path="password2" placeholder="비밀번호를 다시 입력하세요" />
+      							<form:input type="password" class="form-control" id="password2" path="password2" placeholder="비밀번호를 다시 입력하세요" />
       							<form:errors path="password2" cssClass="text-danger"></form:errors>
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-12">
-      							<form:input type="text" class="form-control" id="email" path="email" value="${user.email }" placeholder="이메일을 입력해주세요"  />
+      							<form:input type="text" class="form-control" id="email" path="email" value="${user.email }" placeholder="이메일을 입력해주세요"  readonly="true"/>
       							<form:errors path="email" cssClass="text-danger"></form:errors>
 							</div>
 						</div>
 						<div class="form-row ">
 							<div class="form-group col-md-12">
+							<div>
+								<p class="text-muted" style="margin-left: 5px;"> 생년월일 </p>
+							</div>
 								<form:input type="date" class="form-control" path="birthday" id="birthday"  placeholder="태어난 년도" />
 								<form:errors path="birthday" cssClass="text-danger"></form:errors>
 							</div>
@@ -126,7 +129,7 @@ $(function(){
 	$('#sns-signup-form').submit(function() {
 		
 		var idRegExp = /^[a-zA-Z0-9]{5,20}$/;
-		var nickNameRegExp = /^[가-힣]{1,10}$/;
+		var nickNameRegExp = /^[가-힣a-zA-Z0-9]{1,10}$/;
 		var passwordRegExp = /^[a-zA-Z0-9!@#$%_]{8,16}$/;
 		var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		
@@ -146,7 +149,7 @@ $(function(){
 			return false;
 		}
 		if (!nickNameRegExp.test(nickName)) {
-			alert("닉네임은 한글 1글자이상 10글자 이하로 입력하세요");
+			alert("닉네임은 2글자이상 10글자 이하의 숫자 or 알파벳 or 한글 조합으로 입력하세요");
 			return false;
 		}
 		

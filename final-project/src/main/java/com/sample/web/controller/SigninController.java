@@ -266,7 +266,8 @@ public class SigninController {
 		// 메일 내용 
 		// String recipient = "aldus207"; //받는 사람의 메일주소를 입력해주세요. 
 		String subject = "공공연한 사이입니다."; //메일 제목 입력해주세요. 
-		String body = "이 <a href='http://localhost/signup.do'>링크</a>를 타고가서 회원가입해주시기 바랍니다."; //메일 내용 입력해주세요. 
+		String customerEamil = findUserInfo.getEmail();
+		String body = "이 <a href='http://localhost/signup.do?email="+customerEamil+"'>링크</a>를 타고가서 회원가입해주시기 바랍니다."; //메일 내용 입력해주세요. 
 		
 		Properties props = System.getProperties(); // 정보를 담기 위한 객체 생성 
 		
@@ -332,7 +333,7 @@ public class SigninController {
 		}
 		
 		int total = userService.getAllUsersCount(param);
-		int row = 4;
+		int row = 10;
 		Pagination pagination = new Pagination(row, 3, pageNo, total);
 		int beginIndex  = pagination.getBeginIndex() - 1;
 		int endIndex = row;

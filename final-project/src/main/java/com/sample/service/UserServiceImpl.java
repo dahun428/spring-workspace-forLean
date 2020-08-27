@@ -27,6 +27,13 @@ public class UserServiceImpl implements UserService{
 		userDao.insertUserAddr(user);
 		
 	}
+	
+	@Override
+	public void fixUser(User user) {
+		userDao.fixUserMain(user);
+		userDao.fixUserAddr(user);
+		
+	}
 
 	public User loginUser(String id, String password) {
 		User user = userDao.getUserById(id);
@@ -48,6 +55,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User getUserDetail(String id) {
 		return userDao.getUserById(id);
+	}
+	
+	@Override
+	public User getUserDetailByCondition(Map<String, Object> condition) {
+		// TODO Auto-generated method stub
+		return userDao.getUserByCondition(condition);
 	}
 
 	@Override
@@ -89,6 +102,8 @@ public class UserServiceImpl implements UserService{
 	
 		return userDao.getAllUsersCount(param);
 	}
+
+
 	
 
 }

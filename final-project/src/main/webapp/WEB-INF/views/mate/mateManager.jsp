@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -31,12 +32,21 @@
 </style>
 </head>
 <body>
-	<div class="header">
-		<%@ include file="../common/navi.jsp"%>
-	</div>
-	<div class="body">
-		<div class="container-fluid" style="margin-top: 100px;">
+	<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../manager/common/managernavi.jsp" %>
+   <div class="page-content">
+		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
+				<div class="col-12 mt-5 p-3 text-center ">					
+					<h1>메이트 등록</h1>				
+				<hr />
+				</div>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-12 mt-3">
+				<div class="row mt-2">				
 				<div class="col-8" style="padding-left: 100px">
 					<div class="row">
 						<div class="col-12" >
@@ -346,13 +356,12 @@
 								</div>
 							</div>
 						</div>
-					</div>
+				</div>
+				
+				</div>
 				</div>
 			</div>
 		</div>
-	<div class="footer">
-		<%@ include file="../common/footer.jsp"%>
-	</div>
 	<!-- 공연 리스트 모달 -->
 	<div class="modal fade" id="performance-list-modal" tabindex="-1" aria-labelledby="performance-list-modal-label" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -406,7 +415,8 @@
 <!-- input hidden -->
 <input type="hidden" id="hidden-performance-info-id" />
 <input type="hidden" id="hidden-hall-id" />
-
+</div>
+</div>
  
 </body>
 </html>

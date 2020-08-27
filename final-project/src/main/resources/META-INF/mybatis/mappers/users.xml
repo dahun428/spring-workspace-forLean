@@ -77,6 +77,28 @@
 		WHERE A.id = #{id}
 	</select>
 	
+	<select id="getUserByCondition" parameterType="map" resultType="User">
+		SELECT id as id, password, nickname, 
+			   birthday, gender, email, tel, 
+			   admin
+		FROM user_main 
+		<choose>
+			<when test="column == 'id'">
+				where id = #{value}
+			</when>
+			<when test="column == 'nickname'">
+				where nickname = #{value}
+			</when>
+			<when test="column == 'email'">
+				where email = #{value}
+			</when>
+			<when test="column == 'tel'">
+				where tel = #{value}
+			</when>
+		</choose>
+	</select>	
+	
+	
 	<select id="getAllUsers" parameterType="map" resultType="UserInfoDto">
 		SELECT a.id, a.nickname, b.regDate,
 			(select count(likedUser)
@@ -203,11 +225,35 @@
 		(#{id},#{postalCode}, #{sido}, #{sigungu}, #{addr})
 	</insert>
 
+	<!-- 포인트만 업데이트하는 쿼리 -->
 	<update id="updateUser" parameterType="User">
 		UPDATE user_sub
 			SET point = #{point}
 		WHERE id = #{id}
 	</update>
+	
+	<update id="fixUserMain" parameterType="User">
+		update 
+			user_main
+		set 
+			nickname = #{nickname}
+			password = #{password}
+			tel      = #{tel}
+		where 
+			id = #{id}
+	</update>
+	
+	<update id="fixUserAddr" parameterType="User">
+		update
+			user_address
+		set
+			postalCode = #{postalCode}
+			sido       = #{sido}
+			sigungu    = #{sigungu}
+			addr       = #{addr}
+		where 
+			id = #{id}
+		</update>
 
 	<insert id="insertUserPoint" parameterType="UserPoint">
 		INSERT into user_point_history

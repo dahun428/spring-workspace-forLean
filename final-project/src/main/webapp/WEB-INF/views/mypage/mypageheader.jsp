@@ -22,7 +22,7 @@
 						<h3>${LOGIN_USER.nickname }</h3>
 					</div>
 					<div class="col-12 mt-3">
-						<button class="btn btn-primary btn-lg">나의 정보 변경</button>
+						<a href="/userUpdate.do"><button class="btn btn-primary btn-lg">나의 정보 변경</button></a>
 					</div>
 				</div>
 			</div>

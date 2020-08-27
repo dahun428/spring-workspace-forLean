@@ -14,6 +14,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="/resources/css/style.css" />
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -41,11 +42,10 @@
 </style>
 </head>
 <body>
-	<div class="header">
-		<%@ include file="../../common/navi.jsp"%>
-	</div>	
-	
-	<div class="body" style="margin-top: 50px;">
+	<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../../manager/common/managernavi.jsp" %>
+   <div class="page-content">
+   	<div class="container">
 		<div class="container-fluid">		
 			<div class="row">
 				<div class="col-12 mt-5 p-3 text-center">					
@@ -127,8 +127,8 @@
 		</div> <!-- container 끝 -->
 	</div><!-- body 끝 -->
 	
-	<div class="footer" style="height: 200px;"></div>
-	
+</div>
+</div>	
 <script type="text/javascript" src="/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/resources/bootstrap/js/bootstrap.min.js"></script>
