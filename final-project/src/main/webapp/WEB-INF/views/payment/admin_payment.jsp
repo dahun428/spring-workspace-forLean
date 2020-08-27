@@ -18,6 +18,8 @@
 <script type="text/javascript" src="/resources/js/jquery.color.js"></script>
 <script type="text/javascript" src="/resources/js/custom.js"></script>
 <script type="text/javascript" src="/resources/js/credit.js"></script>
+<link rel="stylesheet" href="/resources/css/style.css" />
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
@@ -34,24 +36,38 @@
 }
 </style>
 <body>
-	<div class="header">
-		<%@ include file="../common/navi.jsp"%>
-	</div>
-	<div class="body" style="margin-top: 200px;">
-		<div class="container" style="margin-bottom: -100px;">
-			<div class="row">
-				<div class="col-3">
-					<div class="card text-center" style="height:700px;">
-						<div class="card-header">
-							<div>매출분석</div>
+<c:set var="topName" value="sales"/>
+	<%@ include file="../manager/common/managerTop.jsp" %>
+<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../manager/common/managernavi.jsp" %>
+		<div class="container">
+			<div class="row card mt-4">
+				<div class="col-12 mt-4 mb-4">
+					<div class="row">
+
+						<div class="col-2">
+							<div class="card text-center" style="height: 700px;">
+								<div class="card-header">
+									<div>매출분석</div>
+								</div>
+								<div class="card-body">
+									<button class="btn btn-outline-success btn-block"
+										id="payment-status">결제 현황</button>
+								</div>
+								<div class="card-body">
+									<button class="btn btn-outline-success btn-block"
+										id="payment-method">결제 수단</button>
+								</div>
+								<div class="card-body">
+									<button class="btn btn-outline-success btn-block"
+										id="total-sales">총 매출</button>
+								</div>
+							</div>
 						</div>
-						<div class="card-body"><button class="btn btn-outline-success btn-block" id="payment-status">결제 현황</button></div>
-						<div class="card-body"><button class="btn btn-outline-success btn-block" id="payment-method">결제 수단</button></div>
-						<div class="card-body"><button class="btn btn-outline-success btn-block" id="total-sales">총    매출</button></div>
+						<div class="col-10">
+							<div id="chartdiv"></div>
+						</div>
 					</div>
-				</div>
-				<div class="col-9">
-					<div id="chartdiv"></div>
 				</div>
 			</div>
 		</div>

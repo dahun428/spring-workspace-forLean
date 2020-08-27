@@ -22,6 +22,8 @@
 <script type="text/javascript" src="/resources/js/custom.js"></script>
 </head>
 <body>
+<c:set var="topName" value="user"/>
+	<%@ include file="../manager/common/managerTop.jsp" %>
 <div class="page-wrapper chiller-theme toggled">
   <%@ include file="../manager/common/managernavi.jsp" %>
   <!-- sidebar-wrapper  -->
@@ -29,9 +31,6 @@
  <div class="container">
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-12 mt-5 mb-5">
-			<div class="display-4 text-center">고객리스트</div>
-		</div>
 		<div class="col-12 mt-3">
 			<div class="row"> 
 				<div class="col-2" >

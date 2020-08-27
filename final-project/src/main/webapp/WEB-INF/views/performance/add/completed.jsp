@@ -30,6 +30,8 @@
 </style>
 </head>
 <body>
+<c:set var="topName" value="performance"/>
+	<%@ include file="../../manager/common/managerTop.jsp" %>
  <div class="page-wrapper chiller-theme toggled">
   <%@ include file="../../manager/common/managernavi.jsp" %>
   <!-- sidebar-wrapper  -->

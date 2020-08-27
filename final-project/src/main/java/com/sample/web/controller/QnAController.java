@@ -130,7 +130,7 @@ public class QnAController {
 		
 		qnaService.addNewQna(qna);
 		
-		return "redirect:list.do";
+		return "redirect:/admin/qna/list.do";
 	}
 	
 	@PostMapping("/modifyquestion.do")
@@ -139,7 +139,7 @@ public class QnAController {
 		qnaService.updateQna(qnaForm);
 		
 		
-		return "redirect:list.do";
+		return "redirect:/admin/qna/list.do";
 	}
 	
 	@GetMapping("/deleteQuestion.do")
@@ -147,7 +147,7 @@ public class QnAController {
 		
 		qnaService.removeQna(qnaId);
 		
-		return "redirect:list.do";
+		return "redirect:/admin/qna/list.do";
 	}
 	
 	@GetMapping("/questionDetail.do")
@@ -169,7 +169,7 @@ public class QnAController {
 		
 		qnaService.addNewAnswer(answerForm);
 		
-		return "redirect:list.do";
+		return "redirect:/admin/qna/list.do";
 		
 	}
 	
@@ -183,7 +183,7 @@ public class QnAController {
 		
 		qnaService.modifyAnswer(answerForm);
 		
-		return "redirect:list.do";
+		return "redirect:/admin/qna/list.do";
 	}
 	
 	

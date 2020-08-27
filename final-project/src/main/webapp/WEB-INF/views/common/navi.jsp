@@ -76,7 +76,14 @@
 						<li><a href="/performance/list.do?category=뮤지컬" class="h4">뮤지컬</a></li>
 						<li><a href="/performance/list.do?category=연극" class="h4">연극</a></li>
 						<li><a href="/notice/list.do" class="h4">공지사항</a></li>
-						<li><a href="/qna/list.do" class="h4">고객문의센터</a></li>
+						<li><a href="#customcenter" data-toggle="collapse" aria-expanded="false"
+							 class="dropdown-toggle h4">고객문의센터</a>
+							<ul class="collapse list-unstyled" id="customcenter">
+								<li><a href="/qna/list.do" class="h6">QnA</a></li>
+								<li><a href="/notice/list.do" class="h6">공지사항</a></li>
+							</ul>
+						
+						</li>
 					<c:if test="${not empty LOGIN_USER }">
 						<li><a href="#mypage" data-toggle="collapse" aria-expanded="false"
 							class="dropdown-toggle h4">마이페이지</a>

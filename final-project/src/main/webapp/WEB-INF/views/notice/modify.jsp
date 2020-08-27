@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" />
 <!-- 써머노트에디터 CSS파일 -->
 <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css" />
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -71,29 +72,14 @@ a:hover {
 </style>
 </head>
 <body>
-<div class="header">
-	<%@ include file="../common/navi.jsp" %>
-</div>
+<c:set var="topName" value="notice"/>
+	<%@ include file="../manager/common/managerTop.jsp" %>
+<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../manager/common/managernavi.jsp" %>
 <div class="body" style="margin-top: 100px;">
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<div class="row mb-3">
-					<div class="col-12">
-						<strong><span style="font-size: 25px;">고객지원센터</span></strong>
-						<p id="modal-open-checked1" hidden="" title="${openModal }"></p>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-12">
-						<div class="row category" id="notice-category" align="center">
-							<div class="col" id="notice-list"><a href="/notice/list.do?pageNo=1&rows=10&status=blank&keyword=blank">공지사항</a></div>
-							<div class="col" id="QnA-list"><a href="/qna/list.do">QnA</a></div>
-							<div class="col" id="">자주하는질문</div>
-							<div class="col" id="">나의문의내역</div>
-						</div>
-					</div>
-				</div>
+		<div class="row card">
+			<div class="col-12 mt-2 mb-2">
 				<form action="modify.do" method="post" enctype="multipart/form-data">
 				<input type="hidden" id="modify-noticeId" name="noticeId" value="${noticeId }">
 				<!-- EL에서 값 가져오기 -->
@@ -208,7 +194,7 @@ a:hover {
 						<div class="col-1 right">
 							<div class="row">
 								<div class="col-12" align="center">
-									<a href="/notice/list.do"><i class="fas fa-stream fa-2x" style="color: black;"></i></a>
+									<a href="/admin/notice/list.do"><i class="fas fa-stream fa-2x" style="color: black;"></i></a>
 								</div>
 							</div>
 							<div class="row right">
@@ -221,13 +207,14 @@ a:hover {
 							<button type="submit" class="btn btn-primary">수정하기</button>
 						</div>
 						<div class="col-1 right">
-							<a href="/notice/list.do" class="btn btn-danger">취소</a>
+							<a href="/admin/notice/list.do" class="btn btn-danger">취소</a>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+</div>
 <%@ include file="noticeSearchModal.jsp" %>
 <%@ include file="noticeModifyModal.jsp" %>
 </div>
@@ -251,7 +238,7 @@ $(function() {
 		var imagePaths = new Array();
 		
 		$.ajax({
-			url: "getImages.do",
+			url: "/notice/getImages.do",
 			type: "GET",
 			dataType: "json",
 			success: function (data) {
@@ -269,7 +256,7 @@ $(function() {
 				
 				for (var i=0; i<imagePaths.length; i++) {
 					var addElement = "";
-					addElement = "<img src='../resources/sample-images/"+imagePaths[i]+"' style='height: 200px; width: 200px;' class='img-thumbnail scale'>"
+					addElement = "<img src='/resources/sample-images/"+imagePaths[i]+"' style='height: 200px; width: 200px;' class='img-thumbnail scale'>"
 					
 					$("#image-list-search-image").append(addElement);
 					
@@ -390,7 +377,7 @@ $(function() {
  	var noticeId = $("#modify-noticeId").val();
  	
 	$.ajax({
-		url: "noticeDetail.do",
+		url: "/notice/noticeDetail.do",
 		data: {no : noticeId},
 		type: "GET",
 		dataType: "json",
@@ -415,7 +402,7 @@ $(function() {
 			
 			var addElement = "";
 			addElement += "<div class='col-12' style='margin-top: 40px;'>";
-			addElement += "<img src=../resources/sample-images/"+notice.images[0].imagePath+" name='imagePath' style='height:200px;' class='img-thumbnail'>"
+			addElement += "<img src=/resources/sample-images/"+notice.images[0].imagePath+" name='imagePath' style='height:200px;' class='img-thumbnail'>"
 			addElement += "<input type='hidden' name='imagePath' value='"+notice.images[0].imagePath+"'>"
 			addElement += "</div>";
 			addElement += "<div class='row'>"
@@ -464,7 +451,7 @@ $(function() {
 		var imagePaths = new Array();
 		
 		$.ajax({
-			url: "getImages.do",
+			url: "/notice/getImages.do",
 			type: "GET",
 			dataType: "json",
 			success: function (data) {
@@ -482,7 +469,7 @@ $(function() {
 				
 				for (var i=0; i<imagePaths.length; i++) {
 					var addElement = "";
-					addElement = "<img src='../resources/sample-images/"+imagePaths[i]+"' style='height: 200px; width: 200px;' class='img-thumbnail scale'>"
+					addElement = "<img src='/resources/sample-images/"+imagePaths[i]+"' style='height: 200px; width: 200px;' class='img-thumbnail scale'>"
 					
 					$("#image-list-search-image").append(addElement);
 					
