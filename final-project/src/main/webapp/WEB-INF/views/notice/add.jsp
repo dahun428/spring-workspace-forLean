@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" />
 <!-- 써머노트에디터 CSS파일 -->
 <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css" />
+<link rel="stylesheet" href="/resources/css/manager.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" ></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -73,29 +74,15 @@ a:hover {
 </style>
 </head>
 <body>
-<div class="header">
-	<%@ include file="../common/navi.jsp" %>
-</div>
-<div class="body" style="margin-top: 70px;">
+<c:set var="topName" value="notice"/>
+	<%@ include file="../manager/common/managerTop.jsp" %>
+<div class="page-wrapper chiller-theme toggled">
+  <%@ include file="../manager/common/managernavi.jsp" %>
+  <!-- sidebar-wrapper  -->
+ <div class="page-content">
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<div class="row mb-3">
-					<div class="col-12">
-						<strong><span style="font-size: 25px;">고객지원센터</span></strong>
-						<p id="modal-open-checked1" hidden="" title="${openModal }"></p>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-12">
-						<div class="row category" id="notice-category" align="center">
-							<div class="col" id="notice-list"><a href="/notice/list.do">공지사항</a></div>
-							<div class="col" id="QnA-list"><a href="/qna/list.do">QnA</a></div>
-							<div class="col" id="">자주하는질문</div>
-							<div class="col" id="">나의문의내역</div>
-						</div>
-					</div>
-				</div>
+		<div class="row card">
+			<div class="col-12 mt-2 mb-2">
 				<form action="add.do" method="post" enctype="multipart/form-data">
 				<!-- EL에서 값 가져오기 -->
 					<div class="row">
@@ -209,7 +196,7 @@ a:hover {
 						<div class="col-1 right">
 							<div class="row">
 								<div class="col-12" align="center">
-									<a href="/notice/list.do"><i class="fas fa-stream fa-2x" style="color: black;"></i></a>
+									<a href="/admin/notice/list.do"><i class="fas fa-stream fa-2x" style="color: black;"></i></a>
 								</div>
 							</div>
 							<div class="row right">
@@ -222,7 +209,7 @@ a:hover {
 							<button type="submit" class="btn btn-primary">등록</button>
 						</div>
 						<div class="col-1 right">
-							<a href="/notice/list.do" class="btn btn-danger">취소</a>
+							<a href="/admin/notice/list.do" class="btn btn-danger">취소</a>
 						</div>
 					</div>
 				</form>
@@ -230,6 +217,7 @@ a:hover {
 		</div>
 	</div>
 <%@ include file="noticeSearchModal.jsp" %>
+</div>
 </div>
 <script type="text/javascript">
 $(function() {

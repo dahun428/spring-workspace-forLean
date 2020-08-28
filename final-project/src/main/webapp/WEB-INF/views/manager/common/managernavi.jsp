@@ -43,8 +43,8 @@
 					</a>
 						<div class="sidebar-submenu">
 							<ul>
-								<li><a href="#">공지사항</a></li>
-								<li><a href="#">QnA</a></li>
+								<li><a href="/admin/notice/list.do">공지사항</a></li>
+								<li><a href="/admin/qna/list.do">QnA</a></li>
 							</ul>
 						</div></li>
 					<li class="sidebar-dropdown"><a href="#"> <i
@@ -52,7 +52,7 @@
 					</a>
 						<div class="sidebar-submenu">
 							<ul>
-								<li><a href="#">결제현황</a></li>
+								<li><a href="/payment/admin_payment.do">결제현황</a></li>
 								<li><a href="#">결제수단</a></li>
 								<li><a href="#">총매출</a></li>
 							</ul>
@@ -61,9 +61,13 @@
 			</div>
 			<!-- sidebar-menu  -->
 		</div>
+		<div class="sidebar-footer">
+			<a href="/home.do"><i class="fas fa-home custom-color"></i></a>
+		</div>
 		<!-- sidebar-content  -->
 	</nav>
 <script type="text/javascript">
+	$(".page-wrapper").removeClass('toggled');
 $(".sidebar-dropdown > a").click(function() {
 	  $(".sidebar-submenu").slideUp(200);
 	  if (

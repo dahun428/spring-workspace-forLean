@@ -230,7 +230,7 @@ $(function() {
 			contentType: false,
 			processData: false,
 			data: data,
-			url: "addImage.do",
+			url: "/notice/addImage.do",
 			dataType: "json",
 			success: function (data) {
 				
@@ -269,7 +269,7 @@ $(function() {
 		
 		$.ajax({
 			type: "GET",
-			url:"getImagesByKeyword.do",
+			url:"/notice/getImagesByKeyword.do",
 			data: {keyword: searchKeyword},
 			dataType: "json",
 			success: function (data) {

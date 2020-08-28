@@ -9,7 +9,6 @@
 .emoticon:hover {
 	cursor: pointer;
 }
-
 #select-emoticon-form i {
 	font-size: 80px;
 }
@@ -261,8 +260,6 @@ $(function() {
 		})
 	})
 	
-
-
 	$("#search-photo-modal").on("keyup", function () {
 		
 		var searchKeyword = $(this).val();

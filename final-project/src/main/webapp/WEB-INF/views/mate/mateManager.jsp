@@ -32,6 +32,8 @@
 </style>
 </head>
 <body>
+<c:set var="topName" value="mate"/>
+	<%@ include file="../manager/common/managerTop.jsp" %>
 	<div class="page-wrapper chiller-theme toggled">
   <%@ include file="../manager/common/managernavi.jsp" %>
    <div class="page-content">

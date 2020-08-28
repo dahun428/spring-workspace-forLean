@@ -180,7 +180,7 @@ public class NoticeController {
 		User LoginedAdmin = (User)session.getAttribute("LOGIN_USER");
 		
 		if (LoginedAdmin == null) {
-			return "redirect:list.do?error=deny";
+			return "redirect:/admin/notice/list.do?error=deny";
 		}
 		
 		List<String> imgSrcPaths = noticeForm.getImagePath();
@@ -250,7 +250,7 @@ public class NoticeController {
 		noticeListDto.add(subContentDto);
 		
 		noticeService.addNewNotice(notice, noticeListDto);
-		return "redirect:list.do";
+		return "redirect:/admin/notice/list.do";
 	}
 	
 	@GetMapping("/delete.do")
@@ -258,7 +258,7 @@ public class NoticeController {
 		int findNoticeId = NumberUtil.stringToInt(noticeId);
 		noticeService.deleteNoticeById(findNoticeId);
 		
-		return "redirect:list.do";
+		return "redirect:/admin/notice/list.do";
 	}
 	
 	
@@ -329,7 +329,7 @@ public class NoticeController {
 		
 		System.out.println(noticeForm.toString());
 		
-		return "redirect:list.do";
+		return "redirect:/admin/notice/list.do";
 	}
 	
 	// 글번호에 해당하는 글정보를 json 형식의 텍스트로 제공하는 요청핸들러 메소드

@@ -113,27 +113,27 @@ public class PaymentController {
 		return "redirect:/mate/mate.do";
 	}
 	
-	@RequestMapping("admin_payment.do")
+	@RequestMapping("/admin_payment.do")
 	public String adminPayment() {
 		
 		return "payment/admin_payment";
 	}
 	
-	@RequestMapping("paymentStatus.do")
+	@RequestMapping("/paymentStatus.do")
 	@ResponseBody
 	public List<PaymentDto> getPaymentStatus(PaymentDto paymentDto) {
 		
 		return paymentService.getPaymentStatus(paymentDto);
 	}
 	
-	@RequestMapping("paymentAll.do")
+	@RequestMapping("/paymentAll.do")
 	@ResponseBody
 	public List<PaymentDto> getPaymentAll(PaymentDto paymentDto) {
 		
 		return paymentService.getPaymentAll(paymentDto);
 	}
 	
-	@RequestMapping("totalSales.do")
+	@RequestMapping("/totalSales.do")
 	@ResponseBody
 	public List<PaymentDto> getTotalSales(PaymentDto paymentDto) {
 		
