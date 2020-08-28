@@ -115,6 +115,10 @@
 				<when test="query != null and query == 'del' ">
 					and b.deleted = 'Y'
 				</when>
+				<when test="query != null and query == 'regDate' ">
+					and MONTH(b.regDate) = MONTH(current_timestamp)
+					and b.deleted = 'N'
+				</when>
 				<when test="query != null and query == 'black' ">
 					and ...
 					and b.deleted = 'N'
@@ -128,7 +132,6 @@
 					ORDER BY b.regDate DESC
 				</when>
 				<when test="sort == 'like'">
-					
 					ORDER BY getlike DESC
 				</when>
 			</choose>
@@ -148,6 +151,10 @@
 				</when>
 				<when test="query != null and query == 'black' ">
 					and ...
+					and b.deleted = 'N'
+				</when>
+				<when test="query != null and query == 'regDate' ">
+					and MONTH(b.regDate) = MONTH(current_timestamp)
 					and b.deleted = 'N'
 				</when>
 				<otherwise>

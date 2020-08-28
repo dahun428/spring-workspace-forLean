@@ -61,7 +61,8 @@
 		</if>
 		<if test="endDate != null">
 			and #{endDate} > A.endDate
-		</if>		
+		</if>
+			and endDate > NOW()		
 		<if test="age != null">
 			and A.rating = #{age}
 		</if>
@@ -108,7 +109,8 @@
 		</if>
 		<if test="endDate != null">
 			and #{endDate} > A.endDate
-		</if>		
+		</if>			
+			and A.endDate > NOW()
 		<if test="age != null">
 			and A.rating = #{age}
 		</if>
@@ -162,6 +164,7 @@
 			<if test="endDate != null">
 				and #{endDate} > A.endDate
 			</if>		
+				and A.endDate > NOW()	
 			<if test="age != null">
 				and A.rating = #{age}
 			</if>
@@ -170,6 +173,73 @@
 		) F
 	</select>
 	
+	<select id="totalSearchPerformanceByPage" parameterType="map" resultMap="PerformanceDetailDtoResultMap">
+		SELECT 
+			distinct A.id 		as id, 
+					A.title		as title, 
+					A.category	as category, 
+					A.provider	as provider,  
+					A.rating	as rating, 
+					A.runningTime	as runningTime, 
+					A.startDate		as startDate, 
+					A.endDate		as endDate, 
+					A.point			as point, 
+					A.likes			as likes, 
+					A.imagePath		as imagePath, 
+					A.`explain`		as `explain`, 
+					C.name			as hallName, 
+					C.address		as hallAddress,
+					A.reserveCount  as reserveCount						
+		FROM 
+			performance_info A		
+		JOIN 
+			hall_info_main C ON C.id = A.hallInfoId
+		JOIN 
+			performance_genre D ON A.id = D.id	
+		WHERE 
+			A.title like CONCAT('%', #{title}, '%') 
+		AND
+			endDate > NOW()
+		ORDER BY 
+			A.id	
+		LIMIT 
+			#{endIndex} OFFSET #{beginIndex}	
+	</select>
+	
+	<select id="getTotalRowsOfPerformanceForTotalSearch" parameterType="map" resultType="int">
+		SELECT COUNT(*) AS cnt 
+		FROM (
+			SELECT 
+				distinct A.id 		as id, 
+						A.title		as title, 
+						A.category	as category, 
+						A.provider	as provider,  
+						A.rating	as rating, 
+						A.runningTime	as runningTime, 
+						A.startDate		as startDate, 
+						A.endDate		as endDate, 
+						A.point			as point, 
+						A.likes			as likes, 
+						A.imagePath		as imagePath, 
+						A.`explain`		as `explain`, 
+						C.name			as hallName, 
+						C.address		as hallAddress,
+						A.reserveCount  as reserveCount						
+			FROM 
+				performance_info A		
+			JOIN 
+				hall_info_main C ON C.id =A.hallInfoId
+			JOIN 
+				performance_genre D ON A.id = D.id	
+			WHERE 
+				A.title like CONCAT('%', #{title}, '%') 
+			AND
+				endDate > NOW()
+			ORDER BY 
+				A.id
+		) F
+	
+	</select>
 	
 	
 	<select id="getScheduleByPerformanceMainId" parameterType="int" resultType="PerformanceSchedule">
@@ -338,6 +408,20 @@
 			A.id	
 	</select>
 	
+	<select id="getPerformanceSeatPriceByPerformanceInfoAndSeatRate"
+		parameterType="PerformanceSeatPrice" resultType="PerformanceSeatPrice">
+		SELECT 
+			infoId, seatRate, price
+		FROM 
+			performance_seat_price
+		WHERE 
+			infoid= #{infoId}
+		AND 
+			seatRate LIKE #{seatRate}
+	
+	</select>
+	
+	
 	<insert id="insertHallInfo" parameterType="HallInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO 
@@ -425,6 +509,15 @@
 		
 	</update>
 	
+	<update id="updatePerformanceHallInfoId" parameterType="Performance">
+	UPDATE performance_info
+	SET 
+		hallInfoId = #{hallInfo.id}
+	WHERE 
+		id= #{id}
+	
+	</update>
+	
 	<select id="getHallInfoByPerformanceInfoId" parameterType="int" resultType="HallInfo">
 		SELECT 
 			A.id , A.`name`, A.address, A.gpsX, A.gpsY
@@ -435,6 +528,7 @@
 		WHERE 
 			B.id=#{value}	
 	</select>
+	
 	
 	
 	

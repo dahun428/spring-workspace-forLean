@@ -166,4 +166,22 @@
 		left outer join performance_seat_price h on h.infoId = c.id and h.seatRate = f.seatRate
 		where a.id = #{reserveId}
 	</select>
+	
+	<select id="getReserveCurrentCnt" resultMap="reserveDetail">
+		SELECT imagePath, title, COUNT(*) cnt 
+		FROM reserve_main a,
+				(SELECT e.id AS reserveId,c.title, c.imagePath 
+				FROM performance_info c
+				JOIN performance_main d ON c.id = d.infoId
+				JOIN reserve_main e ON e.performanceId = d.id
+				) f
+		WHERE a.id = f.reserveId
+		AND year(a.regDate) = YEAR(current_timestamp) 
+		GROUP BY a.performanceId
+		ORDER BY cnt DESC
+		LIMIT 0,3
+	</select>
+	
+	
+	
 </mapper>
