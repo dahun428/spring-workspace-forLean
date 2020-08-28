@@ -49,7 +49,7 @@
 	</div>
 </div>
 <input type="hidden" id="performance-content"/>
-<input type="hidden" id="performance-imgurl"/>
+
 <script type="text/javascript">
 $(function() {
 

@@ -361,8 +361,8 @@
 												<div class="col-5">
 													<div class="row justify-content-center">
 														<div class="col-12">
-															<div class="card">
-																<div class="card-body">
+															<div class="card" style="display:none;">
+																<div class="card-body" >
 																	<div class="mb-4">
 																		<i class='fas fa-bullhorn mr-2'
 																			style='font-size: 24px'></i>
@@ -400,9 +400,12 @@
 													<i class='fas fa-heart mr-2'
 														style='font-size: 24px; color: red;'></i><label>${performance.likes }</label>
 												</div>
-												<div class="d-inline">
+												<!-- 뒷풀이게시판 -->
+												<!--  
+												<div class="d-inline" style="display:none;">
 													<i class='far fa-comment-alt mr-2' style='font-size: 24px'></i><label></label>
 												</div>
+												-->
 											</div>
 											<div>
 												<button type="button" class="btn btn-outline-danger mr-2"
@@ -516,7 +519,8 @@
 													<div class="row justify-content-center">
 														<div class="col-12">
 															<div class="card">
-																<div class="card-body">
+																<!-- 뒷풀이게시판 -->
+																<div class="card-body" style="display:none;">
 																	<div class="mb-4">
 																		<i class='fas fa-bullhorn mr-2'
 																			style='font-size: 24px'></i>
@@ -561,12 +565,14 @@
 													</button>
 													<label id="modalLikes"></label>
 												</div>
-												<div class="d-inline">
+												<!--  
+												<div class="d-inline" style="display:none;">
 													<button type="button" class="btn btn-sm" id="goBoard">													
 														<i class='far fa-comment-alt mr-2' style='font-size: 24px'></i>
 													</button>
 													<label id="modalAfterParty"></label>
 												</div>
+												-->
 											</div>
 											
 										</div>
@@ -584,17 +590,18 @@
 									
 										<button type="button" class="btn btn-outline-danger mr-4 btn-lg"
 											id="modalBuyBtn" data-no="">예매하기</button>
-										<button type="button" class="btn btn-outline-dark btn-lg"
+										<button type="button" class="btn btn-outline-dark btn-lg" style="display:none;"
 											id="modalMateGroupBtn" data-no="">메이트 그룹</button>
 									</div>
 									
+									<!--  
 									<div class="row justify-content-end mt-3">
 										<button type="button" class="btn btn btn-info mr-4 btn-lg"
 												id="modalUpdateBtn" data-no="" >수정하기</button>
 										<button type="button" class="btn btn btn-danger mr-2 btn-lg"
 												id="modalDeleteBtn" data-no="">삭제하기</button>	
 									</div>
-									
+									-->
 									
 									<!-- 태그 창 끝 -->
 								</div>

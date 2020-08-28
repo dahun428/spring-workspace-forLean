@@ -460,11 +460,11 @@ public class PerformanceContoller {
 			FileCopyUtils.copy(upFile.getInputStream(), new FileOutputStream(file));	
 			performanceForm.setImagePath(filename);
 //			performance.setImagePath(filename);		
-		} /*else {
+		} else {
 			String downloadFile = performanceService.saveImage(performanceForm.getImagePath(), performanceForm.getTitle(), saveDirectory);
 			System.out.println("downloadFile : " + downloadFile);
-			//performanceForm.setImagePath(downloadFile);
-		}*/
+			performanceForm.setImagePath(downloadFile);
+		}
 		
 		
 		

@@ -174,7 +174,8 @@
 							<input type="file" id="upfile" class="form-control mb-1" name="upfile">
 						</div>
 						<input type="hidden" id="performance-place-address" name="hallAddress" />
-						<input type="hidden" id="performance-place" name="hallName" />						
+						<input type="hidden" id="performance-place" name="hallName" />
+						<input type="hidden" id="performance-imgurl" name="imagePath"/>						
 					</form>
 				</div>				
 			</div> <!-- 기본정보 입력 끝 -->

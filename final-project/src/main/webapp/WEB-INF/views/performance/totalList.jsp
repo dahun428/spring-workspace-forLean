@@ -62,7 +62,7 @@
 						</div>
 						<div>
 							<form action="/performance/totalList.do" method="get"
-							id="totalSearchForm">
+							id="totalListForm">
 								<input type="hidden" class="form-control" id="searchTitle"
 								name="title" value="${title }"/>
 								<input type="hidden" class="form-control" id="listOrder"
@@ -209,7 +209,8 @@
 													<i class='fas fa-heart mr-2'
 														style='font-size: 24px; color: red;'></i><label>${performance.likes }</label>
 												</div>
-												<div class="d-inline">
+												<!-- 뒷풀이 게시판 -->
+												<div class="d-inline" style="display:none;">
 													<i class='far fa-comment-alt mr-2' style='font-size: 24px'></i><label></label>
 												</div>
 											</div>
@@ -592,7 +593,7 @@ function goPage(no) {
 	}
 	
 	$("#pageNo").val(no);
-	$("#totalSearchForm").submit();
+	$("#totalListForm").submit();
 }
 
 function searchGenre(genre) {
