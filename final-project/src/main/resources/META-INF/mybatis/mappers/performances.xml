@@ -425,6 +425,19 @@
 		
 	</update>
 	
+	<select id="getHallInfoByPerformanceInfoId" parameterType="int" resultType="HallInfo">
+		SELECT 
+			A.id , A.`name`, A.address, A.gpsX, A.gpsY
+		FROM 
+			hall_info_main A
+		JOIN 
+			performance_info B ON A.id = B.hallInfoId
+		WHERE 
+			B.id=#{value}	
+	</select>
+	
+	
+	
 	<select id="getPerformanceByPerformanceMainId" parameterType="int" resultMap="PerformanceDetailDtoResultMap">
 	SELECT 
 			distinct A.id 		as id, 

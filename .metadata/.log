@@ -12046,3 +12046,9 @@ svn: E200009: 'C:\APP\eGovFrameDev-3.9.0-64bit\workspace\final-project\src\main\
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-27 20:31:24.774
 !MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-28 09:24:27.788
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-08-28 09:24:27.811
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
